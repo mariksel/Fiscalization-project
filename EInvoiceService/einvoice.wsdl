@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+ name="EinvoiceService"
+ targetNamespace="https://Einvoice.tatime.gov.al/EinvoiceService"
+ xmlns:al="https://Einvoice.tatime.gov.al/EinvoiceService"
+ xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+ xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+ xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+ xmlns:als="https://Einvoice.tatime.gov.al/EinvoiceService/schema"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+ <wsdl:types>
+ <xsd:schema>
+ <xsd:import namespace="https://Einvoice.tatime.gov.al/EinvoiceService/schema" schemaLocation="alimc-einvoice-service.xsd"/>
+ </xsd:schema>
+ </wsdl:types>
+ <wsdl:message name="RegisterEinvoiceRequest">
+ <wsdl:documentation>Element representing register sale message.</wsdl:documentation>
+ <wsdl:part element="als:RegisterEinvoiceRequest" name="request" />
+ </wsdl:message>
+ <wsdl:message name="RegisterEinvoiceResponse">
+ <wsdl:documentation>Element representing register invoice response message.</wsdl:documentation>
+ <wsdl:part element="als:RegisterEinvoiceResponse" name="response" />
+ </wsdl:message>
+
+ <wsdl:message name="EinvoiceChangeStatusRequest">
+ <wsdl:documentation>Element representing Einvoice change status request message.</wsdl:documentation>
+ <wsdl:part element="als:EinvoiceChangeStatusRequest" name="request" />
+ </wsdl:message>
+
+ <wsdl:message name="EinvoiceChangeStatusResponse">
+ <wsdl:documentation>Element representing Einvoice change status response message.</wsdl:documentation>
+ <wsdl:part element="als:EinvoiceChangeStatusResponse" name="response" />
+ </wsdl:message>
+
+ <wsdl:message name="GetTaxpayersRequest">
+ <wsdl:documentation>Element representing get Taxpayers request message.</wsdl:documentation>
+ <wsdl:part element="als:GetTaxpayersRequest" name="request" />
+ </wsdl:message>
+
+ <wsdl:message name="GetTaxpayersResponse">
+ <wsdl:documentation>Element representing get Taxpayers response message.</wsdl:documentation>
+ <wsdl:part element="als:GetTaxpayersResponse" name="response" />
+ </wsdl:message>
+
+ <wsdl:message name="GetEinvoicesRequest">
+ <wsdl:documentation>Element representing get Einvocies request message.</wsdl:documentation>
+ <wsdl:part element="als:GetEinvoicesRequest" name="request" />
+ </wsdl:message>
+
+ <wsdl:message name="GetEinvoicesResponse">
+ <wsdl:documentation>Element representing get Einovices response message.</wsdl:documentation>
+ <wsdl:part element="als:GetEinvoicesResponse" name="response" />
+ </wsdl:message>
+
+ <wsdl:portType name="EinvoiceServicePortType">
+ <wsdl:operation name="registerEinvoice">
+ <wsdl:input message="al:RegisterEinvoiceRequest"/>
+ <wsdl:output message="al:RegisterEinvoiceResponse"/>
+ </wsdl:operation>
+ <wsdl:operation name="einvoiceChangeStatus">
+ <wsdl:input message="al:EinvoiceChangeStatusRequest"/>
+ <wsdl:output message="al:EinvoiceChangeStatusResponse"/>
+ </wsdl:operation>
+ <wsdl:operation name="getTaxpayers">
+ <wsdl:input message="al:GetTaxpayersRequest"/>
+ <wsdl:output message="al:GetTaxpayersResponse"/>
+ </wsdl:operation>
+ <wsdl:operation name="getEinvoices">
+ <wsdl:input message="al:GetEinvoicesRequest"/>
+ <wsdl:output message="al:GetEinvoicesResponse"/>
+ </wsdl:operation>
+ </wsdl:portType>
+ <wsdl:binding name="EinvoiceServiceSoap" type="al:EinvoiceServicePortType">
+ <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+ <wsdl:operation name="registerEinvoice">
+ <soap:operation soapAction="https://Einvoice.tatime.gov.al/EinvoiceService/RegisterEinvoice"/>
+ <wsdl:input>
+ <soap:body use="literal"/>
+ </wsdl:input>
+ <wsdl:output>
+ <soap:body use="literal"/>
+ </wsdl:output>
+ </wsdl:operation>
+ <wsdl:operation name="einvoiceChangeStatus">
+ <soap:operation soapAction="https://Einvoice.tatime.gov.al/EinvoiceService/EinvoiceChangeStatus"/>
+ <wsdl:input>
+ <soap:body use="literal"/>
+ </wsdl:input>
+ <wsdl:output>
+ <soap:body use="literal"/>
+ </wsdl:output>
+ </wsdl:operation>
+ <wsdl:operation name="getTaxpayers">
+ <soap:operation soapAction="https://Einvoice.tatime.gov.al/EinvoiceService/GetTaxpayers"/>
+ <wsdl:input>
+ <soap:body use="literal"/>
+ </wsdl:input>
+ <wsdl:output>
+ <soap:body use="literal"/>
+ </wsdl:output>
+ </wsdl:operation>
+ <wsdl:operation name="getEinvoices">
+ <soap:operation soapAction="https://Einvoice.tatime.gov.al/EinvoiceService/GetEinvoices"/>
+ <wsdl:input>
+ <soap:body use="literal"/>
+ </wsdl:input>
+ <wsdl:output>
+ <soap:body use="literal"/>
+ </wsdl:output>
+ </wsdl:operation>
+ </wsdl:binding>
+ <wsdl:service name="EinvoiceService">
+ <wsdl:port name="EinvoiceServicePort" binding="al:EinvoiceServiceSoap">
+ <soap:address location="https://einvoice-test.tatime.gov.al/EinvoiceService-v1"/>
+ </wsdl:port>
+ </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,1045 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema
+ targetNamespace="https://Einvoice.tatime.gov.al/EinvoiceService/schema"
+ xmlns:al="https://Einvoice.tatime.gov.al/EinvoiceService/schema"
+ xmlns="http://www.w3.org/2001/XMLSchema"
+ xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+ xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+ elementFormDefault="qualified"
+ vc:minVersion="1.1">
+ <import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+ <element name="RegisterEinvoiceRequest">
+ <annotation>
+ <documentation>Root XML element representing register sale message.</documentation>
+ </annotation>
+ <complexType>
+ <all minOccurs="1" maxOccurs="1">
+ <element name="Header" type="al:RegisterEinvoiceRequestHeaderType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>Element representing the header of the message.</documentation>
+ </annotation>
+ </element>
+ <element name="EinvoiceEnvelope" type="al:EinvoiceEnvelopeType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>XML element containing actual einvoice XML in UBL or CII format.</documentation>
+ </annotation>
+ </element>
+ <element ref="ds:Signature" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>XML element representing a signature.</documentation>
+ </annotation>
+ </element>
+ </all>
+ <attribute name="Id" type="string" use="required" fixed="Request">
+ <annotation>
+ <documentation>Attribute used for signature creation and verification.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Version" type="al:IntSType" use="required" fixed="1">
+ <annotation>
+ <documentation>Attribute used to specify compliance with XSD schema.</documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ </element>
+ <element name="RegisterEinvoiceResponse">
+ <annotation>
+ <documentation>Root XML element representing register invoice response message.</documentation>
+ </annotation>
+ <complexType>
+ <all minOccurs="1" maxOccurs="1">
+ <element name="Header" type="al:RegisterEinvoiceResponseHeaderType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>Element representing the header of the message.</documentation>
+ </annotation>
+ </element>
+ <element name="EIC" type="al:UUIDSType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>CIS generated verification code that can be used to uniquely identify registered
+einvoice.</documentation>
+ </annotation>
+ </element>
+ <element name="Warnings" type="al:WarningsType" minOccurs="0" maxOccurs="1" >
+ <annotation>
+ <documentation>XML element representing list of warnings.</documentation>
+ </annotation>
+ </element>
+ <element ref="ds:Signature" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>XML element representing a signature.</documentation>
+ </annotation>
+ </element>
+ </all>
+ <attribute name="Id" type="string" use="required" fixed="Request">
+ <annotation>
+ <documentation>Attribute used for signature creation and verification.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Version" type="al:IntSType" use="required" fixed="1">
+ <annotation>
+ <documentation>Attribute used to specify compliance with XSD schema.</documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ </element>
+ <element name="EinvoiceChangeStatusRequest">
+ <annotation>
+ <documentation>Root XML element representing Einvoice change status request message.</documentation>
+ </annotation>
+ <complexType>
+ <all minOccurs="1" maxOccurs="1">
+ <element name="Header" type="al:EinvoiceChangeStatusRequestHeaderType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>Element representing the header of the message.</documentation>
+ </annotation>
+ </element>
+ <element name="EICs" type="al:EICsType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>XML element representing list of Einvoice ids.</documentation>
+ </annotation>
+ </element>
+ <element name="EinStatus" type="al:EinvoiceStatusType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>Element that represents Einvoice status.</documentation>
+ </annotation>
+ </element>
+ <element ref="ds:Signature" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>XML element representing a signature.</documentation>
+ </annotation>
+ </element>
+ </all>
+ <attribute name="Id" type="string" use="required" fixed="Request">
+ <annotation>
+ <documentation>Attribute used for signature creation and verification.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Version" type="al:IntSType" use="required" fixed="1">
+ <annotation>
+ <documentation>Attribute used to specify compliance with XSD schema.</documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ </element>
+ <element name="EinvoiceChangeStatusResponse">
+ <annotation>
+ <documentation>Root XML element representing Einvoice change status response message.</documentation>
+ </annotation>
+ <complexType>
+ <all minOccurs="1" maxOccurs="1">
+ <element name="Header" type="al:EinvoiceChangeStatusResponseHeaderType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>Element representing the header of the message.</documentation>
+ </annotation>
+ </element>
+ <element name="ResponseCode" type="al:ResponseCodeType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>Response code.</documentation>
+ </annotation>
+ </element>
+ <element ref="ds:Signature" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>XML element representing a signature.</documentation>
+ </annotation>
+ </element>
+ </all>
+ <attribute name="Id" type="string" use="required" fixed="Request">
+ <annotation>
+ <documentation>Attribute used for signature creation and verification.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Version" type="al:IntSType" use="required" fixed="1">
+ <annotation>
+ <documentation>Attribute used to specify compliance with XSD schema.</documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ </element>
+ <element name="GetTaxpayersRequest">
+ <annotation>
+ <documentation>Root XML element representing get Taxpayers request message.</documentation>
+ </annotation>
+ <complexType>
+ <all minOccurs="1" maxOccurs="1">
+ <element name="Header" type="al:GetTaxpayersRequestHeaderType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>Element representing the header of the message.</documentation>
+ </annotation>
+ </element>
+ <element name="Filter" type="al:TaxpayerFilterType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>XML element containing filters.</documentation>
+ </annotation>
+ </element>
+ <element ref="ds:Signature" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>XML element representing a signature.</documentation>
+ </annotation>
+ </element>
+ </all>
+ <attribute name="Id" type="string" use="required" fixed="Request">
+ <annotation>
+ <documentation>Attribute used for signature creation and verification.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Version" type="al:IntSType" use="required" fixed="1">
+ <annotation>
+ <documentation>Attribute used to specify compliance with XSD schema.</documentation>
+ </annotation>
+ </attribute> 
+ </complexType>
+ </element>
+ <element name="GetTaxpayersResponse">
+ <annotation>
+ <documentation>Root XML element representing get Taxpayers response message.</documentation>
+ </annotation>
+ <complexType>
+ <all minOccurs="1" maxOccurs="1">
+ <element name="Header" type="al:GetTaxpayersResponseHeaderType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>Element representing the header of the message.</documentation>
+ </annotation>
+ </element>
+ <element name="Taxpayers" type="al:TaxpayersType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>XML element representing list of taxpayers.</documentation>
+ </annotation>
+ </element>
+ <element ref="ds:Signature" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>XML element representing a signature.</documentation>
+ </annotation>
+ </element>
+ </all>
+ <attribute name="Id" type="string" use="required" fixed="Request">
+ <annotation>
+ <documentation>Attribute used for signature creation and verification.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Version" type="al:IntSType" use="required" fixed="1">
+ <annotation>
+ <documentation>Attribute used to specify compliance with XSD schema.</documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ </element>
+ <element name="GetEinvoicesRequest">
+ <annotation>
+ <documentation>Root XML element representing get Einvoices request message.</documentation>
+ </annotation>
+ <complexType>
+ <all minOccurs="1" maxOccurs="1">
+ <element name="Header" type="al:GetEinvoicesRequestHeaderType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>Element representing the header of the message.</documentation>
+ </annotation>
+ </element>
+ <element name="EIC" type="al:UUIDSType" minOccurs="0" maxOccurs="1">
+ <annotation>
+ <documentation>Einvoice EIC for find One Einvoice, only find one returns pdf.</documentation>
+ </annotation>
+ </element>
+ <element name="PartyType" type="al:PartyTypeSType" minOccurs="0" maxOccurs="1">
+ <annotation>
+ <documentation>Einvoice party type (Buyer or Seller)</documentation>
+ </annotation>
+ </element>
+ <element name="RecDateTimeFrom" type="al:UTCSType" minOccurs="0" maxOccurs="1">
+ <annotation>
+ <documentation>Receive date time from</documentation>
+ </annotation>
+ </element>
+ <element name="RecDateTimeTo" type="al:UTCSType" minOccurs="0" maxOccurs="1">
+ <annotation>
+ <documentation>Receive date time to</documentation>
+ </annotation>
+ </element>
+ <element ref="ds:Signature" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>XML element representing a signature.</documentation>
+ </annotation>
+ </element>
+ </all>
+ <attribute name="Id" type="string" use="required" fixed="Request">
+ <annotation>
+ <documentation>Attribute used for signature creation and verification.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Version" type="al:IntSType" use="required" fixed="1">
+ <annotation>
+ <documentation>Attribute used to specify compliance with XSD schema.</documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ </element>
+ <element name="GetEinvoicesResponse">
+ <annotation>
+ <documentation>Root XML element representing get Einvoices response message.</documentation>
+ </annotation>
+ <complexType>
+ <all minOccurs="1" maxOccurs="1">
+ <element name="Header" type="al:GetEinvoicesResponseHeaderType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>Element representing the header of the message.</documentation>
+ </annotation>
+ </element>
+ <element name="Einvoices" type="al:EinvoicesType" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>XML element representing list of Einvoices.</documentation>
+ </annotation>
+ </element>
+ <element ref="ds:Signature" minOccurs="1" maxOccurs="1">
+ <annotation>
+ <documentation>XML element representing a signature.</documentation>
+ </annotation>
+ </element>
+ </all>
+ <attribute name="Id" type="string" use="required" fixed="Request">
+ <annotation>
+ <documentation>Attribute used for signature creation and verification.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Version" type="al:IntSType" use="required" fixed="1">
+ <annotation>
+ <documentation>Attribute used to specify compliance with XSD schema.</documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ </element>
+
+ <complexType name="EinvoiceChangeStatusRequestHeaderType">
+ <attribute name="UUID" type="al:UUIDSType" use="required">
+ <annotation>
+ <documentation>Element generated by the TCR. It uniquely identifies the request message sent from TCR to CIS.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="SendDateTime" use="required" type="al:UTCSType">
+ <annotation>
+ <documentation>Element represents date and time of sending the request message to the CIS. </documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ <complexType name="EinvoiceChangeStatusResponseHeaderType">
+ <attribute name="UUID" type="al:UUIDSType" use="required">
+ <annotation>
+ <documentation>Element generated by the CIS for every message sent to the TCR. It uniquely identifies the message sent to the
+TCR.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="RequestUUID" type="al:UUIDSType" use="required">
+ <annotation>
+ <documentation>Element generated by the TCR and referenced by the CIS. It uniquely identifies the request message for which
+response message was sent to the TCR.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="SendDateTime" type="al:UTCSType" use="required">
+ <annotation>
+ <documentation>Element represents date and time of sending the response message to the TCR. </documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ <complexType name="RegisterEinvoiceRequestHeaderType">
+ <attribute name="UUID" type="al:UUIDSType" use="required">
+ <annotation>
+ <documentation>Element generated by the TCR. It uniquely identifies the request message sent from TCR to CIS.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="SendDateTime" use="required" type="al:UTCSType">
+ <annotation>
+ <documentation>Element represents date and time of sending the request message to the CIS. </documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ <complexType name="RegisterEinvoiceResponseHeaderType">
+ <attribute name="UUID" type="al:UUIDSType" use="required">
+ <annotation>
+ <documentation>Element generated by the CIS for every message sent to the TCR. It uniquely identifies the message sent to the
+TCR.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="RequestUUID" type="al:UUIDSType" use="required">
+ <annotation>
+ <documentation>Element generated by the TCR and referenced by the CIS. It uniquely identifies the request message for which
+response message was sent to the TCR.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="SendDateTime" type="al:UTCSType" use="required">
+ <annotation>
+ <documentation>Element represents date and time of sending the response message to the TCR. </documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ <complexType name="GetEinvoicesRequestHeaderType">
+ <attribute name="UUID" type="al:UUIDSType" use="required">
+ <annotation>
+ <documentation>Element generated by the TCR. It uniquely identifies the request message sent from TCR to CIS.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="SendDateTime" use="required" type="al:UTCSType">
+ <annotation>
+ <documentation>Element represents date and time of sending the request message to the CIS. </documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ <complexType name="GetEinvoicesResponseHeaderType">
+ <attribute name="UUID" type="al:UUIDSType" use="required">
+ <annotation>
+ <documentation>Element generated by the CIS for every message sent to the TCR. It uniquely identifies the message sent to the
+TCR.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="RequestUUID" type="al:UUIDSType" use="required">
+ <annotation>
+ <documentation>Element generated by the TCR and referenced by the CIS. It uniquely identifies the request message for which
+response message was sent to the TCR.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="SendDateTime" type="al:UTCSType" use="required">
+ <annotation>
+ <documentation>Element represents date and time of sending the response message to the TCR. </documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ <complexType name="GetTaxpayersRequestHeaderType">
+ <attribute name="UUID" type="al:UUIDSType" use="required">
+ <annotation>
+ <documentation>Element generated by the TCR. It uniquely identifies the request message sent from TCR to CIS.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="SendDateTime" use="required" type="al:UTCSType">
+ <annotation>
+ <documentation>Element represents date and time of sending the request message to the CIS. </documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ <complexType name="GetTaxpayersResponseHeaderType">
+ <attribute name="UUID" type="al:UUIDSType" use="required">
+ <annotation>
+ <documentation>Element generated by the CIS for every message sent to the TCR. It uniquely identifies the message sent to the
+TCR.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="RequestUUID" type="al:UUIDSType" use="required">
+ <annotation>
+ <documentation>Element generated by the TCR and referenced by the CIS. It uniquely identifies the request message for which
+response message was sent to the TCR.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="SendDateTime" type="al:UTCSType" use="required">
+ <annotation>
+ <documentation>Element represents date and time of sending the response message to the TCR. </documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ <complexType name="EinvoiceType">
+ <sequence>
+ <element name="Pdf" type="base64Binary" minOccurs="0" maxOccurs="1">
+ <annotation>
+ <documentation>Element contains base64 Einvoice pdf.</documentation>
+ </annotation>
+ </element>
+ </sequence>
+ <attribute name="EIC" type="al:UUIDSType" use="required" >
+ <annotation>
+ <documentation>Einvoice EIC.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="DocNumber" type="al:String100SType" use="required" >
+ <annotation>
+ <documentation>Document number.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="DocType" type="al:DocumentType" use="required" >
+ <annotation>
+ <documentation>Document type.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="RecDateTime" type="al:UTCSType" use="required" >
+ <annotation>
+ <documentation>Einvoice receive date time.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="DueDateTime" type="al:UTCSType" use="required" >
+ <annotation>
+ <documentation>Einvoice due date time.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Status" type="al:EinvoiceStatusType" use="required" >
+ <annotation>
+ <documentation>Einvoice status</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Amount" type="al:DecimalSType" use="required" >
+ <annotation>
+ <documentation>Einvoice amount.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="PartyType" type="al:PartyTypeSType" use="required">
+ <annotation>
+ <documentation>Party type.</documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ <complexType name="EinvoicesType">
+ <sequence>
+ <element name="Einvoice" type="al:EinvoiceType" minOccurs="0" maxOccurs="100">
+ <annotation>
+ <documentation>Element representing a single Einovice.</documentation>
+ </annotation>
+ </element>
+ </sequence>
+ </complexType>
+ <complexType name="TaxpayerType">
+ <attribute name="Name" type="al:String100SType" use="required" >
+ <annotation>
+ <documentation>Taxpayer name.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Tin" type="al:NUISType" use="required" >
+ <annotation>
+ <documentation>Taxpayer NUIS</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Address" type="al:String100SType" use="optional" >
+ <annotation>
+ <documentation>Taxpayer address</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Town" type="al:String100SType" use="optional" >
+ <annotation>
+ <documentation>Taxpayer town</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Country" type="al:CountryCodeSType" use="optional">
+ <annotation>
+ <documentation>Taxpayer country.</documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ <complexType name="TaxpayersType">
+ <sequence>
+ <element name="Taxpayer" type="al:TaxpayerType" minOccurs="0" maxOccurs="100">
+ <annotation>
+ <documentation>Element representing a single taxpayer.</documentation>
+ </annotation>
+ </element>
+ </sequence>
+ </complexType>
+ <complexType name="EinvoiceEnvelopeType">
+ <choice minOccurs="1" maxOccurs="1">
+ <element name="UblInvoice" type="base64Binary">
+ <annotation>
+ <documentation>Element contains base64 encoded UBL Invoice XML.</documentation>
+ </annotation>
+ </element>
+ <element name="UblCreditNote" type="base64Binary">
+ <annotation>
+ <documentation>Element contains base64 encoded UBL CreditNote XML.</documentation>
+ </annotation>
+ </element>
+ <element name="CiiInvoice" type="base64Binary">
+ <annotation>
+ <documentation>Element contains base64 encoded CII Invoice XML.</documentation>
+ </annotation>
+ </element>
+ </choice>
+ </complexType>
+ <complexType name="UblEnvelopeType">
+ <sequence>
+ <any processContents="skip" minOccurs="1" maxOccurs="1"/>
+ </sequence>
+ </complexType>
+ <complexType name="CiiEnvelopeType">
+ <sequence>
+ <any processContents="skip" minOccurs="1" maxOccurs="1"/>
+ </sequence>
+ </complexType>
+ <complexType name="WarningsType">
+ <sequence>
+ <element name="Warning" type="al:WarningType" minOccurs="1" maxOccurs="200">
+ <annotation>
+ <documentation>Element representing an warning in list of warnings.</documentation>
+ </annotation>
+ </element>
+ </sequence>
+ </complexType>
+ <complexType name="WarningType" >
+ <attribute name="Code" type="al:String20SType" >
+ <annotation>
+ <documentation>Warning code.</documentation>
+ </annotation>
+ </attribute>
+ <attribute name="Description" type="al:String100SType" >
+ <annotation>
+ <documentation>Warning description.</documentation>
+ </annotation>
+ </attribute>
+ </complexType>
+ <complexType name="EICsType">
+ <sequence>
+ <element name="EIC" type="al:UUIDSType" minOccurs="1" maxOccurs="100">
+ <annotation>
+ <documentation>Element representing a single einvoice id.</documentation>
+ </annotation>
+ </element>
+ </sequence>
+ </complexType>
+ <complexType name="TaxpayerFilterType">
+ <choice minOccurs="1" maxOccurs="1">
+ <element name="Tin" type="al:NUISType">
+ <annotation>
+ <documentation>Element contains filter for Nuis.</documentation>
+ </annotation>
+ </element>
+ <element name="Name" type="al:String100Min3SType">
+ <annotation>
+ <documentation>Element contains filter for name.</documentation>
+ </annotation>
+ </element>
+ </choice>
+ </complexType>
+ <simpleType name="UTCSType">
+ <annotation>
+ <documentation>Date and time represented as UTC time with ISO 8601 format.</documentation>
+ </annotation>
+ <restriction base="dateTime">
+ <pattern value="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}[+-][0-9]{2}:[0-9]{2}"/>
+ </restriction>
+ </simpleType>
+ <simpleType name="UUIDSType">
+ <annotation>
+ <documentation>UUID constructed according to the RFC4122 (https://tools.ietf.org/html/rfc4122).
+ </documentation>
+ </annotation>
+ <restriction base="string">
+ <pattern value="[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}"/>
+ </restriction>
+ </simpleType>
+ <simpleType name="IntSType">
+ <annotation>
+ <documentation>Positive integer.</documentation>
+ </annotation>
+ <restriction base="int">
+ <minExclusive value="0"/>
+ </restriction>
+ </simpleType>
+ <simpleType name="String20SType">
+ <annotation>
+ <documentation>String of up to 20 characters.</documentation>
+ </annotation>
+ <restriction base="string">
+ <minLength value="1"/>
+ <maxLength value="20"/>
+ </restriction>
+ </simpleType>
+ <simpleType name="String100SType">
+ <annotation>
+ <documentation>String of up to 100 characters.</documentation>
+ </annotation>
+ <restriction base="string">
+ <minLength value="1"/>
+ <maxLength value="100"/>
+ </restriction>
+ </simpleType>
+ <simpleType name="String100Min3SType">
+ <annotation>
+ <documentation>String of 3 up to 100 characters.</documentation>
+ </annotation>
+ <restriction base="string">
+ <minLength value="3"/>
+ <maxLength value="100"/>
+ </restriction>
+ </simpleType>
+ <simpleType name="DecimalSType">
+ <annotation>
+ <documentation>Decimal number with two numbers after decimal point.</documentation>
+ </annotation>
+ <restriction base="decimal">
+ <pattern value="([1-9][0-9]*|0)\.[0-9]{2}|0"/>
+ </restriction>
+ </simpleType>
+ <simpleType name="NUISType">
+ <annotation>
+ <documentation>NUIS constructed in one letter - eight numbers - one letter pattern, unique.</documentation>
+ </annotation>
+ <restriction base="string">
+ <pattern value="[a-zA-Z]{1}[0-9]{8}[a-zA-Z]{1}"/>
+ </restriction>
+ </simpleType>
+ <simpleType name="EinvoiceStatusType">
+ <annotation>
+ <documentation>Einvoice status types.</documentation>
+ </annotation>
+ <restriction base="string">
+ <enumeration value="ACCEPTED">
+ <annotation>
+ <documentation>Accepted type.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="REFUSED">
+ <annotation>
+ <documentation>Refused type.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="PAID">
+ <annotation>
+ <documentation>Paid type.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="PARTIALLY_PAID">
+ <annotation>
+ <documentation>Partially paid type.</documentation>
+ </annotation>
+ </enumeration>
+ </restriction>
+ </simpleType>
+ <simpleType name="DocumentType">
+ <annotation>
+ <documentation>Document code types.</documentation>
+ </annotation>
+ <restriction base="string">
+ <enumeration value="80">
+ <annotation>
+ <documentation>Debit note related to goods or services type.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="82">
+ <annotation>
+ <documentation>Metered services invoice type.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="84">
+ <annotation>
+ <documentation>Debit note related to financial adjustments type.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="380">
+ <annotation>
+ <documentation>Commercial invoicetype.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="383">
+ <annotation>
+ <documentation>Debit note type.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="386">
+ <annotation>
+ <documentation>Prepayment invoice type.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="393">
+ <annotation>
+ <documentation>Factored invoice type.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="395">
+ <annotation>
+ <documentation>Consignment invoice type.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="575">
+ <annotation>
+ <documentation>Insurer's invoice type.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="623">
+ <annotation>
+ <documentation>Forwarder's invoice type.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="780">
+ <annotation>
+ <documentation>Freight invoice type.</documentation>
+ </annotation>
+ </enumeration>
+ </restriction>
+ </simpleType>
+ <simpleType name="ResponseCodeType">
+ <annotation>
+ <documentation>Response code types.</documentation>
+ </annotation>
+ <restriction base="string">
+ <enumeration value="ACCEPTED">
+ <annotation>
+ <documentation>Accepted type.</documentation>
+ </annotation>
+ </enumeration>
+ </restriction>
+ </simpleType>
+ <simpleType name="PartyTypeSType">
+ <annotation>
+ <documentation>Party types.</documentation>
+ </annotation>
+ <restriction base="string">
+ <enumeration value="BUYER">
+ <annotation>
+ <documentation>Buyer type.</documentation>
+ </annotation>
+ </enumeration>
+ <enumeration value="SELLER">
+ <annotation>
+ <documentation>Seller type.</documentation>
+ </annotation>
+ </enumeration>
+ </restriction>
+ </simpleType>
+ <simpleType name="CountryCodeSType">
+ <annotation>
+ <documentation>Country codes from ISO 3166-1 alpha3 standard</documentation>
+ </annotation>
+ <restriction base="string">
+ <enumeration value="ABW"><annotation><documentation>Aruba</documentation></annotation></enumeration>
+ <enumeration value="AFG"><annotation><documentation>Afghanistan</documentation></annotation></enumeration>
+ <enumeration value="AGO"><annotation><documentation>Angola</documentation></annotation></enumeration>
+ <enumeration value="AIA"><annotation><documentation>Anguilla</documentation></annotation></enumeration>
+ <enumeration value="ALA"><annotation><documentation>Aland Islands</documentation></annotation></enumeration>
+ <enumeration value="ALB"><annotation><documentation>Albania</documentation></annotation></enumeration>
+ <enumeration value="AND"><annotation><documentation>Andorra</documentation></annotation></enumeration>
+ <enumeration value="ARE"><annotation><documentation>United Arab Emirates</documentation></annotation></enumeration>
+ <enumeration value="ARG"><annotation><documentation>Argentina</documentation></annotation></enumeration>
+ <enumeration value="ARM"><annotation><documentation>Armenia</documentation></annotation></enumeration>
+ <enumeration value="ASM"><annotation><documentation>American Samoa</documentation></annotation></enumeration>
+ <enumeration value="ATA"><annotation><documentation>Antarctica</documentation></annotation></enumeration>
+ <enumeration value="ATF"><annotation><documentation>French Southern Territories</documentation></annotation></enumeration>
+ <enumeration value="ATG"><annotation><documentation>Antigua and Barbuda</documentation></annotation></enumeration>
+ <enumeration value="AUS"><annotation><documentation>Australia</documentation></annotation></enumeration>
+ <enumeration value="AUT"><annotation><documentation>Austria</documentation></annotation></enumeration>
+ <enumeration value="AZE"><annotation><documentation>Azerbaijan</documentation></annotation></enumeration>
+ <enumeration value="BDI"><annotation><documentation>Burundi</documentation></annotation></enumeration>
+ <enumeration value="BEL"><annotation><documentation>Belgium</documentation></annotation></enumeration>
+ <enumeration value="BEN"><annotation><documentation>Benin</documentation></annotation></enumeration>
+ <enumeration value="BES"><annotation><documentation>Bonaire, Sint Eustatius and Saba</documentation></annotation></enumeration>
+ <enumeration value="BFA"><annotation><documentation>Burkina Faso</documentation></annotation></enumeration>
+ <enumeration value="BGD"><annotation><documentation>Bangladesh</documentation></annotation></enumeration>
+ <enumeration value="BGR"><annotation><documentation>Bulgaria</documentation></annotation></enumeration>
+ <enumeration value="BHR"><annotation><documentation>Bahrain</documentation></annotation></enumeration>
+ <enumeration value="BHS"><annotation><documentation>Bahamas</documentation></annotation></enumeration>
+ <enumeration value="BIH"><annotation><documentation>Bosnia and Herzegovina</documentation></annotation></enumeration>
+ <enumeration value="BLM"><annotation><documentation>Saint Barthelemy</documentation></annotation></enumeration>
+ <enumeration value="BLR"><annotation><documentation>Belarus</documentation></annotation></enumeration>
+ <enumeration value="BLZ"><annotation><documentation>Belize</documentation></annotation></enumeration>
+ <enumeration value="BMU"><annotation><documentation>Bermuda</documentation></annotation></enumeration>
+ <enumeration value="BOL"><annotation><documentation>Bolivia (Plurinational State of)</documentation></annotation></enumeration>
+ <enumeration value="BRA"><annotation><documentation>Brazil</documentation></annotation></enumeration>
+ <enumeration value="BRB"><annotation><documentation>Barbados</documentation></annotation></enumeration>
+ <enumeration value="BRN"><annotation><documentation>Brunei Darussalam</documentation></annotation></enumeration>
+ <enumeration value="BTN"><annotation><documentation>Bhutan</documentation></annotation></enumeration>
+ <enumeration value="BVT"><annotation><documentation>Bouvet Island</documentation></annotation></enumeration>
+ <enumeration value="BWA"><annotation><documentation>Botswana</documentation></annotation></enumeration>
+ <enumeration value="CAF"><annotation><documentation>Central African Republic</documentation></annotation></enumeration>
+ <enumeration value="CAN"><annotation><documentation>Canada</documentation></annotation></enumeration>
+ <enumeration value="CCK"><annotation><documentation>Cocos (Keeling) Islands</documentation></annotation></enumeration>
+ <enumeration value="CHE"><annotation><documentation>Switzerland</documentation></annotation></enumeration>
+ <enumeration value="CHL"><annotation><documentation>Chile</documentation></annotation></enumeration>
+ <enumeration value="CHN"><annotation><documentation>China</documentation></annotation></enumeration>
+ <enumeration value="CIV"><annotation><documentation>Cote d'Ivoire</documentation></annotation></enumeration>
+ <enumeration value="CMR"><annotation><documentation>Cameroon</documentation></annotation></enumeration>
+ <enumeration value="COD"><annotation><documentation>Congo, Democratic Republic of the</documentation></annotation></enumeration>
+ <enumeration value="COG"><annotation><documentation>Congo</documentation></annotation></enumeration>
+ <enumeration value="COK"><annotation><documentation>Cook Islands</documentation></annotation></enumeration>
+ <enumeration value="COL"><annotation><documentation>Colombia</documentation></annotation></enumeration>
+ <enumeration value="COM"><annotation><documentation>Comoros</documentation></annotation></enumeration>
+ <enumeration value="CPV"><annotation><documentation>Cabo Verde</documentation></annotation></enumeration>
+ <enumeration value="CRI"><annotation><documentation>Costa Rica</documentation></annotation></enumeration>
+ <enumeration value="CUB"><annotation><documentation>Cuba</documentation></annotation></enumeration>
+ <enumeration value="CUW"><annotation><documentation>Curacao</documentation></annotation></enumeration>
+ <enumeration value="CXR"><annotation><documentation>Christmas Island</documentation></annotation></enumeration>
+ <enumeration value="CYM"><annotation><documentation>Cayman Islands</documentation></annotation></enumeration>
+ <enumeration value="CYP"><annotation><documentation>Cyprus</documentation></annotation></enumeration>
+ <enumeration value="CZE"><annotation><documentation>Czechia</documentation></annotation></enumeration>
+ <enumeration value="DEU"><annotation><documentation>Germany</documentation></annotation></enumeration>
+ <enumeration value="DJI"><annotation><documentation>Djibouti</documentation></annotation></enumeration>
+ <enumeration value="DMA"><annotation><documentation>Dominica</documentation></annotation></enumeration>
+ <enumeration value="DNK"><annotation><documentation>Denmark</documentation></annotation></enumeration>
+ <enumeration value="DOM"><annotation><documentation>Dominican Republic</documentation></annotation></enumeration>
+ <enumeration value="DZA"><annotation><documentation>Algeria</documentation></annotation></enumeration>
+ <enumeration value="ECU"><annotation><documentation>Ecuador</documentation></annotation></enumeration>
+ <enumeration value="EGY"><annotation><documentation>Egypt</documentation></annotation></enumeration>
+ <enumeration value="ERI"><annotation><documentation>Eritrea</documentation></annotation></enumeration>
+ <enumeration value="ESH"><annotation><documentation>Western Sahara</documentation></annotation></enumeration>
+ <enumeration value="ESP"><annotation><documentation>Spain</documentation></annotation></enumeration>
+ <enumeration value="EST"><annotation><documentation>Estonia</documentation></annotation></enumeration>
+ <enumeration value="ETH"><annotation><documentation>Ethiopia</documentation></annotation></enumeration>
+ <enumeration value="FIN"><annotation><documentation>Finland</documentation></annotation></enumeration>
+ <enumeration value="FJI"><annotation><documentation>Fiji</documentation></annotation></enumeration>
+ <enumeration value="FLK"><annotation><documentation>Falkland Islands (Malvinas)</documentation></annotation></enumeration>
+ <enumeration value="FRA"><annotation><documentation>France</documentation></annotation></enumeration>
+ <enumeration value="FRO"><annotation><documentation>Faroe Islands</documentation></annotation></enumeration>
+ <enumeration value="FSM"><annotation><documentation>Micronesia (Federated States of)</documentation></annotation></enumeration>
+ <enumeration value="GAB"><annotation><documentation>Gabon</documentation></annotation></enumeration>
+ <enumeration value="GBR"><annotation><documentation>United Kingdom of Great Britain and Northern Ireland</documentation></annotation></enumeration>
+ <enumeration value="GEO"><annotation><documentation>Georgia</documentation></annotation></enumeration>
+ <enumeration value="GGY"><annotation><documentation>Guernsey</documentation></annotation></enumeration>
+ <enumeration value="GHA"><annotation><documentation>Ghana</documentation></annotation></enumeration>
+ <enumeration value="GIB"><annotation><documentation>Gibraltar</documentation></annotation></enumeration>
+ <enumeration value="GIN"><annotation><documentation>Guinea</documentation></annotation></enumeration>
+ <enumeration value="GLP"><annotation><documentation>Guadeloupe</documentation></annotation></enumeration>
+ <enumeration value="GMB"><annotation><documentation>Gambia</documentation></annotation></enumeration>
+ <enumeration value="GNB"><annotation><documentation>Guinea-Bissau</documentation></annotation></enumeration>
+ <enumeration value="GNQ"><annotation><documentation>Equatorial Guinea</documentation></annotation></enumeration>
+ <enumeration value="GRC"><annotation><documentation>Greece</documentation></annotation></enumeration>
+ <enumeration value="GRD"><annotation><documentation>Grenada</documentation></annotation></enumeration>
+ <enumeration value="GRL"><annotation><documentation>Greenland</documentation></annotation></enumeration>
+ <enumeration value="GTM"><annotation><documentation>Guatemala</documentation></annotation></enumeration>
+ <enumeration value="GUF"><annotation><documentation>French Guiana</documentation></annotation></enumeration>
+ <enumeration value="GUM"><annotation><documentation>Guam</documentation></annotation></enumeration>
+ <enumeration value="GUY"><annotation><documentation>Guyana</documentation></annotation></enumeration>
+ <enumeration value="HKG"><annotation><documentation>Hong Kong</documentation></annotation></enumeration>
+ <enumeration value="HMD"><annotation><documentation>Heard Island and McDonald Islands</documentation></annotation></enumeration>
+ <enumeration value="HND"><annotation><documentation>Honduras</documentation></annotation></enumeration>
+ <enumeration value="HRV"><annotation><documentation>Croatia</documentation></annotation></enumeration>
+ <enumeration value="HTI"><annotation><documentation>Haiti</documentation></annotation></enumeration>
+ <enumeration value="HUN"><annotation><documentation>Hungary</documentation></annotation></enumeration>
+ <enumeration value="IDN"><annotation><documentation>Indonesia</documentation></annotation></enumeration>
+ <enumeration value="IMN"><annotation><documentation>Isle of Man</documentation></annotation></enumeration>
+ <enumeration value="IND"><annotation><documentation>India</documentation></annotation></enumeration>
+ <enumeration value="IOT"><annotation><documentation>British Indian Ocean Territory</documentation></annotation></enumeration>
+ <enumeration value="IRL"><annotation><documentation>Ireland</documentation></annotation></enumeration>
+ <enumeration value="IRN"><annotation><documentation>Iran (Islamic Republic of)</documentation></annotation></enumeration>
+ <enumeration value="IRQ"><annotation><documentation>Iraq</documentation></annotation></enumeration>
+ <enumeration value="ISL"><annotation><documentation>Iceland</documentation></annotation></enumeration>
+ <enumeration value="ISR"><annotation><documentation>Israel</documentation></annotation></enumeration>
+ <enumeration value="ITA"><annotation><documentation>Italy</documentation></annotation></enumeration>
+ <enumeration value="JAM"><annotation><documentation>Jamaica</documentation></annotation></enumeration>
+ <enumeration value="JEY"><annotation><documentation>Jersey</documentation></annotation></enumeration>
+ <enumeration value="JOR"><annotation><documentation>Jordan</documentation></annotation></enumeration>
+ <enumeration value="JPN"><annotation><documentation>Japan</documentation></annotation></enumeration>
+ <enumeration value="KAZ"><annotation><documentation>Kazakhstan</documentation></annotation></enumeration>
+ <enumeration value="KEN"><annotation><documentation>Kenya</documentation></annotation></enumeration>
+ <enumeration value="KGZ"><annotation><documentation>Kyrgyzstan</documentation></annotation></enumeration>
+ <enumeration value="KHM"><annotation><documentation>Cambodia</documentation></annotation></enumeration>
+ <enumeration value="KIR"><annotation><documentation>Kiribati</documentation></annotation></enumeration>
+ <enumeration value="KNA"><annotation><documentation>Saint Kitts and Nevis</documentation></annotation></enumeration>
+ <enumeration value="KOR"><annotation><documentation>Korea, Republic of</documentation></annotation></enumeration>
+ <enumeration value="KWT"><annotation><documentation>Kuwait</documentation></annotation></enumeration>
+ <enumeration value="LAO"><annotation><documentation>Lao People's Democratic Republic</documentation></annotation></enumeration>
+ <enumeration value="LBN"><annotation><documentation>Lebanon</documentation></annotation></enumeration>
+ <enumeration value="LBR"><annotation><documentation>Liberia</documentation></annotation></enumeration>
+ <enumeration value="LBY"><annotation><documentation>Libya</documentation></annotation></enumeration>
+ <enumeration value="LCA"><annotation><documentation>Saint Lucia</documentation></annotation></enumeration>
+ <enumeration value="LIE"><annotation><documentation>Liechtenstein</documentation></annotation></enumeration>
+ <enumeration value="LKA"><annotation><documentation>Sri Lanka</documentation></annotation></enumeration>
+ <enumeration value="LSO"><annotation><documentation>Lesotho</documentation></annotation></enumeration>
+ <enumeration value="LTU"><annotation><documentation>Lithuania</documentation></annotation></enumeration>
+ <enumeration value="LUX"><annotation><documentation>Luxembourg</documentation></annotation></enumeration>
+ <enumeration value="LVA"><annotation><documentation>Latvia</documentation></annotation></enumeration>
+ <enumeration value="MAC"><annotation><documentation>Macao</documentation></annotation></enumeration>
+ <enumeration value="MAF"><annotation><documentation>Saint Martin (French part)</documentation></annotation></enumeration>
+ <enumeration value="MAR"><annotation><documentation>Morocco</documentation></annotation></enumeration>
+ <enumeration value="MCO"><annotation><documentation>Monaco</documentation></annotation></enumeration>
+ <enumeration value="MDA"><annotation><documentation>Moldova, Republic of</documentation></annotation></enumeration>
+ <enumeration value="MDG"><annotation><documentation>Madagascar</documentation></annotation></enumeration>
+ <enumeration value="MDV"><annotation><documentation>Maldives</documentation></annotation></enumeration>
+ <enumeration value="MEX"><annotation><documentation>Mexico</documentation></annotation></enumeration>
+ <enumeration value="MHL"><annotation><documentation>Marshall Islands</documentation></annotation></enumeration>
+ <enumeration value="MKD"><annotation><documentation>North Macedonia</documentation></annotation></enumeration>
+ <enumeration value="MLI"><annotation><documentation>Mali</documentation></annotation></enumeration>
+ <enumeration value="MLT"><annotation><documentation>Malta</documentation></annotation></enumeration>
+ <enumeration value="MMR"><annotation><documentation>Myanmar</documentation></annotation></enumeration>
+ <enumeration value="MNE"><annotation><documentation>Montenegro</documentation></annotation></enumeration>
+ <enumeration value="MNG"><annotation><documentation>Mongolia</documentation></annotation></enumeration>
+ <enumeration value="MNP"><annotation><documentation>Northern Mariana Islands</documentation></annotation></enumeration>
+ <enumeration value="MOZ"><annotation><documentation>Mozambique</documentation></annotation></enumeration>
+ <enumeration value="MRT"><annotation><documentation>Mauritania</documentation></annotation></enumeration>
+ <enumeration value="MSR"><annotation><documentation>Montserrat</documentation></annotation></enumeration>
+ <enumeration value="MTQ"><annotation><documentation>Martinique</documentation></annotation></enumeration>
+ <enumeration value="MUS"><annotation><documentation>Mauritius</documentation></annotation></enumeration>
+ <enumeration value="MWI"><annotation><documentation>Malawi</documentation></annotation></enumeration>
+ <enumeration value="MYS"><annotation><documentation>Malaysia</documentation></annotation></enumeration>
+ <enumeration value="MYT"><annotation><documentation>Mayotte</documentation></annotation></enumeration>
+ <enumeration value="NAM"><annotation><documentation>Namibia</documentation></annotation></enumeration>
+ <enumeration value="NCL"><annotation><documentation>New Caledonia</documentation></annotation></enumeration>
+ <enumeration value="NER"><annotation><documentation>Niger</documentation></annotation></enumeration>
+ <enumeration value="NFK"><annotation><documentation>Norfolk Island</documentation></annotation></enumeration>
+ <enumeration value="NGA"><annotation><documentation>Nigeria</documentation></annotation></enumeration>
+ <enumeration value="NIC"><annotation><documentation>Nicaragua</documentation></annotation></enumeration>
+ <enumeration value="NIU"><annotation><documentation>Niue</documentation></annotation></enumeration>
+ <enumeration value="NLD"><annotation><documentation>Netherlands</documentation></annotation></enumeration>
+ <enumeration value="NOR"><annotation><documentation>Norway</documentation></annotation></enumeration>
+ <enumeration value="NPL"><annotation><documentation>Nepal</documentation></annotation></enumeration>
+ <enumeration value="NRU"><annotation><documentation>Nauru</documentation></annotation></enumeration>
+ <enumeration value="NZL"><annotation><documentation>New Zealand</documentation></annotation></enumeration>
+ <enumeration value="OMN"><annotation><documentation>Oman</documentation></annotation></enumeration>
+ <enumeration value="PAK"><annotation><documentation>Pakistan</documentation></annotation></enumeration>
+ <enumeration value="PAN"><annotation><documentation>Panama</documentation></annotation></enumeration>
+ <enumeration value="PCN"><annotation><documentation>Pitcairn</documentation></annotation></enumeration>
+ <enumeration value="PER"><annotation><documentation>Peru</documentation></annotation></enumeration>
+ <enumeration value="PHL"><annotation><documentation>Philippines</documentation></annotation></enumeration>
+ <enumeration value="PLW"><annotation><documentation>Palau</documentation></annotation></enumeration>
+ <enumeration value="PNG"><annotation><documentation>Papua New Guinea</documentation></annotation></enumeration>
+ <enumeration value="POL"><annotation><documentation>Poland</documentation></annotation></enumeration>
+ <enumeration value="PRI"><annotation><documentation>Puerto Rico</documentation></annotation></enumeration>
+ <enumeration value="PRK"><annotation><documentation>Korea (Democratic People's Republicof)</documentation></annotation></enumeration>
+ <enumeration value="PRT"><annotation><documentation>Portugal</documentation></annotation></enumeration>
+ <enumeration value="PRY"><annotation><documentation>Paraguay</documentation></annotation></enumeration>
+ <enumeration value="PSE"><annotation><documentation>Palestine, State of</documentation></annotation></enumeration>
+ <enumeration value="PYF"><annotation><documentation>French Polynesia</documentation></annotation></enumeration>
+ <enumeration value="QAT"><annotation><documentation>Qatar</documentation></annotation></enumeration>
+ <enumeration value="REU"><annotation><documentation>Reunion</documentation></annotation></enumeration>
+ <enumeration value="ROU"><annotation><documentation>Romania</documentation></annotation></enumeration>
+ <enumeration value="RUS"><annotation><documentation>Russian Federation</documentation></annotation></enumeration>
+ <enumeration value="RWA"><annotation><documentation>Rwanda</documentation></annotation></enumeration>
+ <enumeration value="SAU"><annotation><documentation>Saudi Arabia</documentation></annotation></enumeration>
+ <enumeration value="SDN"><annotation><documentation>Sudan</documentation></annotation></enumeration>
+ <enumeration value="SEN"><annotation><documentation>Senegal</documentation></annotation></enumeration>
+ <enumeration value="SGP"><annotation><documentation>Singapore</documentation></annotation></enumeration>
+ <enumeration value="SGS"><annotation><documentation>South Georgia and the South SandwichIslands</documentation></annotation></enumeration>
+ <enumeration value="SHN"><annotation><documentation>Saint Helena, Ascension and Tristan daCunha</documentation></annotation></enumeration>
+ <enumeration value="SJM"><annotation><documentation>Svalbard and Jan Mayen</documentation></annotation></enumeration>
+ <enumeration value="SLB"><annotation><documentation>Solomon Islands</documentation></annotation></enumeration>
+ <enumeration value="SLE"><annotation><documentation>Sierra Leone</documentation></annotation></enumeration>
+ <enumeration value="SLV"><annotation><documentation>El Salvador</documentation></annotation></enumeration>
+ <enumeration value="SMR"><annotation><documentation>San Marino</documentation></annotation></enumeration>
+ <enumeration value="SOM"><annotation><documentation>Somalia</documentation></annotation></enumeration>
+ <enumeration value="SPM"><annotation><documentation>Saint Pierre and Miquelon</documentation></annotation></enumeration>
+ <enumeration value="SRB"><annotation><documentation>Serbia</documentation></annotation></enumeration>
+ <enumeration value="SSD"><annotation><documentation>South Sudan</documentation></annotation></enumeration>
+ <enumeration value="STP"><annotation><documentation>Sao Tome and Principe</documentation></annotation></enumeration>
+ <enumeration value="SUR"><annotation><documentation>Suriname</documentation></annotation></enumeration>
+ <enumeration value="SVK"><annotation><documentation>Slovakia</documentation></annotation></enumeration>
+ <enumeration value="SVN"><annotation><documentation>Slovenia</documentation></annotation></enumeration>
+ <enumeration value="SWE"><annotation><documentation>Sweden</documentation></annotation></enumeration>
+ <enumeration value="SWZ"><annotation><documentation>Eswatini</documentation></annotation></enumeration>
+ <enumeration value="SXM"><annotation><documentation>Sint Maarten (Dutch part)</documentation></annotation></enumeration>
+ <enumeration value="SYC"><annotation><documentation>Seychelles</documentation></annotation></enumeration>
+ <enumeration value="SYR"><annotation><documentation>Syrian Arab Republic</documentation></annotation></enumeration>
+ <enumeration value="TCA"><annotation><documentation>Turks and Caicos Islands</documentation></annotation></enumeration>
+ <enumeration value="TCD"><annotation><documentation>Chad</documentation></annotation></enumeration>
+ <enumeration value="TGO"><annotation><documentation>Togo</documentation></annotation></enumeration>
+ <enumeration value="THA"><annotation><documentation>Thailand</documentation></annotation></enumeration>
+ <enumeration value="TJK"><annotation><documentation>Tajikistan</documentation></annotation></enumeration>
+ <enumeration value="TKL"><annotation><documentation>Tokelau</documentation></annotation></enumeration>
+ <enumeration value="TKM"><annotation><documentation>Turkmenistan</documentation></annotation></enumeration>
+ <enumeration value="TLS"><annotation><documentation>Timor-Leste</documentation></annotation></enumeration>
+ <enumeration value="TON"><annotation><documentation>Tonga</documentation></annotation></enumeration>
+ <enumeration value="TTO"><annotation><documentation>Trinidad and Tobago</documentation></annotation></enumeration>
+ <enumeration value="TUN"><annotation><documentation>Tunisia</documentation></annotation></enumeration>
+ <enumeration value="TUR"><annotation><documentation>Turkey</documentation></annotation></enumeration>
+ <enumeration value="TUV"><annotation><documentation>Tuvalu</documentation></annotation></enumeration>
+ <enumeration value="TWN"><annotation><documentation>Taiwan, Province of China</documentation></annotation></enumeration>
+ <enumeration value="TZA"><annotation><documentation>Tanzania, United Republic of</documentation></annotation></enumeration>
+ <enumeration value="UGA"><annotation><documentation>Uganda</documentation></annotation></enumeration>
+ <enumeration value="UKR"><annotation><documentation>Ukraine</documentation></annotation></enumeration>
+ <enumeration value="UMI"><annotation><documentation>United States Minor OutlyingIslands</documentation></annotation></enumeration>
+ <enumeration value="RKS"><annotation><documentation>Kosovo</documentation></annotation></enumeration>
+ <enumeration value="URY"><annotation><documentation>Uruguay</documentation></annotation></enumeration>
+ <enumeration value="USA"><annotation><documentation>United States of America</documentation></annotation></enumeration>
+ <enumeration value="UZB"><annotation><documentation>Uzbekistan</documentation></annotation></enumeration>
+ <enumeration value="VAT"><annotation><documentation>Holy See</documentation></annotation></enumeration>
+ <enumeration value="VCT"><annotation><documentation>Saint Vincent and the Grenadines</documentation></annotation></enumeration>
+ <enumeration value="VEN"><annotation><documentation>Venezuela (Bolivarian Republic of)</documentation></annotation></enumeration>
+ <enumeration value="VGB"><annotation><documentation>Virgin Islands (British)</documentation></annotation></enumeration>
+ <enumeration value="VIR"><annotation><documentation>Virgin Islands (U.S.)</documentation></annotation></enumeration>
+ <enumeration value="VNM"><annotation><documentation>Viet Nam</documentation></annotation></enumeration>
+ <enumeration value="VUT"><annotation><documentation>Vanuatu</documentation></annotation></enumeration>
+ <enumeration value="WLF"><annotation><documentation>Wallis and Futuna</documentation></annotation></enumeration>
+ <enumeration value="WSM"><annotation><documentation>Samoa</documentation></annotation></enumeration>
+ <enumeration value="YEM"><annotation><documentation>Yemen</documentation></annotation></enumeration>
+ <enumeration value="ZAF"><annotation><documentation>South Africa</documentation></annotation></enumeration>
+ <enumeration value="ZMB"><annotation><documentation>Zambia</documentation></annotation></enumeration>
+ <enumeration value="ZWE"><annotation><documentation>Zimbabwe</documentation></annotation></enumeration>
+ </restriction>
+ </simpleType>
+
+</schema>
