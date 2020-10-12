@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "FluentValidation/9.2.2": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        }
+      },
       "Microsoft.NETCore.Platforms/3.1.0": {
         "type": "package",
         "compile": {
@@ -713,6 +722,7 @@
         "type": "project",
         "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
+          "Fiscalization": "1.0.0",
           "System.Security.Cryptography.Xml": "4.7.0",
           "System.ServiceModel.Duplex": "4.4.0",
           "System.ServiceModel.Http": "4.4.0",
@@ -726,10 +736,43 @@
         "runtime": {
           "bin/placeholder/EInvoice.dll": {}
         }
+      },
+      "Fiscalization/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "FluentValidation": "9.2.2",
+          "System.Security.Cryptography.Xml": "4.7.0",
+          "System.ServiceModel.Duplex": "4.4.0",
+          "System.ServiceModel.Http": "4.4.0",
+          "System.ServiceModel.NetTcp": "4.4.0",
+          "System.ServiceModel.Security": "4.4.0"
+        },
+        "compile": {
+          "bin/placeholder/Fiscalization.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fiscalization.dll": {}
+        }
       }
     }
   },
   "libraries": {
+    "FluentValidation/9.2.2": {
+      "sha512": "Y1TQrSa82i/WWPpXriEkL7uyUyECw3Uvtq66dZ8VC3pwFa9VqnZmeZaJJpz8deKhJQNDgqwU3BSptKTnyjqzuA==",
+      "type": "package",
+      "path": "fluentvalidation/9.2.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fluentvalidation.9.2.2.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net461/FluentValidation.dll",
+        "lib/net461/FluentValidation.xml",
+        "lib/netstandard2.0/FluentValidation.dll",
+        "lib/netstandard2.0/FluentValidation.xml"
+      ]
+    },
     "Microsoft.NETCore.Platforms/3.1.0": {
       "sha512": "z7aeg8oHln2CuNulfhiLYxCVMPEwBl3rzicjvIX+4sUuCwvXw5oXQEtbiU2c0z4qYL5L3Kmx0mMA/+t/SbY67w==",
       "type": "package",
@@ -3269,6 +3312,11 @@
       "type": "project",
       "path": "../EInvoice/EInvoice.csproj",
       "msbuildProject": "../EInvoice/EInvoice.csproj"
+    },
+    "Fiscalization/1.0.0": {
+      "type": "project",
+      "path": "../Fiscalization/Fiscalization.csproj",
+      "msbuildProject": "../Fiscalization/Fiscalization.csproj"
     }
   },
   "projectFileDependencyGroups": {
@@ -3282,11 +3330,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Repo\\Fiscalization\\EInvoice.Console\\EInvoice.Console.csproj",
+      "projectUniqueName": "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice.Console\\EInvoice.Console.csproj",
       "projectName": "EInvoice.Console",
-      "projectPath": "C:\\Repo\\Fiscalization\\EInvoice.Console\\EInvoice.Console.csproj",
+      "projectPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice.Console\\EInvoice.Console.csproj",
       "packagesPath": "C:\\Users\\marik\\.nuget\\packages\\",
-      "outputPath": "C:\\Repo\\Fiscalization\\EInvoice.Console\\obj\\",
+      "outputPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice.Console\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\marik\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3302,8 +3350,8 @@
       "frameworks": {
         "netcoreapp3.1": {
           "projectReferences": {
-            "C:\\Repo\\Fiscalization\\EInvoice\\EInvoice.csproj": {
-              "projectPath": "C:\\Repo\\Fiscalization\\EInvoice\\EInvoice.csproj"
+            "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice\\EInvoice.csproj": {
+              "projectPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice\\EInvoice.csproj"
             }
           }
         }

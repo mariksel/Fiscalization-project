@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Repo\\Fiscalization\\EInvoice\\EInvoice.csproj": {}
+    "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice\\EInvoice.csproj": {}
   },
   "projects": {
-    "C:\\Repo\\Fiscalization\\EInvoice\\EInvoice.csproj": {
+    "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice\\EInvoice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Repo\\Fiscalization\\EInvoice\\EInvoice.csproj",
+        "projectUniqueName": "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice\\EInvoice.csproj",
         "projectName": "EInvoice",
-        "projectPath": "C:\\Repo\\Fiscalization\\EInvoice\\EInvoice.csproj",
+        "projectPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice\\EInvoice.csproj",
         "packagesPath": "C:\\Users\\marik\\.nuget\\packages\\",
-        "outputPath": "C:\\Repo\\Fiscalization\\EInvoice\\obj\\",
+        "outputPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\marik\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -26,7 +26,11 @@
         },
         "frameworks": {
           "netstandard2.0": {
-            "projectReferences": {}
+            "projectReferences": {
+              "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj": {
+                "projectPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -67,6 +71,85 @@
             "UblSharp": {
               "target": "Package",
               "version": "[1.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj",
+        "projectName": "Fiscalization",
+        "projectPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj",
+        "packagesPath": "C:\\Users\\marik\\.nuget\\packages\\",
+        "outputPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\marik\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[9.2.2, )"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            },
+            "System.Security.Cryptography.Xml": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "System.ServiceModel.Duplex": {
+              "target": "Package",
+              "version": "[4.4.*, )"
+            },
+            "System.ServiceModel.Http": {
+              "target": "Package",
+              "version": "[4.4.*, )"
+            },
+            "System.ServiceModel.NetTcp": {
+              "target": "Package",
+              "version": "[4.4.*, )"
+            },
+            "System.ServiceModel.Security": {
+              "target": "Package",
+              "version": "[4.4.*, )"
             }
           },
           "imports": [

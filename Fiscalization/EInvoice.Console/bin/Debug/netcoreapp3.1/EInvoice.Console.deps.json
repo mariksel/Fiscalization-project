@@ -14,6 +14,14 @@
           "EInvoice.Console.dll": {}
         }
       },
+      "FluentValidation/9.2.2": {
+        "runtime": {
+          "lib/netstandard2.0/FluentValidation.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.2.2.0"
+          }
+        }
+      },
       "Microsoft.NETCore.Platforms/3.1.0": {},
       "Microsoft.NETCore.Targets/1.1.0": {},
       "Microsoft.Win32.SystemEvents/4.7.0": {
@@ -502,6 +510,7 @@
       },
       "EInvoice/1.0.0": {
         "dependencies": {
+          "Fiscalization": "1.0.0",
           "System.Security.Cryptography.Xml": "4.7.0",
           "System.ServiceModel.Duplex": "4.4.4",
           "System.ServiceModel.Http": "4.4.4",
@@ -512,6 +521,19 @@
         "runtime": {
           "EInvoice.dll": {}
         }
+      },
+      "Fiscalization/1.0.0": {
+        "dependencies": {
+          "FluentValidation": "9.2.2",
+          "System.Security.Cryptography.Xml": "4.7.0",
+          "System.ServiceModel.Duplex": "4.4.4",
+          "System.ServiceModel.Http": "4.4.4",
+          "System.ServiceModel.NetTcp": "4.4.4",
+          "System.ServiceModel.Security": "4.4.4"
+        },
+        "runtime": {
+          "Fiscalization.dll": {}
+        }
       }
     }
   },
@@ -520,6 +542,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "FluentValidation/9.2.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Y1TQrSa82i/WWPpXriEkL7uyUyECw3Uvtq66dZ8VC3pwFa9VqnZmeZaJJpz8deKhJQNDgqwU3BSptKTnyjqzuA==",
+      "path": "fluentvalidation/9.2.2",
+      "hashPath": "fluentvalidation.9.2.2.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/3.1.0": {
       "type": "package",
@@ -865,6 +894,11 @@
       "hashPath": "ublsharp.1.1.1.nupkg.sha512"
     },
     "EInvoice/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fiscalization/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

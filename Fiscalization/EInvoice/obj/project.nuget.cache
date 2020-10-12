@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "5BFysebg3E6etIszhCh42w45Cs+u/R8EB6TfaOLV8rr2fv5MWiB5opP8WKCQW68GSgcYdKBwf2nCl4vASE4pnA==",
+  "dgSpecHash": "/Fuzst+t/uOnk9zm/rP4+upndt8WpIRPZZXAxzCtWTTU5hFAu2yfo3c/dczWXhZo8t1DeC6P+xRLkgT7bdP85A==",
   "success": true,
-  "projectFilePath": "C:\\Repo\\Fiscalization\\EInvoice\\EInvoice.csproj",
+  "projectFilePath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice\\EInvoice.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\marik\\.nuget\\packages\\fluentvalidation\\9.2.2\\fluentvalidation.9.2.2.nupkg.sha512",
     "C:\\Users\\marik\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
     "C:\\Users\\marik\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\marik\\.nuget\\packages\\netstandard.library\\2.0.3\\netstandard.library.2.0.3.nupkg.sha512",

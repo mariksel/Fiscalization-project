@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Repo\\Fiscalization\\Fiscalization.Test\\Fiscalization.Test.csproj": {}
+    "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization.Test\\Fiscalization.Test.csproj": {}
   },
   "projects": {
-    "C:\\Repo\\Fiscalization\\Fiscalization.Test\\Fiscalization.Test.csproj": {
+    "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization.Test\\Fiscalization.Test.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Repo\\Fiscalization\\Fiscalization.Test\\Fiscalization.Test.csproj",
+        "projectUniqueName": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization.Test\\Fiscalization.Test.csproj",
         "projectName": "Fiscalization.Test",
-        "projectPath": "C:\\Repo\\Fiscalization\\Fiscalization.Test\\Fiscalization.Test.csproj",
+        "projectPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization.Test\\Fiscalization.Test.csproj",
         "packagesPath": "C:\\Users\\marik\\.nuget\\packages\\",
-        "outputPath": "C:\\Repo\\Fiscalization\\Fiscalization.Test\\obj\\",
+        "outputPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization.Test\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\marik\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -27,8 +27,8 @@
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "C:\\Repo\\Fiscalization\\Fiscalization\\Fiscalization.csproj": {
-                "projectPath": "C:\\Repo\\Fiscalization\\Fiscalization\\Fiscalization.csproj"
+              "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj": {
+                "projectPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj"
               }
             }
           }
@@ -74,14 +74,14 @@
         }
       }
     },
-    "C:\\Repo\\Fiscalization\\Fiscalization\\Fiscalization.csproj": {
+    "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Repo\\Fiscalization\\Fiscalization\\Fiscalization.csproj",
+        "projectUniqueName": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj",
         "projectName": "Fiscalization",
-        "projectPath": "C:\\Repo\\Fiscalization\\Fiscalization\\Fiscalization.csproj",
+        "projectPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj",
         "packagesPath": "C:\\Users\\marik\\.nuget\\packages\\",
-        "outputPath": "C:\\Repo\\Fiscalization\\Fiscalization\\obj\\",
+        "outputPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\marik\\AppData\\Roaming\\NuGet\\NuGet.Config",

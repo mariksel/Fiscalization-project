@@ -16,3 +16,12 @@ C:\Repo\Fiscalization\Fiscalization\obj\Debug\netstandard2.0\Fiscalization.Assem
 C:\Repo\Fiscalization\Fiscalization\obj\Debug\netstandard2.0\Fiscalization.csproj.CoreCompileInputs.cache
 C:\Repo\Fiscalization\Fiscalization\obj\Debug\netstandard2.0\Fiscalization.dll
 C:\Repo\Fiscalization\Fiscalization\obj\Debug\netstandard2.0\Fiscalization.pdb
+C:\Repo\FiscalizationProject\Fiscalization\Fiscalization\bin\Debug\netstandard2.0\Fiscalization.deps.json
+C:\Repo\FiscalizationProject\Fiscalization\Fiscalization\bin\Debug\netstandard2.0\Fiscalization.dll
+C:\Repo\FiscalizationProject\Fiscalization\Fiscalization\bin\Debug\netstandard2.0\Fiscalization.pdb
+C:\Repo\FiscalizationProject\Fiscalization\Fiscalization\obj\Debug\netstandard2.0\Fiscalization.csprojAssemblyReference.cache
+C:\Repo\FiscalizationProject\Fiscalization\Fiscalization\obj\Debug\netstandard2.0\Fiscalization.AssemblyInfoInputs.cache
+C:\Repo\FiscalizationProject\Fiscalization\Fiscalization\obj\Debug\netstandard2.0\Fiscalization.AssemblyInfo.cs
+C:\Repo\FiscalizationProject\Fiscalization\Fiscalization\obj\Debug\netstandard2.0\Fiscalization.csproj.CoreCompileInputs.cache
+C:\Repo\FiscalizationProject\Fiscalization\Fiscalization\obj\Debug\netstandard2.0\Fiscalization.dll
+C:\Repo\FiscalizationProject\Fiscalization\Fiscalization\obj\Debug\netstandard2.0\Fiscalization.pdb

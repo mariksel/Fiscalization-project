@@ -58,7 +58,7 @@ namespace EInvoice
             return iicString;
         }
 
-        public const String XML_SCHEMA_NS = "https://eFiskalizimi.tatime.gov.al/FiscalizationService/schema";
+        public const String XML_SCHEMA_NS = "https://Einvoice.tatime.gov.al/EinvoiceService/schema";
         public const String XML_REQUEST_ID = "Request";
         public const String XML_SIG_METHOD = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";
         public const String XML_DIG_METHOD = "http://www.w3.org/2001/04/xmlenc#sha256";

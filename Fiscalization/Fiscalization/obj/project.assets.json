@@ -1181,11 +1181,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Repo\\Fiscalization\\Fiscalization\\Fiscalization.csproj",
+      "projectUniqueName": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj",
       "projectName": "Fiscalization",
-      "projectPath": "C:\\Repo\\Fiscalization\\Fiscalization\\Fiscalization.csproj",
+      "projectPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj",
       "packagesPath": "C:\\Users\\marik\\.nuget\\packages\\",
-      "outputPath": "C:\\Repo\\Fiscalization\\Fiscalization\\obj\\",
+      "outputPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\marik\\AppData\\Roaming\\NuGet\\NuGet.Config",

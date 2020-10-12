@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Diagnostics;
+using System.IO;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.ServiceModel.Dispatcher;
@@ -38,6 +39,7 @@ namespace EInvoice
             string xmlSOAPNotSigned = xmlDoc.OuterXml;
 
             var signedXML = FiscalizationSigner.SignRequest(xmlSOAPNotSigned);
+            Debug.WriteLine(signedXML);
 
             // Sign the XML as text
             //string xmlSOAPSigned = UtilFiscalization.SignXMRequest(xmlSOAPNotSigned);

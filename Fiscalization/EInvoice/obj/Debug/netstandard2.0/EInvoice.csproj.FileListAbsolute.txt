@@ -16,3 +16,15 @@ C:\Repo\Fiscalization\EInvoice\obj\Debug\netstandard2.0\EInvoice.AssemblyInfo.cs
 C:\Repo\Fiscalization\EInvoice\obj\Debug\netstandard2.0\EInvoice.dll
 C:\Repo\Fiscalization\EInvoice\obj\Debug\netstandard2.0\EInvoice.pdb
 C:\Repo\Fiscalization\EInvoice\obj\Debug\netstandard2.0\EInvoice.csproj.CoreCompileInputs.cache
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice\bin\Debug\netstandard2.0\EInvoice.deps.json
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice\bin\Debug\netstandard2.0\EInvoice.dll
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice\bin\Debug\netstandard2.0\EInvoice.pdb
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice\obj\Debug\netstandard2.0\EInvoice.csprojAssemblyReference.cache
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice\obj\Debug\netstandard2.0\EInvoice.AssemblyInfoInputs.cache
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice\obj\Debug\netstandard2.0\EInvoice.AssemblyInfo.cs
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice\obj\Debug\netstandard2.0\EInvoice.csproj.CoreCompileInputs.cache
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice\obj\Debug\netstandard2.0\EInvoice.dll
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice\obj\Debug\netstandard2.0\EInvoice.pdb
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice\bin\Debug\netstandard2.0\Fiscalization.dll
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice\bin\Debug\netstandard2.0\Fiscalization.pdb
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice\obj\Debug\netstandard2.0\EInvoice.csproj.CopyComplete

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "24qnOwCI18nrxRlBudet41i9Cg99e4dI5NStElxyHJrm1p0tiib+Gh5KyZ7uvpZ9YpAIyGNQNfV1QS2nVg5fMg==",
+  "dgSpecHash": "tuhdK8PLDfcQkm3pZo+tRFdPlICk/RbQ2KIaB0N0Wui4N22A7kDB50Jsd5bQuDg4cwcZf614ID0Rzf1NBYmHXA==",
   "success": true,
-  "projectFilePath": "C:\\Repo\\Fiscalization\\Fiscalization\\Fiscalization.csproj",
+  "projectFilePath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\marik\\.nuget\\packages\\fluentvalidation\\9.2.2\\fluentvalidation.9.2.2.nupkg.sha512",
     "C:\\Users\\marik\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",

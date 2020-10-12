@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "+nVoOf8MFpRZHhabAMv6jBK7R65Vnjzn1B9QkN83UFs2uEdSRWfA/h8PasJG8xG8lCSWtEj8qcXqM2lCcFIFDg==",
+  "dgSpecHash": "KCAgHTfgOiq0nT4w/+dbCQMTX5/N4aWz/vRorNTefwniTA4YRZwUKs/vJJKHcxLY2jP7vJGy0T5flY4iaxaB2g==",
   "success": true,
-  "projectFilePath": "C:\\Repo\\Fiscalization\\EInvoice.Console\\EInvoice.Console.csproj",
+  "projectFilePath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice.Console\\EInvoice.Console.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\marik\\.nuget\\packages\\fluentvalidation\\9.2.2\\fluentvalidation.9.2.2.nupkg.sha512",
     "C:\\Users\\marik\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
     "C:\\Users\\marik\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\marik\\.nuget\\packages\\microsoft.win32.systemevents\\4.7.0\\microsoft.win32.systemevents.4.7.0.nupkg.sha512",

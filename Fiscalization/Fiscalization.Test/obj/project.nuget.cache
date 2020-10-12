@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "KMBK28qwCqhfyj0Fn5Za6ckIPI2KDsm/E2M+C2RDppk+Y1wv04S7fBCxj4c5IDyjeDpFps3xaIAAOcDLi3YPaA==",
+  "dgSpecHash": "Y+XjOU38Gg4qrLRo40siqtBIWIeuL/KAa1U0lyJRR4iNGKJ0qMwmp9OVf6qsCgbAQjgW+QmTrvUunHrFz8swIg==",
   "success": true,
-  "projectFilePath": "C:\\Repo\\Fiscalization\\Fiscalization.Test\\Fiscalization.Test.csproj",
+  "projectFilePath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization.Test\\Fiscalization.Test.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\marik\\.nuget\\packages\\fluentvalidation\\9.2.2\\fluentvalidation.9.2.2.nupkg.sha512",
     "C:\\Users\\marik\\.nuget\\packages\\microsoft.codecoverage\\16.4.0\\microsoft.codecoverage.16.4.0.nupkg.sha512",

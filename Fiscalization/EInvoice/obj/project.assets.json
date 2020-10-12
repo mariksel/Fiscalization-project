@@ -2,6 +2,15 @@
   "version": 3,
   "targets": {
     ".NETStandard,Version=v2.0": {
+      "FluentValidation/9.2.2": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/FluentValidation.dll": {}
+        }
+      },
       "Microsoft.NETCore.Platforms/2.0.0": {
         "type": "package",
         "compile": {
@@ -709,10 +718,43 @@
           "lib/netstandard2.0/UblSharp.XmlSerializers.dll": {},
           "lib/netstandard2.0/UblSharp.dll": {}
         }
+      },
+      "Fiscalization/1.0.0": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "FluentValidation": "9.2.2",
+          "System.Security.Cryptography.Xml": "4.7.0",
+          "System.ServiceModel.Duplex": "4.4.0",
+          "System.ServiceModel.Http": "4.4.0",
+          "System.ServiceModel.NetTcp": "4.4.0",
+          "System.ServiceModel.Security": "4.4.0"
+        },
+        "compile": {
+          "bin/placeholder/Fiscalization.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fiscalization.dll": {}
+        }
       }
     }
   },
   "libraries": {
+    "FluentValidation/9.2.2": {
+      "sha512": "Y1TQrSa82i/WWPpXriEkL7uyUyECw3Uvtq66dZ8VC3pwFa9VqnZmeZaJJpz8deKhJQNDgqwU3BSptKTnyjqzuA==",
+      "type": "package",
+      "path": "fluentvalidation/9.2.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "fluentvalidation.9.2.2.nupkg.sha512",
+        "fluentvalidation.nuspec",
+        "lib/net461/FluentValidation.dll",
+        "lib/net461/FluentValidation.xml",
+        "lib/netstandard2.0/FluentValidation.dll",
+        "lib/netstandard2.0/FluentValidation.xml"
+      ]
+    },
     "Microsoft.NETCore.Platforms/2.0.0": {
       "sha512": "VdLJOCXhZaEMY7Hm2GKiULmn7IEPFE4XC5LPSfBVCUIA8YLZVh846gtfBJalsPQF2PlzdD7ecX7DZEulJ402ZQ==",
       "type": "package",
@@ -3404,10 +3446,16 @@
         "ublsharp.1.1.1.nupkg.sha512",
         "ublsharp.nuspec"
       ]
+    },
+    "Fiscalization/1.0.0": {
+      "type": "project",
+      "path": "../Fiscalization/Fiscalization.csproj",
+      "msbuildProject": "../Fiscalization/Fiscalization.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETStandard,Version=v2.0": [
+      "Fiscalization >= 1.0.0",
       "NETStandard.Library >= 2.0.3",
       "System.Security.Cryptography.Xml >= 4.7.0",
       "System.ServiceModel.Duplex >= 4.4.*",
@@ -3423,11 +3471,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Repo\\Fiscalization\\EInvoice\\EInvoice.csproj",
+      "projectUniqueName": "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice\\EInvoice.csproj",
       "projectName": "EInvoice",
-      "projectPath": "C:\\Repo\\Fiscalization\\EInvoice\\EInvoice.csproj",
+      "projectPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice\\EInvoice.csproj",
       "packagesPath": "C:\\Users\\marik\\.nuget\\packages\\",
-      "outputPath": "C:\\Repo\\Fiscalization\\EInvoice\\obj\\",
+      "outputPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\marik\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3442,7 +3490,11 @@
       },
       "frameworks": {
         "netstandard2.0": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj": {
+              "projectPath": "C:\\Repo\\FiscalizationProject\\Fiscalization\\Fiscalization\\Fiscalization.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
