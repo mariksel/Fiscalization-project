@@ -68,7 +68,7 @@ namespace test
                     TypeOfInv = InvoiceSType.CASH,
                     BusinUnitCode = "bb123bb123",
                     Currency = new CurrencyType
-                    {
+                    {v
                         Code = CurrencyCodeSType.EUR,
                         ExRate = 1.24,
                         IsBuying = true
@@ -103,7 +103,7 @@ namespace test
                        Address = "seller address",
                        Country = CountryCodeSType.ALB,
                        CountrySpecified = true,
-                       IDNum = "L71928020R",
+                       IDNum = "L41316032F",
                        IDType = IDTypeSType.NUIS,
                        Name = "Seller name",
                        Town = "seller town",

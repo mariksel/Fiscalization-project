@@ -6,15 +6,26 @@ using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
 using System.Text;
 using System.Xml;
+using System.Linq;
 
 namespace EInvoice
 {
-    class FiscalizationSigner
+    public class FiscalizationSigner
     {
         private static String KEYSTORE_LOCATION = Path.Combine(Environment.CurrentDirectory, "smartwork.p12");
         private const String KEYSTORE_PASS = "123456";
 
-        private static RSA privateKey { get; set; }
+
+        private static RSA _privateKey;
+        private static RSA privateKey {
+            get
+            {
+                if (_privateKey is null)
+                    throw new NullReferenceException();
+                return _privateKey;
+            }
+            set => _privateKey = value; 
+        }
         private static KeyInfo keyInfo { get; set; }
 
         public static void SetKeyStoreLocation(string keyStorePath)
@@ -68,28 +79,10 @@ namespace EInvoice
         public static string SignRequest(string requestXML)
         {
 
-
-
             // Convert string XML to object
             XmlDocument request = new XmlDocument();
             request.LoadXml(requestXML);
 
-            // Create signature reference
-            Reference reference = new Reference("");
-            reference.AddTransform(new XmlDsigEnvelopedSignatureTransform(false));
-            reference.AddTransform(new XmlDsigExcC14NTransform(false));
-            reference.DigestMethod = XML_DIG_METHOD;
-            reference.Uri = "#" + XML_REQUEST_ID;
-            // Create signature
-            SignedXml xml = new SignedXml(request);
-            xml.SigningKey = privateKey;
-            xml.SignedInfo.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;
-            xml.SignedInfo.SignatureMethod = XML_SIG_METHOD;
-            xml.KeyInfo = keyInfo;
-            xml.AddReference(reference);
-            xml.ComputeSignature();
-            // Add signature element to the request
-            XmlElement signature = xml.GetXml();
 
             // Set the body id - not in used but could be useful at a later stage of this project
             XmlNamespaceManager ns = new XmlNamespaceManager(request.NameTable);
@@ -99,21 +92,53 @@ namespace EInvoice
                 throw new ApplicationException("No body tag found");
             body.RemoveAllAttributes();  // no need to have namespace
 
-
-
-            // Append the Signature element to the First child of the Body.
-            // The first child of Body is actually the Request. This is where the sign xml element should be placed
+            var signature = GetSignature(request, "#" + XML_REQUEST_ID);
+            
             body.FirstChild.AppendChild(signature);
 
-            //body.AppendChild(signature);
-            // Convert signed request to string and print
-            //StringWriter sw = new StringWriter();
-            //XmlTextWriter xw = new XmlTextWriter(sw);
-            //request.WriteTo(xw);
+            return request.InnerXml;
+        }
+
+        public static string SignXmlMessage(string unsignedXml)
+        {
+            XmlDocument request = new XmlDocument();
+            request.LoadXml(unsignedXml);
+
+            var invoiceElm = ((XmlElement)request.GetElementsByTagName("Invoice").Item(0));
+            invoiceElm.SetAttribute("Id", "Message");
+
+            var signature = GetSignature(request, "#Message");
+
+            invoiceElm.AppendChild(signature);
+
+            invoiceElm.RemoveAttribute("Id");
 
             return request.InnerXml;
+        }
+
+        public static XmlElement GetSignature(XmlDocument doc, string uri)
+        {
+
+            // Create signature reference
+            Reference reference = new Reference("");
+            reference.AddTransform(new XmlDsigEnvelopedSignatureTransform(false));
+            reference.AddTransform(new XmlDsigExcC14NTransform(false));
+            reference.DigestMethod = XML_DIG_METHOD;
+            reference.Uri = uri;
+            // Create signature
+            SignedXml xml = new SignedXml(doc);
+            xml.SigningKey = privateKey;
+            xml.SignedInfo.CanonicalizationMethod = SignedXml.XmlDsigExcC14NTransformUrl;
+            xml.SignedInfo.SignatureMethod = XML_SIG_METHOD;
+            xml.KeyInfo = keyInfo;
+            xml.AddReference(reference);
+            xml.ComputeSignature();
 
 
+            XmlElement signature = xml.GetXml();
+           
+
+            return signature;
         }
 
         public static string SignIICSignature(string iicInput)

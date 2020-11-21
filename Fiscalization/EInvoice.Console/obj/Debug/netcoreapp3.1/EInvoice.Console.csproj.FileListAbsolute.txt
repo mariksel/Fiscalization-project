@@ -107,3 +107,5 @@ C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\obj\Debug\netcoreapp
 C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\FluentValidation.dll
 C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\Fiscalization.dll
 C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\Fiscalization.pdb
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\certSoftExpres.txt
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\eltonzhuleku.p12

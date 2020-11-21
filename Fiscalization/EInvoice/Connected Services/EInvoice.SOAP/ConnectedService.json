@@ -1,12 +1,9 @@
 ﻿{
   "ProviderId": "Microsoft.VisualStudio.ConnectedService.Wcf",
   "Version": "15.0.40203.910",
-  "GettingStartedDocument": {
-    "Uri": "https://go.microsoft.com/fwlink/?linkid=858517"
-  },
   "ExtendedData": {
     "inputs": [
-      "../../../../EInvoiceService/einvoice.wsdl"
+      "https://einvoice-test.tatime.gov.al/EinvoiceService-v1/EinvoiceService.wsdl"
     ],
     "collectionTypes": [
       "System.Array",
@@ -16,12 +13,29 @@
       "*, EInvoice.SOAP"
     ],
     "references": [
+      "C:\\Repo\\FiscalizationProject\\Fiscalization\\EInvoice\\bin\\Debug\\netstandard2.0\\Fiscalization.dll",
+      "FluentValidation, {FluentValidation, 9.2.2}",
+      "System.IO, {System.IO, 4.3.0}",
+      "System.Runtime, {System.Runtime, 4.3.0}",
+      "System.Runtime.Serialization.Formatters, {System.Runtime.Serialization.Formatters, 4.3.0}",
+      "System.Runtime.Serialization.Primitives, {System.Runtime.Serialization.Primitives, 4.3.0}",
+      "System.Security.AccessControl, {System.Security.AccessControl, 4.7.0}",
+      "System.Security.Cryptography.Xml, {System.Security.Cryptography.Xml, 4.7.0}",
+      "System.Security.Permissions, {System.Security.Permissions, 4.7.0}",
+      "System.Security.Principal.Windows, {System.Security.Principal.Windows, 4.7.0}",
       "System.ServiceModel, {System.ServiceModel.Primitives, 4.4.4}",
       "System.ServiceModel.Duplex, {System.ServiceModel.Duplex, 4.4.4}",
       "System.ServiceModel.Http, {System.ServiceModel.Http, 4.4.4}",
       "System.ServiceModel.NetTcp, {System.ServiceModel.NetTcp, 4.4.4}",
       "System.ServiceModel.Primitives, {System.ServiceModel.Primitives, 4.4.4}",
-      "System.ServiceModel.Security, {System.ServiceModel.Security, 4.4.4}"
+      "System.ServiceModel.Security, {System.ServiceModel.Security, 4.4.4}",
+      "System.Text.Encoding, {System.Text.Encoding, 4.3.0}",
+      "System.Threading.Tasks, {System.Threading.Tasks, 4.3.0}",
+      "System.Xml.ReaderWriter, {System.Xml.ReaderWriter, 4.3.0}",
+      "System.Xml.XmlDocument, {System.Xml.XmlDocument, 4.3.0}",
+      "System.Xml.XmlSerializer, {System.Xml.XmlSerializer, 4.3.0}",
+      "UblSharp, {UblSharp, 1.1.1}",
+      "UblSharp.XmlSerializers, {UblSharp, 1.1.1}"
     ],
     "targetFramework": "netstandard2.0",
     "typeReuseMode": "All"

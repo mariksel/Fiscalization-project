@@ -1,0 +1,234 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Invoice xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
+	<cbc:ID>20-221-1</cbc:ID>
+	<cbc:IssueDate>2020-10-13</cbc:IssueDate>
+	<cbc:DueDate>2020-10-13</cbc:DueDate>
+	<cbc:InvoiceTypeCode>380</cbc:InvoiceTypeCode>
+	<cbc:TaxPointDate>2020-10-13</cbc:TaxPointDate>
+	<cbc:DocumentCurrencyCode>EUR</cbc:DocumentCurrencyCode>
+	<cbc:TaxCurrencyCode>EUR</cbc:TaxCurrencyCode>
+	<cbc:BuyerReference>buyer-0001</cbc:BuyerReference>
+	<cac:InvoicePeriod>
+		<cbc:DescriptionCode>3</cbc:DescriptionCode>
+	</cac:InvoicePeriod>
+	<cac:OrderReference>
+		<cbc:ID>contract-0001</cbc:ID>
+	</cac:OrderReference>
+	<cac:DespatchDocumentReference>
+		<cbc:ID>delivery-0001</cbc:ID>
+	</cac:DespatchDocumentReference>
+	<cac:ReceiptDocumentReference>
+		<cbc:ID>receipt-0001</cbc:ID>
+	</cac:ReceiptDocumentReference>
+	<cac:OriginatorDocumentReference>
+		<cbc:ID>bid-0001</cbc:ID>
+	</cac:OriginatorDocumentReference>
+	<cac:ContractDocumentReference>
+		<cbc:ID>contract-0001</cbc:ID>
+	</cac:ContractDocumentReference>
+	<cac:AdditionalDocumentReference>
+		<cbc:ID schemeID="AGU">bid-0001</cbc:ID>
+		<cbc:DocumentTypeCode>130</cbc:DocumentTypeCode>
+	</cac:AdditionalDocumentReference>
+	<cac:ProjectReference>
+		<cbc:ID>Project-0001</cbc:ID>
+	</cac:ProjectReference>
+	<cac:Signature>
+		<cbc:ID>urn:oasis:names:specification:ubl:signature:Invoice</cbc:ID>
+		<cbc:ValidationDate>2020-10-13</cbc:ValidationDate>
+		<cbc:ValidationTime>21:40:23.0809958+02:00</cbc:ValidationTime>
+		<cbc:ValidatorID>Validation ID</cbc:ValidatorID>
+		<cbc:CanonicalizationMethod>http://www.w3.org/2000/09/xmldsig#dsa-sha1</cbc:CanonicalizationMethod>
+		<cbc:SignatureMethod>urn:oasis:names:specification:ubl:dsig:enveloped</cbc:SignatureMethod>
+		<cac:SignatoryParty>
+			<cac:PartyIdentification>
+				<cbc:ID>MyParty</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Singatory Party Name</cbc:Name>
+			</cac:PartyName>
+		</cac:SignatoryParty>
+		<cac:DigitalSignatureAttachment>
+			<cac:ExternalReference>
+				<cbc:URI>UBL-Invoice-2.0-Detached-Signature.xml</cbc:URI>
+			</cac:ExternalReference>
+		</cac:DigitalSignatureAttachment>
+	</cac:Signature>
+	<cac:Signature>
+		<cbc:ID>Signature Id</cbc:ID>
+	</cac:Signature>
+	<cac:AccountingSupplierParty>
+		<cac:Party>
+			<cac:PartyIdentification>
+				<cbc:ID>9923:12345678901 ::Al99:12345</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Brand Company</cbc:Name>
+			</cac:PartyName>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Company Ltd.</cbc:RegistrationName>
+				<cbc:CompanyID>012345678</cbc:CompanyID>
+				<cbc:CompanyLegalForm>Company Ltd. established at the Commercial Court in Tirana, share capital of 20,000.00 ALL, Director Behar Shehu</cbc:CompanyLegalForm>
+			</cac:PartyLegalEntity>
+		</cac:Party>
+	</cac:AccountingSupplierParty>
+	<cac:AccountingCustomerParty>
+		<cac:Party>
+			<cac:PartyIdentification>
+				<cbc:ID schemeID="0088">5305123456789</cbc:ID>
+			</cac:PartyIdentification>
+			<cac:PartyName>
+				<cbc:Name>Customs Administration</cbc:Name>
+			</cac:PartyName>
+			<cac:PartyTaxScheme>
+				<cbc:CompanyID>AL11111111119</cbc:CompanyID>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:PartyTaxScheme>
+			<cac:PartyLegalEntity>
+				<cbc:RegistrationName>Ministry of Finance</cbc:RegistrationName>
+				<cbc:CompanyID>07654321</cbc:CompanyID>
+			</cac:PartyLegalEntity>
+		</cac:Party>
+	</cac:AccountingCustomerParty>
+	<cac:PayeeParty>
+		<cac:PartyIdentification>
+			<cbc:ID>9923:11111111119</cbc:ID>
+		</cac:PartyIdentification>
+		<cac:PartyName>
+			<cbc:Name>Payee Company Ltd.</cbc:Name>
+		</cac:PartyName>
+		<cac:PartyLegalEntity>
+			<cbc:CompanyID>07654321</cbc:CompanyID>
+		</cac:PartyLegalEntity>
+	</cac:PayeeParty>
+	<cac:TaxRepresentativeParty>
+		<cac:PostalAddress>
+			<cbc:StreetName>Street 127</cbc:StreetName>
+			<cbc:AdditionalStreetName>Landing 4</cbc:AdditionalStreetName>
+			<cbc:CityName>Tirana</cbc:CityName>
+			<cbc:PostalZone>1000</cbc:PostalZone>
+			<cbc:CountrySubentity>Tirana</cbc:CountrySubentity>
+			<cac:AddressLine>
+				<cbc:Line>Street 127, Subdirectory 4</cbc:Line>
+			</cac:AddressLine>
+			<cac:Country>
+				<cbc:IdentificationCode>AL</cbc:IdentificationCode>
+			</cac:Country>
+		</cac:PostalAddress>
+	</cac:TaxRepresentativeParty>
+	<cac:Delivery>
+		<cbc:ActualDeliveryDate>2020-12-01</cbc:ActualDeliveryDate>
+		<cac:DeliveryLocation>
+			<cbc:ID schemeID="0088">53099998888745</cbc:ID>
+		</cac:DeliveryLocation>
+		<cac:DeliveryParty>
+			<cac:PartyName>
+				<cbc:Name>Delivery Company</cbc:Name>
+			</cac:PartyName>
+		</cac:DeliveryParty>
+	</cac:Delivery>
+	<cac:PaymentMeans>
+		<cbc:PaymentMeansCode>30</cbc:PaymentMeansCode>
+		<cbc:InstructionNote>Payment Note</cbc:InstructionNote>
+		<cbc:PaymentID>AL00 12345678901</cbc:PaymentID>
+		<cac:PayeeFinancialAccount>
+			<cbc:ID>AL47212110090000000235698741</cbc:ID>
+			<cbc:Name>ALL Account</cbc:Name>
+			<cac:FinancialInstitutionBranch>
+				<cbc:ID>2360000</cbc:ID>
+			</cac:FinancialInstitutionBranch>
+		</cac:PayeeFinancialAccount>
+	</cac:PaymentMeans>
+	<cac:AllowanceCharge>
+		<cbc:ChargeIndicator>true</cbc:ChargeIndicator>
+		<cbc:AllowanceChargeReasonCode>32</cbc:AllowanceChargeReasonCode>
+		<cbc:AllowanceChargeReason>Delivery Charge</cbc:AllowanceChargeReason>
+		<cbc:MultiplierFactorNumeric>2</cbc:MultiplierFactorNumeric>
+		<cbc:Amount currencyID="ALL">2.00</cbc:Amount>
+		<cbc:BaseAmount currencyID="ALL">200.00</cbc:BaseAmount>
+		<cac:TaxCategory>
+			<cbc:ID></cbc:ID>
+			<cbc:Percent>13</cbc:Percent>
+			<cac:TaxScheme>
+				<cbc:ID>VAT</cbc:ID>
+			</cac:TaxScheme>
+		</cac:TaxCategory>
+	</cac:AllowanceCharge>
+	<cac:LegalMonetaryTotal>
+		<cbc:LineExtensionAmount currencyID="ALL">250.00</cbc:LineExtensionAmount>
+		<cbc:TaxExclusiveAmount currencyID="ALL">210.00</cbc:TaxExclusiveAmount>
+		<cbc:TaxInclusiveAmount currencyID="ALL">262.00</cbc:TaxInclusiveAmount>
+		<cbc:AllowanceTotalAmount currencyID="ALL">70.00</cbc:AllowanceTotalAmount>
+		<cbc:ChargeTotalAmount currencyID="ALL">30.00</cbc:ChargeTotalAmount>
+		<cbc:PrepaidAmount currencyID="ALL">50.00</cbc:PrepaidAmount>
+		<cbc:PayableRoundingAmount currencyID="ALL">0.00</cbc:PayableRoundingAmount>
+		<cbc:PayableAmount currencyID="ALL">212.50</cbc:PayableAmount>
+	</cac:LegalMonetaryTotal>
+	<cac:InvoiceLine>
+		<cbc:ID>1</cbc:ID>
+		<cbc:Note>Please check the correctness of delivered goods</cbc:Note>
+		<cbc:InvoicedQuantity unitCode="H87">10000</cbc:InvoicedQuantity>
+		<cbc:LineExtensionAmount currencyID="ALL">900.00</cbc:LineExtensionAmount>
+		<cbc:AccountingCost>&gt;CS-024</cbc:AccountingCost>
+		<cac:InvoicePeriod>
+			<cbc:StartDate>2020-10-01</cbc:StartDate>
+			<cbc:EndDate>2020-10-10</cbc:EndDate>
+		</cac:InvoicePeriod>
+		<cac:OrderLineReference>
+			<cbc:LineID>st-nar-1</cbc:LineID>
+		</cac:OrderLineReference>
+		<cac:DocumentReference>
+			<cbc:ID>measuring-place-0001</cbc:ID>
+			<cbc:DocumentTypeCode>130</cbc:DocumentTypeCode>
+		</cac:DocumentReference>
+		<cac:AllowanceCharge>
+			<cbc:ChargeIndicator>true</cbc:ChargeIndicator>
+			<cbc:AllowanceChargeReasonCode>PMI</cbc:AllowanceChargeReasonCode>
+			<cbc:AllowanceChargeReason>Delivery Charge</cbc:AllowanceChargeReason>
+			<cbc:MultiplierFactorNumeric>10000</cbc:MultiplierFactorNumeric>
+			<cbc:Amount currencyID="ALL">100.00</cbc:Amount>
+			<cbc:BaseAmount currencyID="ALL">1000.00</cbc:BaseAmount>
+		</cac:AllowanceCharge>
+		<cac:Item>
+			<cbc:Description>Various commodities that can be described</cbc:Description>
+			<cbc:Name>Goods 1</cbc:Name>
+			<cac:BuyersItemIdentification>
+				<cbc:ID>art-to-1000</cbc:ID>
+			</cac:BuyersItemIdentification>
+			<cac:SellersItemIdentification>
+				<cbc:ID>art-p-0001</cbc:ID>
+			</cac:SellersItemIdentification>
+			<cac:StandardItemIdentification>
+				<cbc:ID schemeID="0160">04012345123456</cbc:ID>
+			</cac:StandardItemIdentification>
+			<cac:OriginCountry>
+				<cbc:IdentificationCode>AL</cbc:IdentificationCode>
+			</cac:OriginCountry>
+			<cac:CommodityClassification>
+				<cbc:ItemClassificationCode listID="STI">03111200-4</cbc:ItemClassificationCode>
+			</cac:CommodityClassification>
+			<cac:ClassifiedTaxCategory>
+				<cbc:ID></cbc:ID>
+				<cbc:Percent>25</cbc:Percent>
+				<cac:TaxScheme>
+					<cbc:ID>VAT</cbc:ID>
+				</cac:TaxScheme>
+			</cac:ClassifiedTaxCategory>
+			<cac:AdditionalItemProperty>
+				<cbc:Name>Color</cbc:Name>
+				<cbc:Value>Red</cbc:Value>
+			</cac:AdditionalItemProperty>
+		</cac:Item>
+		<cac:Price>
+			<cbc:PriceAmount currencyID="ALL">250.00</cbc:PriceAmount>
+			<cbc:BaseQuantity unitCode="H87">1000</cbc:BaseQuantity>
+			<cac:AllowanceCharge>
+				<cbc:ChargeIndicator>false</cbc:ChargeIndicator>
+				<cbc:Amount currencyID="ALL">10.00</cbc:Amount>
+				<cbc:BaseAmount currencyID="ALL">260.00</cbc:BaseAmount>
+			</cac:AllowanceCharge>
+		</cac:Price>
+	</cac:InvoiceLine>
+</Invoice>

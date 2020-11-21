@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System;
+
 namespace EInvoice.SOAP
 {
     
@@ -385,6 +387,9 @@ namespace EInvoice.SOAP
         
         /// <remarks/>
         PARTIALLY_PAID,
+        
+        /// <remarks/>
+        DELIVERED,
     }
     
     /// <remarks/>
@@ -2927,7 +2932,7 @@ namespace EInvoice.SOAP
         
         public RegisterEinvoiceResponse()
         {
-            this.idField = "Request";
+            this.idField = "Response";
             this.versionField = 1;
         }
         
@@ -3065,7 +3070,7 @@ namespace EInvoice.SOAP
         
         private string[] eICsField;
         
-        private EinvoiceStatusType einStatusField;
+        private EinvoiceStatusChangeType einStatusField;
         
         private SignatureType signatureField;
         
@@ -3107,7 +3112,7 @@ namespace EInvoice.SOAP
         }
         
         /// <remarks/>
-        public EinvoiceStatusType EinStatus
+        public EinvoiceStatusChangeType EinStatus
         {
             get
             {
@@ -3164,6 +3169,19 @@ namespace EInvoice.SOAP
     
     /// <remarks/>
     [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
+    [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://Einvoice.tatime.gov.al/EinvoiceService/schema")]
+    public enum EinvoiceStatusChangeType
+    {
+        
+        /// <remarks/>
+        ACCEPTED,
+        
+        /// <remarks/>
+        REFUSED,
+    }
+    
+    /// <remarks/>
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.Xml.Serialization.XmlTypeAttribute(AnonymousType=true, Namespace="https://Einvoice.tatime.gov.al/EinvoiceService/schema")]
     public partial class EinvoiceChangeStatusResponse
@@ -3181,7 +3199,7 @@ namespace EInvoice.SOAP
         
         public EinvoiceChangeStatusResponse()
         {
-            this.idField = "Request";
+            this.idField = "Response";
             this.versionField = 1;
         }
         
@@ -3415,7 +3433,7 @@ namespace EInvoice.SOAP
         
         public GetTaxpayersResponse()
         {
-            this.idField = "Request";
+            this.idField = "Response";
             this.versionField = 1;
         }
         
@@ -3733,7 +3751,7 @@ namespace EInvoice.SOAP
         
         public GetEinvoicesResponse()
         {
-            this.idField = "Request";
+            this.idField = "Response";
             this.versionField = 1;
         }
         
@@ -3844,6 +3862,11 @@ namespace EInvoice.SOAP
         public getEinvoicesResponse1(EInvoice.SOAP.GetEinvoicesResponse GetEinvoicesResponse)
         {
             this.GetEinvoicesResponse = GetEinvoicesResponse;
+        }
+
+        internal RegisterEinvoiceResponse GetEinvoicesResponse()
+        {
+            throw new NotImplementedException();
         }
     }
     
