@@ -9,9 +9,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiscalization", "Fiscalizat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Fiscalization.Test", "Fiscalization.Test\Fiscalization.Test.csproj", "{F0F3FD65-3390-4B06-B0A8-ECAC47AB61F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInvoice", "EInvoice\EInvoice.csproj", "{4FF35C94-E07F-4111-996A-F1C763CBF13E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInvoice", "EInvoice\EInvoice.csproj", "{4FF35C94-E07F-4111-996A-F1C763CBF13E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInvoice.Console", "EInvoice.Console\EInvoice.Console.csproj", "{9CE821AD-D839-4539-B12C-6E81909B242D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInvoice.Console", "EInvoice.Console\EInvoice.Console.csproj", "{9CE821AD-D839-4539-B12C-6E81909B242D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedLibrary", "SharedLibrary\SharedLibrary.csproj", "{502F60F9-1BEE-4DA6-AFDC-56E6824B8446}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LibraryConlose", "LibraryConlose\LibraryConlose.csproj", "{91053A6E-53BA-4B83-9598-0BA4396F2C67}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{9CE821AD-D839-4539-B12C-6E81909B242D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9CE821AD-D839-4539-B12C-6E81909B242D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9CE821AD-D839-4539-B12C-6E81909B242D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{502F60F9-1BEE-4DA6-AFDC-56E6824B8446}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{502F60F9-1BEE-4DA6-AFDC-56E6824B8446}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{502F60F9-1BEE-4DA6-AFDC-56E6824B8446}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{502F60F9-1BEE-4DA6-AFDC-56E6824B8446}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91053A6E-53BA-4B83-9598-0BA4396F2C67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91053A6E-53BA-4B83-9598-0BA4396F2C67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91053A6E-53BA-4B83-9598-0BA4396F2C67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91053A6E-53BA-4B83-9598-0BA4396F2C67}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

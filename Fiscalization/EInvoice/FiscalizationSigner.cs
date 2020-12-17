@@ -17,7 +17,7 @@ namespace EInvoice
 
 
         private static RSA _privateKey;
-        private static RSA privateKey {
+        public static RSA privateKey {
             get
             {
                 if (_privateKey is null)
@@ -26,7 +26,7 @@ namespace EInvoice
             }
             set => _privateKey = value; 
         }
-        private static KeyInfo keyInfo { get; set; }
+        public static KeyInfo keyInfo { get; set; }
 
         public static void SetKeyStoreLocation(string keyStorePath)
         {

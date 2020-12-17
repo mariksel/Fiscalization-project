@@ -68,12 +68,12 @@ namespace test
                     TypeOfInv = InvoiceSType.CASH,
                     BusinUnitCode = "bb123bb123",
                     Currency = new CurrencyType
-                    {v
+                    {
                         Code = CurrencyCodeSType.EUR,
                         ExRate = 1.24,
                         IsBuying = true
                     },
-                    InvNum = "1/2020/cc123cc123",
+                    InvNum = "1/2020",
                     InvOrdNum = 1,
                     IssueDateTime = date,
                     Items = new InvoiceItemType[]{

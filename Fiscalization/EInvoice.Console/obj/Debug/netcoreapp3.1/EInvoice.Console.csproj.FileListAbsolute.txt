@@ -109,3 +109,4 @@ C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp
 C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\Fiscalization.pdb
 C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\certSoftExpres.txt
 C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\eltonzhuleku.p12
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\ubl.xml

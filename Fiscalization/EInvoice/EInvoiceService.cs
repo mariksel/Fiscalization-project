@@ -17,10 +17,18 @@ namespace EInvoice
 
         public async Task<RegisterEinvoiceResponse> RegisterEinvoiceAsync(RegisterEinvoiceRequest rEInvoice)
         {
-            
-
             return (await Client.registerEinvoiceAsync(rEInvoice))
                 .RegisterEinvoiceResponse;
+        }
+
+        public async Task<GetEinvoicesResponse> RegisterEinvoiceAsync(GetEinvoicesRequest request)
+        {
+            return (await Client.getEinvoicesAsync(request)).GetEinvoicesResponse;
+        }
+
+        public async Task<GetTaxpayersResponse> GetTaxPayers(GetTaxpayersRequest request)
+        {
+            return (await Client.getTaxpayersAsync(request)).GetTaxpayersResponse;
         }
 
 
@@ -34,7 +42,8 @@ namespace EInvoice
         static public byte[] EncodeTo64(string toEncode)
         {
 
-            byte[] toEncodeAsBytes = ASCIIEncoding.ASCII.GetBytes(toEncode);
+            byte[] toEncodeAsBytes = Encoding.BigEndianUnicode.GetBytes(toEncode);
+            byte[] toEncodeAsBytes2 = ASCIIEncoding.ASCII.GetBytes(toEncode);
 
             return toEncodeAsBytes;
 

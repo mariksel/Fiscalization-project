@@ -1,0 +1,132 @@
+﻿<ns4:Invoice
+    xmlns:ns4="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2"
+    xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2"
+    xmlns:ns3="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2">
+	<UBLExtensions xmlns="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2">
+		<UBLExtension>
+			<ExtensionContent>
+				<SignatureInformation xmlns="urn:oasis:names:specification:ubl:schema:xsd:SignatureAggregateComponents-2" />
+			</ExtensionContent>
+		</UBLExtension>
+	</UBLExtensions>
+	<CustomizationID>urn:cen.eu:en16931:2017</CustomizationID>
+	<ProfileID>P1</ProfileID>F
+	<ID>22/2020</ID>
+	<IssueDate>2020-12-16</IssueDate>
+	<DueDate>2020-12-16</DueDate>
+	<InvoiceTypeCode>380</InvoiceTypeCode>
+	<Note>IssueDateTime=2020-12-16T14:18:33+01:00#AAI#</Note>
+	<Note>SoftwareCode=fa722lm595#AAI#</Note>
+	<Note>OperatorCode=xs123xs123#AAI#</Note>
+	<Note>BusinessUnitCode=lr991hz335#AAI#</Note>
+	<Note>IsBadDebtInv=false#AAI#</Note>
+	<Note>IIC=AFBF6FC7B3AC67B9CA1D90B17A29CE1F#AAI#</Note>
+	<Note>IICSignature=2DB98B41B8B99CEC2142FC31D60A07E74E12B9DBA6F460E10AD210E8C7AC9B43BEE6359757000D051CE55C383D6EAE5FE9931EF95B74BFD87D03CDA044AB8D4A78477A0524144CEDDBAA636E8215B29A8780B6BAF99B9CB57F479AA6D7D4BB20C3492189AB6965EACCE6D545A787AAC13367BBCB1B6F9F3F2FF4CDCBCAD9DD5E93608ACC9C773C3ADF64AC58DDD5F6F62DBC332B375E6CAF697681E8E9FA8A941B52DB95E37939B8E4742CFBE6ED09511E054E10E3085A4EE2CB2E615DE9051BBE41B1D3CEBAAF972B7491E42BBBE804F5024B954B6F934BF9F2825A21642BBEEDEED64528272A0B043299E77BEB51416B48EAAE1DA0D24ABB30EAE18BFD3480#AAI#</Note>
+	<Note>FIC=12b8691d-0ee3-48d8-8b86-cca6a37f189b#AAI#</Note>
+	<DocumentCurrencyCode>ALL</DocumentCurrencyCode>
+	<TaxCurrencyCode>ALL</TaxCurrencyCode>
+	<ns3:InvoicePeriod>
+		<StartDate>2020-12-16</StartDate>
+	</ns3:InvoicePeriod>
+	<ns3:AccountingSupplierParty>
+		<ns3:Party>
+			<EndpointID schemeID="9923">L82210031Q</EndpointID>
+			<ns3:PartyIdentification>
+				<ID>L82210031Q</ID>
+			</ns3:PartyIdentification>
+			<ns3:PartyName>
+				<Name>Nexia AL</Name>
+			</ns3:PartyName>
+			<ns3:PostalAddress>
+				<StreetName>Rruga ""Ismail Qemali"", Godina 29, Hyrja 1, Apartamenti 6</StreetName>
+				<CityName>Tirana</CityName>
+				<ns3:Country>
+					<IdentificationCode>AL</IdentificationCode>
+				</ns3:Country>
+			</ns3:PostalAddress>
+			<ns3:PartyTaxScheme>
+				<CompanyID>ALL82210031Q</CompanyID>
+				<ns3:TaxScheme>
+					<ID>FRE</ID>
+				</ns3:TaxScheme>
+			</ns3:PartyTaxScheme>
+			<ns3:PartyLegalEntity>
+				<RegistrationName>Nexia AL</RegistrationName>
+				<CompanyID>L82210031Q</CompanyID>
+			</ns3:PartyLegalEntity>
+		</ns3:Party>
+	</ns3:AccountingSupplierParty>
+	<ns3:AccountingCustomerParty>
+		<ns3:Party>
+			<EndpointID schemeID="9923">K91721010Q</EndpointID>
+			<ns3:PartyIdentification>
+				<ID>K91721010Q</ID>
+			</ns3:PartyIdentification>
+			<ns3:PartyName>
+				<Name>Nexia AL</Name>
+			</ns3:PartyName>
+			<ns3:PostalAddress>
+				<StreetName>Rruga "Ismail Qemali", Pall.Nr.29, Kati 3, Tiranë, Shqipëri.</StreetName>
+				<CityName>Tirane</CityName>
+				<ns3:Country>
+					<IdentificationCode>AL</IdentificationCode>
+				</ns3:Country>
+			</ns3:PostalAddress>
+			<ns3:PartyTaxScheme>
+				<CompanyID>ALK91721010Q</CompanyID>
+				<ns3:TaxScheme>
+					<ID>FRE</ID>
+				</ns3:TaxScheme>
+			</ns3:PartyTaxScheme>
+			<ns3:PartyLegalEntity>
+				<RegistrationName>Nexia AL</RegistrationName>
+				<CompanyID>K91721010Q</CompanyID>
+			</ns3:PartyLegalEntity>
+		</ns3:Party>
+	</ns3:AccountingCustomerParty>
+	<ns3:PaymentMeans>
+		<PaymentMeansCode>ZZZ</PaymentMeansCode>
+		<ns3:PayeeFinancialAccount>
+			<ID/>
+		</ns3:PayeeFinancialAccount>
+	</ns3:PaymentMeans>
+	<ns3:TaxTotal>
+		<TaxAmount currencyID="ALL">0.00</TaxAmount>
+		<ns3:TaxSubtotal>
+			<TaxableAmount currencyID="ALL">550.00</TaxableAmount>
+			<TaxAmount currencyID="ALL">0.00</TaxAmount>
+			<ns3:TaxCategory>
+				<ID>Z</ID>
+				<Percent>0.00</Percent>
+				<ns3:TaxScheme>
+					<ID>VAT</ID>
+				</ns3:TaxScheme>
+			</ns3:TaxCategory>
+		</ns3:TaxSubtotal>
+	</ns3:TaxTotal>
+	<ns3:LegalMonetaryTotal>
+		<LineExtensionAmount currencyID="ALL">550.00</LineExtensionAmount>
+		<TaxExclusiveAmount currencyID="ALL">550.00</TaxExclusiveAmount>
+		<TaxInclusiveAmount currencyID="ALL">550.00</TaxInclusiveAmount>
+		<PayableAmount currencyID="ALL">550.00</PayableAmount>
+	</ns3:LegalMonetaryTotal>
+	<ns3:InvoiceLine>
+		<ID>0987976567</ID>
+		<InvoicedQuantity unitCode="H87">1.0</InvoicedQuantity>
+		<LineExtensionAmount currencyID="ALL">550.00</LineExtensionAmount>
+		<ns3:Item>
+			<Name>Kafe</Name>
+			<ns3:ClassifiedTaxCategory>
+				<ID>Z</ID>
+				<Percent>0</Percent>
+				<ns3:TaxScheme>
+					<ID>VAT</ID>
+				</ns3:TaxScheme>
+			</ns3:ClassifiedTaxCategory>
+		</ns3:Item>
+		<ns3:Price>
+			<PriceAmount currencyID="ALL">550</PriceAmount>
+			<BaseQuantity unitCode="H87">1.0</BaseQuantity>
+		</ns3:Price>
+	</ns3:InvoiceLine>
+</ns4:Invoice>

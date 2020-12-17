@@ -8,7 +8,8 @@
     ".NETCoreApp,Version=v3.1": {
       "EInvoice.Console/1.0.0": {
         "dependencies": {
-          "EInvoice": "1.0.0"
+          "EInvoice": "1.0.0",
+          "Fiscalization": "1.0.0"
         },
         "runtime": {
           "EInvoice.Console.dll": {}

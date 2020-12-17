@@ -9,7 +9,7 @@ using System.Xml;
 
 namespace Fiscalization
 {
-    class FiscalizationSigner
+    public class FiscalizationSigner
     {
         private static String KEYSTORE_LOCATION = Path.Combine(Environment.CurrentDirectory, "smartwork.p12");
         private const String KEYSTORE_PASS = "123456";
@@ -43,21 +43,7 @@ namespace Fiscalization
 
 
 
-        public static string GenerateIIC(string iicInput)
-        {
-            // Create IIC signature according to RSASSA-PKCS-v1_5
-            byte[] iicSignature = privateKey.SignData(Encoding.ASCII.GetBytes(iicInput), HashAlgorithmName.SHA256,
-           RSASignaturePadding.Pkcs1);
-            string iicSignatureString = BitConverter.ToString(iicSignature).Replace("-", string.Empty);
-            Console.WriteLine("The IIC signature is: " + iicSignatureString);
-            // Hash IIC signature with MD5 to create IIC
-            byte[] iic = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(iicSignature);
-            string iicString = BitConverter.ToString(iic).Replace("-", string.Empty);
-
-
-            return iicString;
-        }
-
+        
         public const String XML_SCHEMA_NS = "https://eFiskalizimi.tatime.gov.al/FiscalizationService/schema";
         public const String XML_REQUEST_ID = "Request";
         public const String XML_SIG_METHOD = "http://www.w3.org/2001/04/xmldsig-more#rsa-sha256";
@@ -115,6 +101,22 @@ namespace Fiscalization
 
 
         }
+
+        public static string GenerateIIC(string iicInput)
+        {
+            // Create IIC signature according to RSASSA-PKCS-v1_5
+            byte[] iicSignature = privateKey.SignData(Encoding.ASCII.GetBytes(iicInput), HashAlgorithmName.SHA256,
+           RSASignaturePadding.Pkcs1);
+            string iicSignatureString = BitConverter.ToString(iicSignature).Replace("-", string.Empty);
+            Console.WriteLine("The IIC signature is: " + iicSignatureString);
+            // Hash IIC signature with MD5 to create IIC
+            byte[] iic = ((HashAlgorithm)CryptoConfig.CreateFromName("MD5")).ComputeHash(iicSignature);
+            string iicString = BitConverter.ToString(iic).Replace("-", string.Empty);
+
+
+            return iicString;
+        }
+
 
         public static string SignIICSignature(string iicInput)
         {

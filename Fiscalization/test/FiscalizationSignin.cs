@@ -10,7 +10,7 @@ using test.ServiceReference1;
 
 namespace Fiscalization
 {
-    class FiscalizationSignin
+    public class FiscalizationSignin
     {
         private static String KEYSTORE_LOCATION = Path.Combine(Environment.CurrentDirectory, "smartwork.p12");
         private const String KEYSTORE_PASS = "123456";

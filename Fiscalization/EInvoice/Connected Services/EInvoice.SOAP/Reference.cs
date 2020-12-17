@@ -7,8 +7,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-using System;
-
 namespace EInvoice.SOAP
 {
     
@@ -3862,11 +3860,6 @@ namespace EInvoice.SOAP
         public getEinvoicesResponse1(EInvoice.SOAP.GetEinvoicesResponse GetEinvoicesResponse)
         {
             this.GetEinvoicesResponse = GetEinvoicesResponse;
-        }
-
-        internal RegisterEinvoiceResponse GetEinvoicesResponse()
-        {
-            throw new NotImplementedException();
         }
     }
     
