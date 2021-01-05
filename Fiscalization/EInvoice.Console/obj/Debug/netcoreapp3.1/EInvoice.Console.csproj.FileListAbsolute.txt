@@ -110,3 +110,13 @@ C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp
 C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\certSoftExpres.txt
 C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\eltonzhuleku.p12
 C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\ubl.xml
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\AutoMapper.dll
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\Enums.NET.dll
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\Newtonsoft.Json.dll
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.dll
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Options.dll
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\Microsoft.Extensions.Primitives.dll
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\Colorful.Console.dll
+C:\Repo\FiscalizationProject\Fiscalization\EInvoice.Console\bin\Debug\netcoreapp3.1\cimi.p12

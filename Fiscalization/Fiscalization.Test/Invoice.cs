@@ -9,7 +9,7 @@ namespace Fiscalization.Test
 {
     public class Tests
     {
-        FiscalizationService Service = new FiscalizationService(Path.Combine(Environment.CurrentDirectory, "smartwork.p12"));
+        //FiscalizationService Service = new FiscalizationService(Path.Combine(Environment.CurrentDirectory, "smartwork.p12"));
         [SetUp]
         public void Setup()
         {
@@ -49,7 +49,7 @@ namespace Fiscalization.Test
                 }
             };
 
-             Service.RegisterInvoiceAsync(invoice).Wait();
+             //Service.RegisterInvoiceAsync(invoice).Wait();
 
             Assert.Pass();
         }

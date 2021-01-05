@@ -1,137 +1,62 @@
-﻿using FiscalizationService.SOAP;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using EnumsNET;
+using Fiscalization.Enums;
+using System.ComponentModel.DataAnnotations;
 
 namespace Fiscalization.Models
 {
-    public class Seller : INotifyPropertyChanged
+    public class Seller
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void RaisePropertyChanged(string propertyName)
+        public static Seller CreateSeller(string idNum, string name, string address, string town, CountryCode? country)
         {
-            PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null))
+            var seller = new Seller
             {
-                propertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+                IDType = IDType.NUIS,
+                IDNum = idNum,
+                Name = name,
+                Address = address,
+                Town = town,
+            };
+            if (country.HasValue)
+                seller.Country = country.Value;
+            return seller;
         }
-
-
-
-        private IDTypeSType iDTypeField;
-
-        private string iDNumField;
-
-        private string nameField;
-
-        private string addressField;
-
-        private string townField;
-
-        private CountryCodeSType countryField;
-
-        private bool countryFieldSpecified;
-
-
-
-        public IDTypeSType IDType
-        {
-            get => iDTypeField;
-            set
-            {
-                this.iDTypeField = value;
-                RaisePropertyChanged(nameof(IDType));
-            }
-        }
+        [Required]
+        public IDType IDType { get; set; }
 
         /// <summary>
         /// Numri identifikues i shitësit.
         /// Gjatësia: 20 karaktere.
         /// Shembull: Për NUIS/NIPT: K72001008V, Për numrin social: 123-45-6789.
         /// </summary>
-        public string IDNum
-        {
-            get => iDNumField;
-            set
-            {
-                this.iDNumField = value;
-                RaisePropertyChanged(nameof(IDNum));
-            }
-        }
+        [Required]
+        public string IDNum { get; set; }
 
         /// <summary>
         /// Emri i shitësit.
         /// Gjatësia: 100 karaktere.
         /// Shembull: Emri Mbiemri.
         /// </summary>
-        public string Name
-        {
-            get => nameField;
+        [Required]
+        public string Name { get; set; }
+
+        public string Address { get; set; }
+
+        public string Town { get; set; }
+
+        public bool CountrySpecified { get; private set; } = false;
+        private CountryCode _country;
+        public CountryCode Country { 
+            get => _country;
             set
             {
-                this.nameField = value;
-                RaisePropertyChanged(nameof(Name));
-            }
+                if (value.IsDefined())
+                {
+                    _country = value;
+                    CountrySpecified = true;
+                }
+            } 
         }
 
 
-        public string Address
-        {
-            get => addressField;
-            set
-            {
-                this.addressField = value;
-                RaisePropertyChanged(nameof(Address));
-            }
-        }
-
-
-        public string Town
-        {
-            get => townField;
-            set
-            {
-                this.townField = value;
-                RaisePropertyChanged(nameof(Town));
-            }
-        }
-
-
-        public CountryCodeSType Country
-        {
-            get => countryField;
-            set
-            {
-                this.countryField = value;
-                RaisePropertyChanged(nameof(Country));
-            }
-        }
-
- 
-        public bool CountrySpecified
-        {
-            get => countryFieldSpecified;
-            set
-            {
-                this.countryFieldSpecified = value;
-                RaisePropertyChanged(nameof(CountrySpecified));
-            }
-        }
-
-        public SellerType ToSellerType()
-        {
-            return new SellerType
-            {
-                Address = Address,
-                Country = Country,
-                CountrySpecified = CountrySpecified,
-                IDNum = IDNum,
-                IDType = IDType,
-                Name = Name,
-                Town = Town
-            };
-        }
     }
 }

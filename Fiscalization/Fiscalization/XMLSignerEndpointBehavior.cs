@@ -9,7 +9,11 @@ using System.Threading.Tasks;
 
 namespace Fiscalization
 {
-    public class XMLSignerEndpointBehavior : IEndpointBehavior
+    public interface IFisXmlSignerEndpointBehavior: IEndpointBehavior
+    {
+
+    }
+    public class FisXMLSignerEndpointBehavior : IFisXmlSignerEndpointBehavior
     {
         public void AddBindingParameters(ServiceEndpoint endpoint, BindingParameterCollection bindingParameters)
         {

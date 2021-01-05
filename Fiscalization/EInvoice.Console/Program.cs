@@ -1,5 +1,4 @@
-﻿using EInvoice.Models;
-using EInvoice.SOAP;
+﻿using EInvoice.SOAP;
 using Fiscalization;
 using FiscalizationService.SOAP;
 using System;
@@ -21,74 +20,425 @@ using UblSharp.CommonExtensionComponents;
 using UblSharp.UnqualifiedDataTypes;
 using CountryCodeSType = FiscalizationService.SOAP.CountryCodeSType;
 using InvoiceType = FiscalizationService.SOAP.InvoiceType;
+using _con = Colorful.Console;
 
 using SignatureType = UblSharp.CommonAggregateComponents.SignatureType;
+using Newtonsoft.Json;
+using System.Diagnostics;
+using EInvoice.Models;
+using EnumsNET;
+using System.Drawing;
+using EInvoice.Requests;
 
 namespace EInvoice.Console
 {
     public class Program
     {
+        public static string CERT = "eltonzhuleku.p12";
+        //public static string CERT = "cimi.p12";
+        static EInvoiceServiceFactory _factory = new EInvoiceServiceFactory(Path.Combine(Environment.CurrentDirectory, CERT));
+
+        public class MenuItem
+        {
+            public delegate void MenuItemCommand();
+            public string Name { get; set; }
+            public MenuItemCommand Command { get; set; }
+
+            public override string ToString()
+            {
+                return Name;
+            }
+        }
+
+
+        static MenuItem[] MenuItems = new MenuItem[]
+            {
+                new MenuItem{ Name = "Get Tax Payers By Name", Command = GetTaxPayersByName },
+                new MenuItem{ Name = "Get Tax Payer By Tin",  Command = GetTaxPayersByTin },
+                new MenuItem{ Name = "Get EInvoice BY EIC", Command = GetEInvoiceByEIC },
+                new MenuItem{ Name = "Get EInvoices", Command = GetEInvoices },
+                new MenuItem{ Name = "EInvoice Change Status", Command = EInvocieChangeStatus },
+                new MenuItem{ Name = "Create EInvoice", Command = CreateEInvoice },
+                new MenuItem{ Name = "Clear Screen", Command = ClearScreen },
+                new MenuItem{ Name = "Exit", Command = Exit },
+
+
+            };
+        static int position = MenuItems.Length;
         static async Task Main(string[] args)
         {
-            
+           
+            _con.ForegroundColor = Color.White;
+            _con.BackgroundColor = Color.Black;
+            _con.Clear();
+
+            ShowMenu();
+
+            while (true)
+            {
+                var line = _con.ReadLine();
+                if (line == "menu")
+                {
+                    ShowMenu();
+                }
+            }
+
 
             //await getTaxPayers();
 
 
-            var service = new EInvoiceService(Path.Combine(Environment.CurrentDirectory, "eltonzhuleku.p12"));
+            return;
+
+
+            
+            
+        }
+
+        public static void SelectMenuItem(bool isUp)
+        {
+            if (isUp)
+            {
+                if (position > 0)
+                {
+                    _con.SetCursorPosition(0, _con.CursorTop);
+                    _con.Write(MenuItems[position]);
+                    position--;
+                    _con.SetCursorPosition(0, _con.CursorTop - 1);
+                    _con.BackgroundColor = Color.DarkMagenta;
+                    _con.ForegroundColor = Color.White;
+                    _con.Write(MenuItems[position]);
+                    _con.ResetColor();
+                }
+            }
+            else
+            {
+                if (position < MenuItems.Length-1)
+                {
+                    _con.SetCursorPosition(0, _con.CursorTop);
+                    _con.Write(MenuItems[position]);
+                    position++;
+                    _con.SetCursorPosition(0, _con.CursorTop + 1);
+                    _con.BackgroundColor = Color.DarkMagenta;
+                    _con.ForegroundColor = Color.White;
+                    _con.Write(MenuItems[position]);
+                    _con.ResetColor();
+                }
+            }
+        }
+
+        static bool inOnMenu = false;
+        public static void ShowMenu()
+        {
+            inOnMenu = true;
+            _con.ResetColor();
+            foreach (var item in MenuItems)
+            {
+                _con.WriteLine(item);
+            }
+            _con.SetCursorPosition(0, _con.CursorTop - MenuItems.Length);
+            _con.BackgroundColor = Color.DarkMagenta;
+            _con.ForegroundColor = Color.White;
+            _con.Write(MenuItems[0]);
+            _con.ResetColor();
+            position = 0;
+
+            while (inOnMenu)
+            {
+                var key = _con.ReadKey();
+                if (key.Key == ConsoleKey.UpArrow)
+                {
+                    SelectMenuItem(true);
+                }
+                else if (key.Key == ConsoleKey.DownArrow)
+                {
+                    SelectMenuItem(false);
+                }
+                else if (key.Key == ConsoleKey.Enter)
+                {
+                    OnMenuItemSelect();
+                }
+            }
+        }
+
+        public static void OnMenuItemSelect()
+        {
+            var item = MenuItems[position];
+            HideMenu();
+            _con.WriteLine($"You selected: {item}");
+
+            item.Command();
+
+        }
+
+        public static void HideMenu()
+        {
+            _con.SetCursorPosition(0, _con.CursorTop - position);
+            foreach (var item in MenuItems)
+            {
+                _con.Write(new string(' ', _con.WindowWidth));
+
+            }
+            _con.SetCursorPosition(0, _con.CursorTop);
+            _con.SetCursorPosition(0, _con.CursorTop - (MenuItems.Length -1));
+            inOnMenu = false;
+        }
+
+        public static void GetTaxPayersByName()
+        {
+            _con.Write("Enter Name:");
+            var name = _con.ReadLine();
+
+            EInvoiceService service = _factory.GetEInvoiceService();
+
+            var request = new Requests.GetTaxpayersByNameRequest(DateTime.Now, name);
+
+            var res = service.GetTaxPayersAsync(request).Result;
+            var json = JsonConvert.SerializeObject(res, Newtonsoft.Json.Formatting.Indented);
+            _con.WriteLine(json);
+        }
+
+        public static void GetTaxPayersByTin()
+        {
+            _con.Write("Enter Tin:");
+            var tin = _con.ReadLine();
+
+            EInvoiceService service = _factory.GetEInvoiceService();
+
+            var request = new Requests.GetTaxpayersByTinRequest(DateTime.Now, tin);
+
+            var res = service.GetTaxPayersAsync(request).Result;
+            var json = JsonConvert.SerializeObject(res, Newtonsoft.Json.Formatting.Indented);
+            _con.WriteLine(json);
+        }
+
+        public static void GetEInvoiceByEIC()
+        {
+            DateTime date = EInvoiceService.GetDateTimeNow();
+            _con.Write("Enter EIC:");
+            var eic = _con.ReadLine();
+
+            EInvoiceService service = _factory.GetEInvoiceService();
+
+            var request = GetEInvoicesRequest.GetEInvoiceByEICRequest(eic, date);
+
+            var res = service.GetEInvoicesAsync(request).Result;
+            var json = JsonConvert.SerializeObject(res, Newtonsoft.Json.Formatting.Indented);
+            _con.WriteLine(json);
+
+            if (res.Success)
+            {
+                var pdf = res.Einvoices.First().Pdf.GetTempFile();
+                Process.Start(new ProcessStartInfo("cmd", $"/c start {pdf}"));
+            }
+
+        }
+
+        public static void GetEInvoices()
+        {
+            DateTime date = EInvoiceService.GetDateTimeNow();
+            var indent = "   ";
+            _con.WriteLine("Filter flags:");
+            _con.WriteLine($"{indent}Type: --type //PartyType [BUYER, SELLER]");
+            _con.WriteLine($"{indent}From: --from //From Date [Format: {DateFormat}]");
+            _con.WriteLine($"{indent}To: --to //To Date [Format: {DateFormat}]");
+            _con.Write("Enter Filters:");
+            var line = _con.ReadLine();
+            Enums.PartyType? type = null;
+            DateTime? from = null;
+            DateTime? to = null;
+            if (GetTypeFlag(line, out Enums.PartyType typeValue))
+                type = typeValue;
+
+            if (GetDateFlag("--from", line, out DateTime fromValue))
+                from = fromValue;
+
+            if (GetDateFlag("--to", line, out DateTime toValue))
+                to = toValue;
+
+            EInvoiceService service = _factory.GetEInvoiceService();
+
+            var request = GetEInvoicesRequest.GetEInvoicesListRequest(type, from, to);
+
+            
+
+            var res = service.GetEInvoicesAsync(request).Result;
+            
+
+            if (res.Success)
+            {
+           
+                _con.WriteLine($"EInvoices:");
+                foreach (var invoice in res.Einvoices)
+                {
+                    ShowInvoice(invoice, indent);
+                }
+                //var pdf = res.Einvoices.First().Pdf.GetTempFile();
+                //Process.Start(new ProcessStartInfo("cmd", $"/c start {pdf}"));
+            } else
+            {
+                _con.WriteLineStyled(res.ErrorMessage, new Colorful.StyleSheet(Color.Red));
+                var json = JsonConvert.SerializeObject(res, Newtonsoft.Json.Formatting.Indented);
+                _con.WriteLine(json);
+            }
+            
+        }
+
+        public static void ShowInvoice(EInvoiceModel invoice, string parentIndent)
+        {
+            var indend = parentIndent+"|   ";
+            _con.WriteLine($"{parentIndent}EInvoice:");
+            _con.WriteLine($"{indend}{nameof(invoice.EIC)}: { invoice.EIC}");
+            _con.WriteLine($"{indend}{nameof(invoice.DocNumber)}: { invoice.DocNumber}");
+            _con.WriteLine($"{indend}{nameof(invoice.DocType)}: { invoice.DocType.AsString()}");
+            _con.WriteLine($"{indend}{nameof(invoice.RecDateTime)}: { invoice.RecDateTime}");
+            _con.WriteLine($"{indend}{nameof(invoice.DueDateTime)}: { invoice.DueDateTime}");
+            _con.WriteLine($"{indend}{nameof(invoice.Status)}: { invoice.Status.AsString()}");
+            _con.WriteLine($"{indend}{nameof(invoice.Amount)}: { invoice.Amount}");
+            _con.WriteLine($"{indend}{nameof(invoice.PartyType)}: { invoice.PartyType.AsString()}");
+
+        }
+
+        public static void EInvocieChangeStatus()
+        {
+            EInvoiceService service = _factory.GetEInvoiceService(); 
+            var date = EInvoiceService.GetDateTimeNow();
+
+            var request = new EInvoiceChangeStatusRequest
+            {
+                Header = new EInvoiceChangeStatusRequestHeader
+                {
+                    SendDateTime = date,
+                    UUID = Guid.NewGuid().ToString()
+                },
+                EInStatus = Enums.EInvoiceStatusChange.REFUSED,
+                EICs = new string[]
+                {
+                    "a287ea21-40a7-446c-95f3-9ff9e04ff85d"
+                }
+            };
+
+            var response = service.EInvoiceChangeStatusAsync(request).Result;
+            var json = JsonConvert.SerializeObject(response, Newtonsoft.Json.Formatting.Indented);
+            _con.WriteLine(json);
+        }
+
+        public static void CreateEInvoice()
+        {
+            EInvoiceService service = _factory.GetEInvoiceService(); //new EInvoiceService(Path.Combine(Environment.CurrentDirectory, "eltonzhuleku.p12"),null) ;
             var date = EInvoiceService.GetDateTimeNow();
 
 
 
             //var xmlText = Case1(date);
-            var xmlText = await Case2(date);
+            var xmlText = Case2(date).Result;
             //var xmlText = await Case3(date);
-            
 
 
-            var invoice = new RegisterEinvoiceRequest {
+
+            var invoice = new RegisterEinvoiceRequest
+            {
                 Header = new RegisterEinvoiceRequestHeaderType
                 {
                     SendDateTime = date,
                     UUID = Guid.NewGuid().ToString()
                 },
-                EinvoiceEnvelope = new EinvoiceEnvelopeType {
+                EinvoiceEnvelope = new EinvoiceEnvelopeType
+                {
                     ItemElementName = ItemChoiceType.UblInvoice,
                     Item = EInvoiceService.EncodeTo64(xmlText),
-                    
+
                 },
-                
+
 
             };
-            
-            var response = await service.RegisterEinvoiceAsync(invoice);
-            
+
+            var response = service.RegisterEinvoiceAsync(invoice).Result;
+            var json = JsonConvert.SerializeObject(response, Newtonsoft.Json.Formatting.Indented);
+            _con.WriteLine(json);
         }
-        
 
-        public static async Task getTaxPayers()
+
+        public static void ClearScreen()
         {
-            var date = EInvoiceService.GetDateTimeNow();
+            _con.Clear();
+        }
+        public static void Exit()
+        {
+            Environment.Exit(0);
+        }
 
-            var service = new EInvoiceService(Path.Combine(Environment.CurrentDirectory, "eltonzhuleku.p12"));
 
-            var request = new GetTaxpayersRequest
+        public const string  DateFormat = "dd-MM-yyyy-HH:mm";
+        public static bool GetDateFlag(string flag, string line, out DateTime date)
+        {
+            
+            if (GetFlag(flag, line, out string value))
             {
-                Header = new GetTaxpayersRequestHeaderType
-                {
-                    SendDateTime = date,
-                    UUID = "a737f2f9-214d-4841-a3d9-331e7b2b3618"
-                },
-                Filter = new TaxpayerFilterType
-                {
-                    //Item = "L41316032F",
-                    //ItemElementName = ItemChoiceType1.Tin
-                    Item = "elton",
-                    ItemElementName = ItemChoiceType1.Name
-                }
-            };
+                date = DateTime.ParseExact(value, DateFormat, null);
+                date = EInvoiceService.GetDateTime(date);
+                return true;
+            }
+            date = new DateTime();
+            return false;
+        }
 
-            var res = await service.GetTaxPayers(request);
+        public static bool GetTypeFlag(string line, out Enums.PartyType type)
+        {
+            type = (Enums.PartyType)( -1);
+            if(GetFlag("--type", line, out string value))
+            {
+                if (value.ToUpperInvariant() == Enums.PartyType.BUYER.AsString())
+                    type = Enums.PartyType.BUYER;
+                else if (value.ToUpperInvariant() == Enums.PartyType.SELLER.AsString())
+                    type = Enums.PartyType.SELLER;
+                else
+                    throw new ArgumentException($"{value} is not a valid type");
+                return true;
+            }
+            return false;
+        }
+
+        public static bool GetFlag(string flag, string line, out string argument)
+        {
+            argument = null;
+            if (!line.Contains(flag))
+                return false;
+            var lineAfterFlag = line.Split(flag)[1].Trim();
+            argument = lineAfterFlag.Split(' ')[0];
+            return true;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        public static async Task getTaxPayers() 
+        {
+            EInvoiceService service = _factory.GetEInvoiceService();
+
+            var request = new Requests.GetTaxpayersByNameRequest(DateTime.Now, "elton");
+            //  request = new Requests.GetTaxpayersByTinRequest(date, "L41316032F")
+ 
+
+            var res = await service.GetTaxPayersAsync(request);
+            var json = JsonConvert.SerializeObject(res, Newtonsoft.Json.Formatting.Indented);
+            _con.WriteLine(json);
         }
  
 
@@ -114,8 +464,11 @@ namespace EInvoice.Console
             var now = DateTime.Now;
             date = new DateTime(now.Year, now.Month, now.Day, now.Hour, now.Minute, now.Second, DateTimeKind.Local);
 
-            
 
+            //var selleNUIS = rInvoice.Invoice.Seller.IDNum;
+            //var buyerNUIS = "K81705022E";
+            var selleNUIS = "L82118024B";
+            var buyerNUIS = "L41316032F";
             var rInvoice = new RegisterInvoiceRequest
             {
                 //Id = "id10",
@@ -183,7 +536,7 @@ namespace EInvoice.Console
                         Address = "seller address",
                         Country = CountryCodeSType.ALB,
                         CountrySpecified = true,
-                        IDNum = "L41316032F",
+                        IDNum = selleNUIS,
                         IDType = IDTypeSType.NUIS,
                         Name = "Seller name",
                         Town = "seller town",
@@ -212,6 +565,7 @@ namespace EInvoice.Console
             //rInvoice.Invoice.IIC = "FFDE6E2A81E2274402E6F9D85B45A188";
             //response.FIC = "57b95dab-fdc9-407d-821b-5a64839f4cd9";
 
+            
 
 
             XmlSerializer xsSubmit = new XmlSerializer(typeof(ExtensionContent));
@@ -264,7 +618,7 @@ namespace EInvoice.Console
                 ID = rInvoice.Invoice.InvNum,
                 IssueDate = date.ToString("yyyy-MM-dd"),
                 DueDate = date.ToString("yyyy-MM-dd"),
-                InvoiceTypeCode = InvoiceTypeCode.CommercialInvoice,
+                //InvoiceTypeCode = InvoiceTypeCode.CommercialInvoice,
                 DocumentCurrencyCode = "ALL",
                 TaxCurrencyCode = "ALL",
                 TaxPointDate = date,
@@ -273,6 +627,9 @@ namespace EInvoice.Console
                     {
                        StartDate = date.ToString("yyyy-MM-dd")
                     }
+                },
+                InvoiceTypeCode = new CodeType { 
+                    Value = Enums.InvoiceTypeCode.CommercialInvoice
                 },
                 //PricingCurrencyCode = new CodeType { },
                 //PaymentCurrencyCode = new CodeType { },
@@ -368,21 +725,21 @@ namespace EInvoice.Console
                         {
                             new PartyIdentificationType
                             {
-                                ID = "9923:" + rInvoice.Invoice.Seller.IDNum,
+                                ID = "9923:" + selleNUIS,
                                 
                             }
                         },
                         EndpointID = new IdentifierType
                         {
                             schemeID = "9923",
-                            Value = rInvoice.Invoice.Seller.IDNum
+                            Value = selleNUIS
                         },
                         PartyLegalEntity = new List<PartyLegalEntityType>
                         {
                             new PartyLegalEntityType
                             {
                                RegistrationName = "Company Ltd.",
-                               CompanyID = "AL"+ rInvoice.Invoice.Seller.IDNum,
+                               CompanyID = "AL"+ selleNUIS,
                             }
                         },
                         PostalAddress = new AddressType
@@ -405,7 +762,7 @@ namespace EInvoice.Console
                         {
                             new PartyTaxSchemeType
                             {
-                                CompanyID = "AL"+ rInvoice.Invoice.Seller.IDNum,
+                                CompanyID = "AL"+ selleNUIS,
                                 TaxScheme = new TaxSchemeType
                                 {
                                     ID = "VAT"
@@ -426,7 +783,7 @@ namespace EInvoice.Console
                         EndpointID = new IdentifierType
                         {
                             schemeID = "9923",
-                            Value = "K81705022E"
+                            Value = buyerNUIS
                         },
 
                         PartyLegalEntity = new List<PartyLegalEntityType>
@@ -434,7 +791,7 @@ namespace EInvoice.Console
                             new PartyLegalEntityType
                             {
                                RegistrationName = "Buyer party name",
-                               CompanyID = "AL"+ "K81705022E",
+                               CompanyID = "AL"+ buyerNUIS,
                             }
                         },
                         PostalAddress = new AddressType
@@ -457,7 +814,7 @@ namespace EInvoice.Console
                         {
                             new PartyTaxSchemeType
                             {
-                                CompanyID = "AL"+ "K81705022E",
+                                CompanyID = "AL"+ buyerNUIS,
                                 TaxScheme = new TaxSchemeType
                                 {
                                     ID = "VAT"
@@ -626,17 +983,7 @@ namespace EInvoice.Console
                             Value = 10
                         }
                     }
-                },
-                //WithholdingTaxTotal = new List<TaxTotalType>
-                //{
-                //    new TaxTotalType {
-                //        TaxAmount = new AmountType
-                //        {
-                //            currencyID = "ALL",
-                //            Value = 10
-                //        }
-                //    }
-                //},            
+                },           
                 LegalMonetaryTotal = new MonetaryTotalType
                 {
                     LineExtensionAmount = new AmountType { currencyID = "ALL", Value = 10 },
@@ -2323,7 +2670,7 @@ namespace EInvoice.Console
 
             return iicInput;
         }
-
+        
         static private string createSignature(string xmlEInvoice)
         {
             XmlDocument xmlDoc = new XmlDocument();
@@ -2331,7 +2678,7 @@ namespace EInvoice.Console
 
             string myfile = "cert";
             string certPass = "123456";//db.Certificate.Select(c => c.certPass).FirstOrDefault().ToString();
-            string certPath = Path.Combine(Environment.CurrentDirectory, "eltonzhuleku.p12"); //Path.Combine(System.Web.HttpContext.Current.Server.MapPath("/Certificate/"), myfile);
+            string certPath = Path.Combine(Environment.CurrentDirectory, CERT); //Path.Combine(System.Web.HttpContext.Current.Server.MapPath("/Certificate/"), myfile);
 
             X509Certificate2Collection collection = new X509Certificate2Collection();
             collection.Import(certPath, certPass, X509KeyStorageFlags.PersistKeySet);

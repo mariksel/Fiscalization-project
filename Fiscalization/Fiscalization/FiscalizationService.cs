@@ -14,92 +14,17 @@ namespace Fiscalization
 {
     public class FiscalizationService
     {
-        FiscalizationClient Client = new FiscalizationClient();
-        public FiscalizationService(string certificatePath)
+        FiscalizationClient Client { get; }
+        public FiscalizationService(CertificateConfigurations certConfigs, FiscalizationClient client )
         {
-            FiscalizationSigner.SetKeyStoreLocation(certificatePath);
+            Client = client;
+            FiscalizationSigner.SetKeyStoreLocation(certConfigs.Path);
         }
-        public async Task RegisterInvoiceAsync(Invoice invoice)
+        public async Task<RegisterInvoiceResponse> RegisterInvoiceAsync(Requests.RegisterInvoiceRequest request)
         {
-
-            InvoiceValidator validator = new InvoiceValidator();
-            var result = validator.Validate(invoice);
-
-            if (!result.IsValid)
-                throw new ValidationException(result.ToString());
-
-            var dateNow = GetDateTimeNow();
-
-            var rInvoice = new RegisterInvoiceRequest
-            {
-                Header = new RegisterInvoiceRequestHeaderType
-                {
-                    UUID = invoice.UUID,
-                    SendDateTime = dateNow,
-                    SubseqDelivType = SubseqDelivTypeSType.SERVICE,
-                    SubseqDelivTypeSpecified = false,
-
-                },
-                Invoice = new InvoiceType
-                {
-                    IsIssuerInVAT = invoice.IsIssuerInVAT,
-                    IIC = invoice.IIC,
-                    IICSignature = invoice.IICSignature,
-                    PayMethods = invoice.PayMethods,
-                    SameTaxes = invoice.SameTaxes,
-                    Buyer = invoice.Buyer,
-                    TypeOfInv = invoice.TypeOfInv,
-                    BusinUnitCode = invoice.BusinUnitCode,
-                    Currency = invoice.Currency,
-                    InvNum = invoice.InvNum,
-                    InvOrdNum = invoice.InvOrdNum,
-                    IssueDateTime = invoice.IssueDateTime,
-                    Items = invoice.Items.Select(item => item.ToInvoiceItemType()).ToArray(),
-                    OperatorCode = invoice.OperatorCode,
-                    PayDeadlineSpecified = invoice.PayDeadlineSpecified,
-                    Seller = invoice.Seller.ToSellerType(),
-                    SoftCode = invoice.SoftCode,
-                    TCRCode = invoice.TCRCode,
-                    TotPrice = invoice.TotPrice,
-                    TotVATAmtSpecified = invoice.TotVATAmtSpecified,
-                    TotPriceWoVAT = invoice.TotPriceWoVAT,
-                    TotVATAmt = invoice.TotVATAmt,
-                    BadDebtInv = invoice.BadDebtInv,
-                    ConsTaxes = invoice.ConsTaxes,
-                    CorrectiveInv = invoice.CorrectiveInv,
-                    Fees = invoice.Fees,
-                    GoodsExAmt = invoice.GoodsExAmt,
-                    GoodsExAmtSpecified = invoice.GoodsExAmtSpecified,
-                    ImpCustDecNum = invoice.ImpCustDecNum,
-                    IsReverseCharge = invoice.IsReverseCharge,
-                    IsSimplifiedInv = invoice.IsSimplifiedInv,
-                    MarkUpAmt = invoice.MarkUpAmt,
-                    MarkUpAmtSpecified = invoice.MarkUpAmtSpecified,
-                    PayDeadline = invoice.PayDeadline,
-                    SumInvIICRefs = invoice.SumInvIICRefs,
-                    SupplyDateOrPeriod = invoice.SupplyDateOrPeriod,
-                    TaxFreeAmt = invoice.TaxFreeAmt,
-                    TaxFreeAmtSpecified = invoice.TaxFreeAmtSpecified,
-                    TypeOfSelfIss = invoice.TypeOfSelfIss,
-                    TypeOfSelfIssSpecified = invoice.TypeOfSelfIssSpecified
-                },
-            };
-
-
-            var response = (await Client.registerInvoiceAsync(rInvoice)).RegisterInvoiceResponse;
-
-           
+            return await Client.RegisterInvoiceAsync(request);
         }
 
-        public async Task RegisterInvoiceSameTimeAsync(Invoice invoice)
-        {
-
-        }
-
-        public async Task RegisterInvoiceLaterTimeAsync(Invoice invoice, SubseqDelivTypeSType problemType)
-        {
-
-        }
 
         public async Task RegisterTCRAsync()
         {
@@ -124,9 +49,16 @@ namespace Fiscalization
             //2020-04-24T23:15:51+02:00
         }
 
+
+
         public static DateTime GetDateTimeNow()
         {
             var date = DateTime.Now;
+            date = GetDateTime(date);
+            return date;
+        }
+        public static DateTime GetDateTime(DateTime date)
+        {
             date = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, DateTimeKind.Local);
             return date;
         }

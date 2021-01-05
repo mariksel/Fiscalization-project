@@ -152,5 +152,46 @@ namespace EInvoice
 
         }
 
+
+        static public string SignUBLInvoice(string ublInvoice)
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.LoadXml(ublInvoice);
+
+
+            XmlElement xmlDocChild = (XmlElement)xmlDoc.GetElementsByTagName("SignatureInformation")[0];
+
+            Reference reference = new Reference();
+            XmlDsigExcC14NTransform innerTransform = new XmlDsigExcC14NTransform(false);
+            reference.AddTransform(new XmlDsigEnvelopedSignatureTransform(false));
+            reference.AddTransform(innerTransform);
+            reference.Uri = "";
+            reference.DigestMethod = "http://www.w3.org/2000/09/xmldsig#sha1";
+
+            // Create a SignedXml object.
+            SignedXml signedXml = new SignedXml(xmlDoc);
+            signedXml.SigningKey = privateKey;
+            signedXml.SignedInfo.CanonicalizationMethod = "http://www.w3.org/TR/2001/REC-xml-c14n-20010315";
+            signedXml.SignedInfo.SignatureMethod = "http://www.w3.org/2000/09/xmldsig#rsa-sha1";
+            signedXml.SignedInfo.AddReference(reference);
+            signedXml.KeyInfo = keyInfo;
+            signedXml.ComputeSignature();
+
+            // Get the XML representation of the signature and save
+            // it to an XmlElement object.
+            XmlElement xmlDigitalSignature = signedXml.GetXml();
+
+            xmlDocChild.AppendChild(xmlDoc.ImportNode(xmlDigitalSignature, true));
+
+            using (var stringWriter = new StringWriter())
+            using (var xmlTextWriter = XmlWriter.Create(stringWriter))
+            {
+                xmlDoc.WriteTo(xmlTextWriter);
+                xmlTextWriter.Flush();
+                return stringWriter.GetStringBuilder().ToString();
+            }
+
+        }
+
     }
 }

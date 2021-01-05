@@ -1,267 +1,73 @@
-﻿using FiscalizationService.SOAP;
+﻿using EnumsNET;
+using Fiscalization.Enums;
+using FiscalizationService.SOAP;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Fiscalization.Models
 {
-    public class Invoice : INotifyPropertyChanged
+    public class Invoice
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-        protected void RaisePropertyChanged(string propertyName)
+
+        public static Invoice CreateInvoice(Seller seller, DateTime issueDateTime, Enums.InvoiceType typeOfInv,
+            string businUnitCode, string tcrCode, string softCode, string operatorCode, int invOrdNum,
+            InvoiceItem[] items, PayMethod[] paymethods, bool isIssuerInVAT)
         {
-            PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
-            if ((propertyChanged != null))
+            var invoice = new Invoice
             {
-                propertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
-        }
-
-
-        public Invoice()
-        {
-            PropertyChanged += (obj, args) =>
-            {
-                switch (args.PropertyName)
-                {
-                    case nameof(IssueDateTime):
-                    case nameof(InvNum):
-                    case nameof(BusinUnitCode):
-                    case nameof(TCRCode):
-                    case nameof(SoftCode):
-                    case nameof(TotPrice):
-                    case nameof(Seller):
-                        GenerateIIC();
-                        break;
-                }
-
+                TypeOfInv = typeOfInv,
+                Seller = seller,
+                IssueDateTime = FiscalizationService.GetDateTime(issueDateTime),
+                BusinUnitCode = businUnitCode,
+                TCRCode = tcrCode,
+                SoftCode = softCode,
+                InvOrdNum = invOrdNum,
+                OperatorCode = operatorCode,
+                Items = items,
+                PayMethods = paymethods,
+                IsIssuerInVAT = isIssuerInVAT
             };
 
-            PropertyChanged += (obj, args) =>
+            GenerateIIC(invoice);
+            invoice.VerifyUrl = GenerateVerifyURL(invoice);
+
+            return invoice;
+        }
+
+        private Invoice() { }
+
+        /// <summary>Lloji i faturës (me, pa para në dorë)</summary>
+        [Required]
+        public Enums.InvoiceType TypeOfInv { get; set; }
+
+        public bool TypeOfSelfIssSpecified { get; private set; }
+        private SelfIss _typeOfSelfIss;
+        /// <summary>Vendosur vetëm nëse është një vetë-faturim</summary>
+        public SelfIss TypeOfSelfIss
+        {
+            get => _typeOfSelfIss;
+            set
             {
-                switch (args.PropertyName)
+                if (value.IsDefined())
                 {
-                    case nameof(Seller):
-                        Seller.PropertyChanged += (obj2, args2) =>
-                        {
-                            switch (args2.PropertyName)
-                            {
-                                case nameof(Seller.IDNum):
-                                    GenerateIIC();
-                                    GenerateVerifyURL();
-                                    break;
-                            }
-
-                        };
-                        GenerateVerifyURL();
-                        break;
-                    case nameof(IIC):
-                    case nameof(IssueDateTime):
-                    case nameof(InvNum):
-                    case nameof(BusinUnitCode):
-                    case nameof(TCRCode):
-                    case nameof(SoftCode):
-                    case nameof(TotPrice):
-                        GenerateVerifyURL();
-                        break;
+                    _typeOfSelfIss = value;
+                    TypeOfSelfIssSpecified = true;
                 }
-
-            };
-           
-
-        }
-
-        public string _UUID = Guid.NewGuid().ToString();
-        public string UUID
-        {
-            get => _UUID;
-            set
-            {
-                _UUID = value;
-                RaisePropertyChanged(nameof(UUID));
             }
         }
 
-        private SupplyDateOrPeriodType supplyDateOrPeriod;
-        public SupplyDateOrPeriodType SupplyDateOrPeriod
-        {
-            get => supplyDateOrPeriod;
-            set
-            {
-                supplyDateOrPeriod = value;
-                RaisePropertyChanged(nameof(SupplyDateOrPeriod));
-            }
-        }
-        private CorrectiveInvType correctiveInv;
-        public CorrectiveInvType CorrectiveInv
-        {
-            get => correctiveInv;
-            set
-            {
-                correctiveInv = value;
-                RaisePropertyChanged(nameof(CorrectiveInv));
-            }
-        }
-        private PayMethodType[] payMethods;
-        public PayMethodType[] PayMethods
-        {
-            get => payMethods;
-            set
-            {
-                payMethods = value;
-                RaisePropertyChanged(nameof(PayMethods));
-            }
-        }
-        private CurrencyType currency;
-        public CurrencyType Currency
-        {
-            get => currency;
-            set
-            {
-                currency = value;
-                RaisePropertyChanged(nameof(Currency));
-            }
-        }
+        /// <summary> Lloji i faturës përfaqëson faturat me para në dorë ose pa para në dorë. </summary>
+        [Required]
+        public bool IsSimplifiedInv { get; set; }
+        [Required]
+        public DateTime IssueDateTime { get; set; }
 
-        private Seller seller;
-        public Seller Seller {
-            get => seller;
-            set
-            {
-                seller = value;
-                RaisePropertyChanged(nameof(Seller));
-            }
-        }
-        private BuyerType buyer;
-        public BuyerType Buyer
-        {
-            get => buyer;
-            set
-            {
-                buyer = value;
-                RaisePropertyChanged(nameof(Buyer));
-            }
-        }
-        private InvoiceItem[] items;
-        /// <summary>
-        /// Lista e artikujve.
-        /// </summary>
-        public InvoiceItem[] Items
-        {
-            get => items;
-            set
-            {
-                items = value;
-                RaisePropertyChanged(nameof(Items));
-            }
-        }
-        private SameTaxType[] sameTaxes;
-        public SameTaxType[] SameTaxes
-        {
-            get => sameTaxes;
-            set
-            {
-                sameTaxes = value;
-                RaisePropertyChanged(nameof(SameTaxes));
-            }
-        }
-        private ConsTaxType[] consTaxes;
-        public ConsTaxType[] ConsTaxes
-        {
-            get => consTaxes;
-            set
-            {
-                consTaxes = value;
-                RaisePropertyChanged(nameof(ConsTaxes));
-            }
-        }
-        private FeeType[] fees;
-        public FeeType[] Fees
-        {
-            get => fees;
-            set
-            {
-                fees = value;
-                RaisePropertyChanged(nameof(Fees));
-            }
-        }
-        private SumInvIICRefType[] sumInvIICRefs;
-        public SumInvIICRefType[] SumInvIICRefs
-        {
-            get => sumInvIICRefs;
-            set
-            {
-                sumInvIICRefs = value;
-                RaisePropertyChanged(nameof(SumInvIICRefs));
-            }
-        }
-        private BadDebtInvType badDebtInv;
-        public BadDebtInvType BadDebtInv
-        {
-            get => badDebtInv;
-            set
-            {
-                badDebtInv = value;
-                RaisePropertyChanged(nameof(BadDebtInv));
-            }
-        }
-        private InvoiceSType typeOfInv;
-        /// <summary>
-        /// Lloji i faturës përfaqëson faturat me para në dorë ose pa para në dorë.
-        /// </summary>
-        public InvoiceSType TypeOfInv
-        {
-            get => typeOfInv;
-            set
-            {
-                typeOfInv = value;
-                RaisePropertyChanged(nameof(TypeOfInv));
-            }
-        }
-        private bool isSimplifiedInv;
-        public bool IsSimplifiedInv
-        {
-            get => isSimplifiedInv;
-            set
-            {
-                isSimplifiedInv = value;
-                RaisePropertyChanged(nameof(IsSimplifiedInv));
-            }
-        }
-        private SelfIssSType typeOfSelfIss;
-        public SelfIssSType TypeOfSelfIss
-        {
-            get => typeOfSelfIss;
-            set
-            {
-                typeOfSelfIss = value;
-                RaisePropertyChanged(nameof(TypeOfSelfIss));
-            }
-        }
-        private bool typeOfSelfIssSpecified;
-        public bool TypeOfSelfIssSpecified
-        {
-            get => typeOfSelfIssSpecified;
-            set
-            {
-                typeOfSelfIssSpecified = value;
-                RaisePropertyChanged(nameof(TypeOfSelfIssSpecified));
-            }
-        }
-        private DateTime issueDateTime = FiscalizationService.GetDateTimeNow();
-        public DateTime IssueDateTime
-        {
-            get => issueDateTime;
-            set
-            {
-                issueDateTime = value;
-                RaisePropertyChanged(nameof(IssueDateTime));
-            }
-        }
-        private string invNum;
         /// <summary>
         /// Numri i faturës i përbërë nga numri rendor, viti i lëshimit të faturës dhe kodi i TCR-së që ka lëshuar faturën, nëse
         /// fatura nuk është e barabartë me “NONCASH”. Numri rendor i faturës është një sekuencë, që i caktohet çdo fature
@@ -270,276 +76,167 @@ namespace Fiscalization.Models
         /// TypeOfInv nuk është e barabartë me NONCASH: 9934/2019/ab123ab123
         /// TypeOfInv është e barabartë me NONCASH: 9934/2019
         /// </summary>
+        [Required]
         public string InvNum
         {
-            get => invNum;
-            set
+            get
             {
-                invNum = value;
-                RaisePropertyChanged(nameof(InvNum));
+                var year = IssueDateTime.Year;
+                if (TypeOfInv == Enums.InvoiceType.NONCASH)
+                    return $"{InvOrdNum}/{year}";
+                else
+                    return $"{InvOrdNum}/{year}/{TCRCode}";
             }
         }
-        private int invOrdNum;
         /// <summary>
         /// Numri rendor i faturës. Numri rendor i faturës është një sekuencë, që i caktohet çdo fature të re, kështu që faturat
         /// të mund të numërohen.Sekuenca rivendoset në fillim të çdo viti.
         /// </summary>
-        public int InvOrdNum
-        {
-            get => invOrdNum;
-            set
-            {
-                invOrdNum = value;
-                RaisePropertyChanged(nameof(InvOrdNum));
-            }
-        }
-        private string _TCRCode;
+        [Required]
+        public int InvOrdNum { get; set; }
+        public bool IsIssuerInVAT { get; set; }
+        public SupplyDateOrPeriod SupplyDateOrPeriod { get; set; }
+        /// <summary>
+        /// Referenca në NSLF (IIC) e faturës origjinale. 
+        /// Vendoset vetëm nëse kjo është një faturë korrigjuese e faturës origjinale që duhet të ndryshohet.
+        /// </summary>
+        public CorrectiveInvoice CorrectiveInv { get; set; }
+        [Required, MinLength(1), MaxLength(10)]
+        public PayMethod[] PayMethods { get; set; }
+        public Currency Currency { get; set; }
+        [Required]
+        public Seller Seller { get; set; }
+        public Buyer Buyer { get; set; }
+        /// <summary> Lista e artikujve. </summary>
+        [Required, MinLength(1), MaxLength(1000)]
+        public InvoiceItem[] Items { get; set; }
+        /// <summary>
+        /// Elementi XML që përfaqëson listën e artikujve të grumbulluar për të njëjtën normë TVSH-je ose përjashtim nga TVSH-ja
+        /// </summary>
+        public SameTax[] SameTaxes { get; set; }
+        public ConsTax[] ConsTaxes { get; set; }
+        [MaxLength(20)]
+        public Fee[] Fees { get; set; }
+        public SumInvIICRef[] SumInvIICRefs { get; set; }
+        public BadDebtInv BadDebtInv { get; set; }
+        
         /// <summary>
         /// Kodi i pajisjes që lëshon faturën.
         /// Modeli: [a-z]{2}[0-9]{3}[a-z]{2}[0-9]{3} .
         /// Shembull: ab123ab123 .
         /// </summary>
-        public string TCRCode
-        {
-            get => _TCRCode;
+        public string TCRCode { get; set; }
+
+        public bool TaxFreeAmtSpecified { get; private set; } = false;
+        private decimal _taxFreeAmt;
+        public decimal TaxFreeAmt { 
+            get => _taxFreeAmt;
             set
             {
-                _TCRCode = value;
-                RaisePropertyChanged(nameof(TCRCode));
+                _taxFreeAmt = value;
+                TaxFreeAmtSpecified = true;
             }
         }
-        private bool isIssuerInVAT;
-        public bool IsIssuerInVAT
-        {
-            get => isIssuerInVAT;
+
+        public bool MarkUpAmtSpecified { get; private set; }
+        private decimal _markUpAmt;
+        /// <summary>
+        /// Shuma totale që i përket procedurës së veçantë të skemës së marzhit në faturë si numër dhjetor (shuma e tatueshme). 
+        /// Marzhi për mallrat e përdorura, veprat e artit, koleksionet ose antikuaret.
+        /// </summary>
+        public decimal MarkUpAmt { 
+            get => _markUpAmt;
             set
             {
-                isIssuerInVAT = value;
-                RaisePropertyChanged(nameof(IsIssuerInVAT));
+                _markUpAmt = value;
+                MarkUpAmtSpecified = true;
             }
         }
-        private decimal taxFreeAmt;
-        public decimal TaxFreeAmt
-        {
-            get => taxFreeAmt;
+
+        public bool GoodsExAmtSpecified { get; private set; } = false;
+        private decimal _goodsExAmt;
+        /// <summary>
+        /// Çmimi total i furnizimit të mallrave të eksportuara. Nuk ka TVSH në faturë.
+        /// </summary>
+        public decimal GoodsExAmt { 
+            get => _goodsExAmt;
             set
             {
-                taxFreeAmt = value;
-                RaisePropertyChanged(nameof(TaxFreeAmt));
-            }
+                _goodsExAmt = value;
+                GoodsExAmtSpecified = true;
+            } 
         }
-        private bool taxFreeAmtSpecified;
-        public bool TaxFreeAmtSpecified
-        {
-            get => taxFreeAmtSpecified;
+
+        /// <summary>Çmimi total i faturës pa TVSH</summary>
+        [Required]
+        public decimal TotPriceWoVAT { get; set; }
+
+        public bool TotVATAmtSpecified { get; private set; } = false;
+        private decimal _totVATAmt;
+        /// <summary>Shuma totale e TVSH-së së faturës</summary>
+        public decimal TotVATAmt { 
+            get => _totVATAmt;
             set
             {
-                taxFreeAmtSpecified = value;
-                RaisePropertyChanged(nameof(TaxFreeAmtSpecified));
+                _totVATAmt = value;
+                TotVATAmtSpecified = true;
             }
         }
-        private decimal markUpAmt;
-        public decimal MarkUpAmt
-        {
-            get => markUpAmt;
-            set
-            {
-                markUpAmt = value;
-                RaisePropertyChanged(nameof(MarkUpAmt));
-            }
-        }
-        private bool markUpAmtSpecified;
-        public bool MarkUpAmtSpecified
-        {
-            get => markUpAmtSpecified;
-            set
-            {
-                markUpAmtSpecified = value;
-                RaisePropertyChanged(nameof(MarkUpAmtSpecified));
-            }
-        }
-        private decimal goodsExAmt;
-        public decimal GoodsExAmt
-        {
-            get => goodsExAmt;
-            set
-            {
-                goodsExAmt = value;
-                RaisePropertyChanged(nameof(GoodsExAmt));
-            }
-        }
-        private bool goodsExAmtSpecified;
-        public bool GoodsExAmtSpecified
-        {
-            get => goodsExAmtSpecified;
-            set
-            {
-                goodsExAmtSpecified = value;
-                RaisePropertyChanged(nameof(GoodsExAmtSpecified));
-            }
-        }
-        private decimal totPriceWoVAT;
-        public decimal TotPriceWoVAT
-        {
-            get => totPriceWoVAT;
-            set
-            {
-                totPriceWoVAT = value;
-                RaisePropertyChanged(nameof(TotPriceWoVAT));
-            }
-        }
-        private decimal totVATAmt;
-        public decimal TotVATAmt
-        {
-            get => totVATAmt;
-            set
-            {
-                totVATAmt = value;
-                RaisePropertyChanged(nameof(TotVATAmt));
-            }
-        }
-        private bool totVATAmtSpecified;
-        public bool TotVATAmtSpecified
-        {
-            get => totVATAmtSpecified;
-            set
-            {
-                totVATAmtSpecified = value;
-                RaisePropertyChanged(nameof(TotVATAmtSpecified));
-            }
-        }
-        private decimal totPrice;
-        public decimal TotPrice
-        {
-            get => totPrice;
-            set
-            {
-                totPrice = value;
-                RaisePropertyChanged(nameof(TotPrice));
-            }
-        }
-        private string operatorCode;
-        public string OperatorCode
-        {
-            get => operatorCode;
-            set
-            {
-                operatorCode = value;
-                RaisePropertyChanged(nameof(OperatorCode));
-            }
-        }
-        private string businUnitCode;
+
+        /// <summary>Çmimi total i të gjithë artikujve përfshirë tatimet dhe zbritjet</summary>
+        [Required]
+        public decimal TotPrice => Items.Sum(item => item.PA);
+
+        [Required]
+        public string OperatorCode { get; set; }
         /// <summary>
         /// Kodi i vendit të ushtrimit të veprimtarisë së biznesit në të cilin është lëshuar fatura.
         /// Gjatësia 10 karaktere
         /// [a-z]{2}[0-9]{3}[a-z]{2}[0-9]{3}
         /// Shembull ab123ab123
         /// </summary>
-        public string BusinUnitCode
-        {
-            get => businUnitCode;
-            set
-            {
-                businUnitCode = value;
-                RaisePropertyChanged(nameof(BusinUnitCode));
-            }
-        }
-        private string softCode;
+        [Required]
+        public string BusinUnitCode { get; set; }
         /// <summary>
         /// Kodi i softuerit të përdorur për lëshimin e faturës.
         /// [a-z]{2}[0-9]{3}[a-z]{2}[0-9]{3}
         /// Shembull ab123ab123
         /// </summary>
-        public string SoftCode
-        {
-            get => softCode;
+        public string SoftCode { get; set; }
+        public string ImpCustDecNum { get; set; }
+        [Required]
+        public string IIC { get; set; }
+        [Required]
+        public string IICSignature { get; set; }
+        /// <summary>
+        /// Nëse është e vërtetë, blerësi është i detyruar të paguajë TVSH-në.
+        /// </summary>
+        public bool IsReverseCharge { get; set; }
+
+        public bool PayDeadlineSpecified { get; private set; } = false;
+        private DateTime _payDeadline;
+        public DateTime PayDeadline { 
+            get => _payDeadline;
             set
             {
-                softCode = value;
-                RaisePropertyChanged(nameof(SoftCode));
-            }
-        }
-        private string impCustDecNum;
-        public string ImpCustDecNum
-        {
-            get => impCustDecNum;
-            set
-            {
-                impCustDecNum = value;
-                RaisePropertyChanged(nameof(ImpCustDecNum));
-            }
-        }
-        private string _IIC;
-        public string IIC
-        {
-            get => _IIC;
-            private set
-            {
-                _IIC = value;
-                RaisePropertyChanged(nameof(IIC));
-            }
-        }
-        private string _IICSignature;
-        public string IICSignature
-        {
-            get => _IICSignature;
-            private set
-            {
-                _IICSignature = value;
-                RaisePropertyChanged(nameof(IICSignature));
-            }
-        }
-        private bool isReverseCharge;
-        public bool IsReverseCharge
-        {
-            get => isReverseCharge;
-            set
-            {
-                isReverseCharge = value;
-                RaisePropertyChanged(nameof(IsReverseCharge));
-            }
-        }
-        private DateTime payDeadline;
-        public DateTime PayDeadline
-        {
-            get => payDeadline;
-            set
-            {
-                payDeadline = value;
-                RaisePropertyChanged(nameof(PayDeadline));
-            }
-        }
-        private bool payDeadlineSpecified;
-        public bool PayDeadlineSpecified
-        {
-            get => payDeadlineSpecified;
-            set
-            {
-                payDeadlineSpecified = value;
-                RaisePropertyChanged(nameof(PayDeadlineSpecified));
-            }
+                _payDeadline = value;
+                PayDeadlineSpecified = true;
+            } 
         }
 
-        private string verifyUrl;
-        public string VerifyUrl
-        {
-            get => verifyUrl;
-            private set
-            {
-                verifyUrl = value;
-                RaisePropertyChanged(nameof(VerifyUrl));
-            }
-        }
+        public string VerifyUrl { get; set; }
 
-        private void GenerateIIC()
+        private static void GenerateIIC(Invoice invoice)
         {
-            var iicInput = CreateIICInput();
+            var iicInput = CreateIICInput(invoice);
             if (iicInput == null)
                 return;
-            IIC = FiscalizationSigner.GenerateIIC(iicInput);
-            IICSignature = FiscalizationSigner.SignIICSignature(iicInput);
+            invoice.IIC = FiscalizationSigner.GenerateIIC(iicInput);
+            invoice.IICSignature = FiscalizationSigner.SignIICSignature(iicInput);
         }
-        public string CreateIICInput()
+
+
+        public static string CreateIICInput(Invoice invoice)
         {
             // Issuer NUIS(Chapter 3.7.1.51)
             // Date and time created(Chapter 3.7.1.8)
@@ -549,56 +246,56 @@ namespace Fiscalization.Models
             // Software code(Chapter 3.7.1.22)86 | 118
             // Total price(Chapter 3.7.1.19)
 
-            if (InvNum is null || Seller is null)
+            if (invoice.InvNum is null || invoice.Seller is null)
                 return null;
 
             // Issuer NUIS
-            string iicInput = Seller.IDNum;
+            string iicInput = invoice.Seller.IDNum;
 
             // dateTimeCreated
-            iicInput += "|" + FiscalizationService.GetDatetimeISO8601(IssueDateTime);
+            iicInput += "|" + FiscalizationService.GetDatetimeISO8601(invoice.IssueDateTime);
 
             // invoiceNumber
-            iicInput += "|" + Regex.Match(InvNum, @"\A([0-9]{0,10})", RegexOptions.Singleline).Value;
+            iicInput += "|" + Regex.Match(invoice.InvNum, @"\A([0-9]{0,10})", RegexOptions.Singleline).Value;
 
             // busiUnitCode
-            iicInput += "|" + BusinUnitCode;
+            iicInput += "|" + invoice.BusinUnitCode;
 
             // tcrCode
-            iicInput += "|" + TCRCode;
+            iicInput += "|" + invoice.TCRCode;
 
             // softCode
-            iicInput += "|" + SoftCode;
+            iicInput += "|" + invoice.SoftCode;
 
             // totalPrice
-            iicInput += "|" + TotPrice;
+            iicInput += "|" + invoice.TotPrice;
 
             return iicInput;
         }
 
-        public string GenerateVerifyURL()
+        public static string GenerateVerifyURL(Invoice invoice)
         {
-            if (InvNum is null || Seller is null)
+            if (invoice.InvNum is null || invoice.Seller is null)
                 return null;
 
             // This is QR Code
             string baseUrl = @"https://efiskalizimi-app-test.tatime.gov.al/invoice-check/#/verify?";
 
-            baseUrl += "iic=" + IIC + "&";
+            baseUrl += "iic=" + invoice.IIC + "&";
 
-            baseUrl += "tin=" + Seller.IDNum + "&";
+            baseUrl += "tin=" + invoice.Seller.IDNum + "&";
 
-            baseUrl += "crtd=" + FiscalizationService.GetDatetimeISO8601(IssueDateTime) + "&";
+            baseUrl += "crtd=" + FiscalizationService.GetDatetimeISO8601(invoice.IssueDateTime) + "&";
 
-            baseUrl += "ord=" + Regex.Match(InvNum, @"\A([0-9]{0,10})", RegexOptions.Singleline).Value + "&";
+            baseUrl += "ord=" + Regex.Match(invoice.InvNum, @"\A([0-9]{0,10})", RegexOptions.Singleline).Value + "&";
 
-            baseUrl += "bu=" + BusinUnitCode + "&";
+            baseUrl += "bu=" + invoice.BusinUnitCode + "&";
 
-            baseUrl += "cr=" + TCRCode + "&";
+            baseUrl += "cr=" + invoice.TCRCode + "&";
 
-            baseUrl += "sw=" + SoftCode + "&";
+            baseUrl += "sw=" + invoice.SoftCode + "&";
 
-            baseUrl += "prc=" + TotPrice.ToString("F", CultureInfo.InvariantCulture);
+            baseUrl += "prc=" + invoice.TotPrice.ToString("F", CultureInfo.InvariantCulture);
 
             return baseUrl;
         }

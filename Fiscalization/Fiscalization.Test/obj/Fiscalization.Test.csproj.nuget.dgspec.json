@@ -120,9 +120,21 @@
         "netstandard2.0": {
           "targetAlias": "netstandard2.0",
           "dependencies": {
+            "AutoMapper": {
+              "target": "Package",
+              "version": "[10.1.1, )"
+            },
+            "Enums.NET": {
+              "target": "Package",
+              "version": "[3.0.3, )"
+            },
             "FluentValidation": {
               "target": "Package",
               "version": "[9.2.2, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[5.0.1, )"
             },
             "NETStandard.Library": {
               "suppressParent": "All",

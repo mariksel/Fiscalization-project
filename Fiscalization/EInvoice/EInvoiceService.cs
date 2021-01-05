@@ -1,4 +1,8 @@
-﻿using EInvoice.SOAP;
+﻿using EInvoice.Models;
+using EInvoice.Requests;
+using EInvoice.Responses;
+using EInvoice.SOAP;
+using Fiscalization.Models;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,33 +12,43 @@ namespace EInvoice
 {
     public class EInvoiceService
     {
-        EInvoiceClient Client = new EInvoiceClient();
-        public EInvoiceService(string certificatePath)
+        protected EInvoiceClient Client { get; }
+        public EInvoiceService(CertificateConfigurations certConfigs, EInvoiceClient client)
         {
-            
-            FiscalizationSigner.SetKeyStoreLocation(certificatePath);
+            Client = client;
+            FiscalizationSigner.SetKeyStoreLocation(certConfigs.Path);
         }
 
-        public async Task<RegisterEinvoiceResponse> RegisterEinvoiceAsync(RegisterEinvoiceRequest rEInvoice)
+        public async Task<RegisterEInvoiceResponse> RegisterEinvoiceAsync(RegisterEInvoiceRequest request)
         {
-            return (await Client.registerEinvoiceAsync(rEInvoice))
-                .RegisterEinvoiceResponse;
+            return await Client.RegisterEInvoiceAsync(request);
         }
 
-        public async Task<GetEinvoicesResponse> RegisterEinvoiceAsync(GetEinvoicesRequest request)
+        public async Task<GetEInvoicesResponse> GetEInvoicesAsync(GetEInvoicesRequest request)
         {
-            return (await Client.getEinvoicesAsync(request)).GetEinvoicesResponse;
+            return await Client.GetEInvoicesAsync(request);
         }
 
-        public async Task<GetTaxpayersResponse> GetTaxPayers(GetTaxpayersRequest request)
+        public async Task<Responses.GetTaxpayersResponse> GetTaxPayersAsync(Requests.GetTaxpayersRequest request)
         {
-            return (await Client.getTaxpayersAsync(request)).GetTaxpayersResponse;
+            var res = await Client.GetTaxpayersAsync(request);
+            return res;
+        }
+
+        public async Task<EInvoiceChangeStatusResponse> EInvoiceChangeStatusAsync(EInvoiceChangeStatusRequest request)
+        {
+            return await Client.EInvoiceChangeStatusAsync(request);
         }
 
 
         public static DateTime GetDateTimeNow()
         {
             var date = DateTime.Now;
+            date = GetDateTime(date);
+            return date;
+        }
+        public static DateTime GetDateTime(DateTime date)
+        {
             date = new DateTime(date.Year, date.Month, date.Day, date.Hour, date.Minute, date.Second, DateTimeKind.Local);
             return date;
         }
