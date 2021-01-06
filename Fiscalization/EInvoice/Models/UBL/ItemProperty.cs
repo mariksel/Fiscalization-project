@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UblSharp.CommonAggregateComponents;
 
 namespace EInvoice.Models.UBL
 {
@@ -16,5 +17,14 @@ namespace EInvoice.Models.UBL
         /// Such as "Red".
         /// </summary>
         public string Value { get; set; }
+
+        public ItemPropertyType ToItemPropertyType()
+        {
+            return new ItemPropertyType
+            {
+                Name = Name,
+                Value = Value
+            };
+        }
     }
 }

@@ -31,8 +31,9 @@ namespace EInvoice.AutoMapper
 
             CreateMap<RegisterEInvoiceRequest, RegisterEinvoiceRequest>();
             CreateMap<RegisterEInvoiceRequestHeader, RegisterEinvoiceRequestHeaderType>();
-            CreateMap<RegisterEInvoiceResponse, RegisterEinvoiceResponse>();
-            CreateMap<Warning, WarningType>();
+            CreateMap<RegisterEinvoiceResponse, RegisterEInvoiceResponse>();
+            CreateMap<RegisterEinvoiceResponseHeaderType, RegisterEInvoiceResponseHeader>();
+            CreateMap< WarningType, Warning>();
             CreateMap<EInvoiceEnvelope, EinvoiceEnvelopeType>();
             
 

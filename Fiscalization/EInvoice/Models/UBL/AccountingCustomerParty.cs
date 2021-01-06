@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Fiscalization.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UblSharp.CommonAggregateComponents;
@@ -9,9 +10,23 @@ namespace EInvoice.Models.UBL
     {
         public Party Party { get; set; }
 
-        public AccountingCustomerParty(string nuis)
+        public AccountingCustomerParty(Buyer buyer)
         {
-            Party = new Party(nuis);
+            var postalAddress = new PostalAddress
+            {
+                StreetName = buyer.Address,
+                CityName = buyer.Town,
+                //PostalZone = seller.
+                //CountrySubentity = "Tirana",
+
+                
+            };
+            if (buyer.Country.HasValue)
+                postalAddress.Country = new Country
+                {
+                    IdentificationCode = buyer.Country.Value
+                };
+            Party = new Party(buyer.IDNum, buyer.Name, postalAddress);
         }
         public CustomerPartyType ToSupplierPartyType()
         {

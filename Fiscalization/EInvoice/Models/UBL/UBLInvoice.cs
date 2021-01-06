@@ -5,9 +5,11 @@ using Fiscalization.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using UblSharp.CommonAggregateComponents;
+using UblSharp.UnqualifiedDataTypes;
 
 namespace EInvoice.Models.UBL
 {
@@ -123,25 +125,76 @@ namespace EInvoice.Models.UBL
         /// <summary>
         /// TOTAL AMOUNTS
         /// A set of business terms that provide information on the total monetary amount of the invoice.
+        /// Cardinality 1..1
         /// </summary>
-        public LegalMonetaryTotal LegalMonetaryTotal { get; set; }
-        public TaxTotal[] TaxTotal { get; set; }
+        [Required]
+        public LegalMonetaryTotal LegalMonetaryTotal { get; }
+        public TaxTotal[] TaxTotal { get; }
 
-        public UBLInvoice(Invoice invoice)
+        public List<TextType> Note { get; private set; }
+
+        public UBLInvoice(Invoice invoice, string FIC)
         {
-
-            InvoiceLine = invoice.Items.Select(m =>
-            {
-                return new InvoiceLine
-                {
-                    ID = m.Id,
-
-                };
-            }).ToArray();
+            var currencyCode = invoice.Currency.Code;
+            InvoiceLine = invoice.Items.Select(item => new InvoiceLine(item, currencyCode)).ToArray();
+            var totalNetAmount = InvoiceLine.Sum(line => line.LineExtensionAmount.Value);
+            var totalAmountWithVat = InvoiceLine.Sum(line => line.Price.PriceAmount.Value);
             LegalMonetaryTotal = new LegalMonetaryTotal
             {
-
+                LineExtensionAmount = new Amount{
+                    currencyID = currencyCode,
+                    Value = totalNetAmount
+                },
+                TaxExclusiveAmount = new Amount
+                {
+                    currencyID = currencyCode,
+                    Value = totalNetAmount
+                },
+                TaxInclusiveAmount = new Amount
+                {
+                    currencyID = currencyCode,
+                    Value = totalAmountWithVat
+                },
+                PayableAmount = new Amount
+                {
+                    currencyID = currencyCode,
+                    Value = totalAmountWithVat
+                }
             };
+
+            var groups = InvoiceLine.GroupBy(
+                i => i.Item.ClassifiedTaxCategory.ID,
+                i => i,
+                (key, g) => new { 
+                    Category = key, 
+                    TaxCategory = g.First().Item.ClassifiedTaxCategory, 
+                    Lines = g.ToList() 
+                } );
+
+            var subtotals = new List<TaxSubtotal>();
+
+            foreach(var g in groups)
+            {
+                var subtotal = new TaxSubtotal();
+                subtotal.TaxCategory = new TaxCategory
+                {
+                    ID = g.Category,
+                    Percent = g.TaxCategory.Percent,
+                    TaxExemptionReason = g.TaxCategory.TaxExemptionReason,
+                    TaxExemptionReasonCode = g.TaxCategory.TaxExemptionReasonCode,
+                    TaxScheme = g.TaxCategory.TaxScheme
+                };
+                subtotal.TaxableAmount = new Amount
+                {
+                    currencyID = currencyCode,
+                    Value = g.Lines.Sum(line => line.LineExtensionAmount.Value)
+                };
+                subtotals.Add(subtotal);
+            }
+
+            TaxTotal = new TaxTotal[1];
+            TaxTotal[0] = new TaxTotal(subtotals.ToArray());
+            Note = _createNoteTypes(invoice, FIC);
         }
 
         public UblSharp.InvoiceType ToInvoiceType()
@@ -153,30 +206,73 @@ namespace EInvoice.Models.UBL
                 InvoiceTypeCode = InvoiceTypeCode.AsString(EnumFormat.Description),
                 DocumentCurrencyCode = DocumentCurrencyCode.AsString(EnumFormat.Name),
                 TaxPointDate = TaxPointDate.ToString("yyyy-MM-dd"),
-                InvoicePeriod = new List<PeriodType>{ InvoicePeriod.ToPeriodType() },
+                InvoicePeriod = new List<PeriodType>{ InvoicePeriod?.ToPeriodType() },
                 DueDate = Dued.ToString("yyyy-MM-dd"),
                 BuyerReference = BuyerReference,
-                ProjectReference = new List<ProjectReferenceType>{ ProjectReference.ToProjectReferenceType() },
-                ContractDocumentReference = new List<DocumentReferenceType>{ ContractDocumentReference.ToDocumentReferenceType() },
-                OrderReference = OrderReference.ToOrderReferenceType(),
-                ReceiptDocumentReference = new List<DocumentReferenceType> { ReceiptDocumentReference.ToDocumentReferenceType() },
-                DespatchDocumentReference = new List<DocumentReferenceType> { DespatchDocumentReference.ToDocumentReferenceType() },
-                OriginatorDocumentReference = new List<DocumentReferenceType> { OriginatorDocumentReference.ToDocumentReferenceType() },
-                AdditionalDocumentReference = new List<DocumentReferenceType> { AdditionalDocumentReference.ToDocumentReferenceType() },
+                ProjectReference = new List<ProjectReferenceType>{ ProjectReference?.ToProjectReferenceType() },
+                ContractDocumentReference = new List<DocumentReferenceType>{ ContractDocumentReference?.ToDocumentReferenceType() },
+                OrderReference = OrderReference?.ToOrderReferenceType(),
+                ReceiptDocumentReference = new List<DocumentReferenceType> { ReceiptDocumentReference?.ToDocumentReferenceType() },
+                DespatchDocumentReference = new List<DocumentReferenceType> { DespatchDocumentReference?.ToDocumentReferenceType() },
+                OriginatorDocumentReference = new List<DocumentReferenceType> { OriginatorDocumentReference?.ToDocumentReferenceType() },
+                AdditionalDocumentReference = new List<DocumentReferenceType> { AdditionalDocumentReference?.ToDocumentReferenceType() },
                 InvoiceLine = InvoiceLine.Select(m => m.ToInvoiceLineType()).ToList(),
                 AccountingCost = AccountingCharge,
-                PaymentTerms = new List<PaymentTermsType> { PaymentTerms.ToPaymentTermsType() },
+                PaymentTerms = new List<PaymentTermsType> { PaymentTerms?.ToPaymentTermsType() },
                 ProfileID = ProfileID.AsString(),
                 CustomizationID = CustomizationID,
-                BillingReference = new List<BillingReferenceType> { BillingReference.ToBillingReferenceType() },
-                AccountingSupplierParty = AccountingSupplierParty.ToSupplierPartyType(),
-                AccountingCustomerParty = AccountingCustomerParty.ToSupplierPartyType(),
+                BillingReference = new List<BillingReferenceType> { BillingReference?.ToBillingReferenceType() },
+                AccountingSupplierParty = AccountingSupplierParty?.ToSupplierPartyType(),
+                AccountingCustomerParty = AccountingCustomerParty?.ToSupplierPartyType(),
                 PaymentMeans = new List<PaymentMeansType> { PaymentMeans.ToPaymentMeansType() },
-                AllowanceCharge = new List<AllowanceChargeType> { AllowanceCharge.ToAllowanceChargeType() },
+                AllowanceCharge = new List<AllowanceChargeType> { AllowanceCharge?.ToAllowanceChargeType() },
                 LegalMonetaryTotal = LegalMonetaryTotal.ToMonetaryTotalType(),
-                TaxTotal = TaxTotal.Select(m => m.ToTaxTotalType()).ToList()
+                TaxTotal = TaxTotal.Select(m => m.ToTaxTotalType()).ToList(),
+                Note = Note
             };
             return ublInvoiceType;
+        }
+
+        private static List<TextType> _createNoteTypes(Invoice invoice, string fic)
+        {
+
+            List<TextType> noteTypes = new List<TextType>
+            {
+                new TextType
+                {
+                    Value = "IssueDateTime=" + invoice.IssueDateTime.ToString("yyyy-MM-ddTHH:mm:ssK", CultureInfo.InvariantCulture) + "#AAI#"
+                },
+                new TextType
+                {
+                    Value = "OperatorCode=" + invoice.OperatorCode + "#AAI#"
+                },
+                new TextType
+                {
+                    Value = "BusinessUnitCode=" + invoice.BusinUnitCode + "#AAI#"
+                },
+                new TextType
+                {
+                    Value = "SoftwareCode=" + invoice.SoftCode + "#AAI#"
+                },
+                new TextType
+                {
+                    Value = "IsBadDebtInv=false#AAI#"
+                },
+                new TextType
+                {
+                    Value = "IIC=" + invoice.IIC + "#AAI#"
+                },
+                new TextType
+                {
+                    Value = "FIC=" + fic + "#AAI#"
+                },
+                new TextType
+                {
+                    Value = "IICSignature=" + invoice.IICSignature + "#AAI#"
+                },
+            };
+
+            return noteTypes;
         }
     }
 }

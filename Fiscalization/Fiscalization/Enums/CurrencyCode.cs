@@ -6,6 +6,7 @@ namespace Fiscalization.Enums
 {
     public enum CurrencyCode
     {
+        ALL,
         AED,
         AFN,
         AMD,

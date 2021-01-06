@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using UblSharp.CommonAggregateComponents;
 
@@ -12,7 +13,9 @@ namespace EInvoice.Models.UBL
     {
         /// <summary>
         /// Total of all Net Amounts for Invoice Items
+        /// Cardinality 1..1
         /// </summary>
+        [Required]
         public Amount LineExtensionAmount { get; set; }
         /// <summary>
         /// Total of all Document-level discounts on an invoice.
@@ -28,13 +31,17 @@ namespace EInvoice.Models.UBL
         /// Total amount of an invoice, not including VAT.
         /// The total amount of an invoice without VAT is the total net amount of the invoice items, 
         /// minus the total of the document-level discounts and plus the total of document-level Charges.
+        /// Cardinality 1..1
         /// </summary>
+        [Required]
         public Amount TaxExclusiveAmount { get; set; }
         /// <summary>
         /// The total amount of an invoice with VAT included.
         /// The total amount of VAT invoiced is the total amount of and invoice without VAT, 
         /// plus the total VAT amount for the invoice.
+        /// Cardinality 1..1
         /// </summary>
+        [Required]
         public Amount TaxInclusiveAmount { get; set; }
         /// <summary>
         /// Total of prepaid amounts.
@@ -51,21 +58,23 @@ namespace EInvoice.Models.UBL
         /// This amount is the total amount of the invoice with VAT deducted for the prepaid amount. 
         /// The amount is zero in the case of a fully paid invoice. 
         /// The amount may be negative, in which case the Seller owes that amount to the Buyer.
+        /// Cardinality 1..1
         /// </summary>
+        [Required]
         public Amount PayableAmount { get; set; }
 
         public MonetaryTotalType ToMonetaryTotalType()
         {
             return new MonetaryTotalType
             {
-                LineExtensionAmount = LineExtensionAmount.ToAmountType(),
-                AllowanceTotalAmount = AllowanceTotalAmount.ToAmountType(),
-                ChargeTotalAmount = ChargeTotalAmount.ToAmountType(),
-                TaxExclusiveAmount = TaxExclusiveAmount.ToAmountType(),
-                TaxInclusiveAmount = TaxInclusiveAmount.ToAmountType(),
-                PrepaidAmount = PrepaidAmount.ToAmountType(),
-                PayableRoundingAmount = PayableRoundingAmount.ToAmountType(),
-                PayableAmount = PayableAmount.ToAmountType(),
+                LineExtensionAmount = LineExtensionAmount?.ToAmountType(),
+                AllowanceTotalAmount = AllowanceTotalAmount?.ToAmountType(),
+                ChargeTotalAmount = ChargeTotalAmount?.ToAmountType(),
+                TaxExclusiveAmount = TaxExclusiveAmount?.ToAmountType(),
+                TaxInclusiveAmount = TaxInclusiveAmount?.ToAmountType(),
+                PrepaidAmount = PrepaidAmount?.ToAmountType(),
+                PayableRoundingAmount = PayableRoundingAmount?.ToAmountType(),
+                PayableAmount = PayableAmount?.ToAmountType(),
             };
         }
 

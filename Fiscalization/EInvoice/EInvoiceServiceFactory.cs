@@ -18,6 +18,7 @@ namespace EInvoice
            .AddSingleton<EInvoiceClient>()
            .AddSingleton<EInvoiceService>()
            .AddSingleton<UBLService>()
+           .AddSingleton<EInvoiceFactory>()
            .AddAutoMapper(config => {
                config.AllowNullCollections = true;
            },typeof(EInvoiceServiceFactory));
@@ -26,6 +27,7 @@ namespace EInvoice
         }
         
         public EInvoiceService EInvoiceService => ServiceProvider.GetRequiredService<EInvoiceService>();
+        public EInvoiceFactory EInvoiceFactory => ServiceProvider.GetRequiredService<EInvoiceFactory>();
         public UBLService UBLService => ServiceProvider.GetRequiredService<UBLService>();
 
 

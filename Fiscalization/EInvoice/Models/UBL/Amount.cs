@@ -1,4 +1,6 @@
-﻿using System;
+﻿using EnumsNET;
+using Fiscalization.Enums;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using UblSharp.UnqualifiedDataTypes;
@@ -7,7 +9,7 @@ namespace EInvoice.Models.UBL
 {
     public class Amount
     {
-        public string currencyID { get; set; }
+        public CurrencyCode currencyID { get; set; }
         public decimal Value { get; set; }
 
         public static Amount operator *(Amount a, decimal d)
@@ -21,8 +23,8 @@ namespace EInvoice.Models.UBL
         {
             return new AmountType
             {
-                Value = Value,
-                currencyID = currencyID
+                Value = decimal.Round(Value, 2),
+                currencyID = currencyID.AsString()
             };
         }
     }

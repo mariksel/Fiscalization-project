@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UblSharp.UnqualifiedDataTypes;
 
 namespace EInvoice.Models.UBL
 {
@@ -16,5 +17,22 @@ namespace EInvoice.Models.UBL
         public string listURI { get; set; }
         public string listSchemeURI { get; set; }
         public string Value { get; set; }
+
+        public CodeType ToCodeType()
+        {
+            return new CodeType
+            {
+                listID = listID,
+                listAgencyID = listAgencyID,
+                listAgencyName = listAgencyName,
+                listName = listName,
+                listVersionID = listVersionID,
+                name = name,
+                languageID = languageID,
+                listURI = listURI,
+                listSchemeURI = listSchemeURI,
+                Value = Value
+            };
+        }
     }
 }

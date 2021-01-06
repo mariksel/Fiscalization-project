@@ -26,12 +26,12 @@ namespace EInvoice.Models.UBL
         /// Initial delivery date of goods or services
         /// [yyyy-MM-dd]
         /// </summary>
-        public DateTime StartDate { get; set; }
+        public DateTime? StartDate { get; set; }
         /// <summary>
         /// Date of delivery of goods or execution of services.
         /// [yyyy-MM-dd]
         /// </summary>
-        public DateTime EndDate { get; set; }
+        public DateTime? EndDate { get; set; }
 
         public PeriodType ToPeriodType()
         {
@@ -40,8 +40,8 @@ namespace EInvoice.Models.UBL
                 DescriptionCode = new List<CodeType> {
                     DescriptionCode.AsString(EnumFormat.Description)
                 },
-                StartDate = StartDate.ToString("yyyy-MM-dd"),
-                EndDate = EndDate.ToString("yyyy-MM-dd"),
+                StartDate = StartDate?.ToString("yyyy-MM-dd"),
+                EndDate = EndDate?.ToString("yyyy-MM-dd"),
             };
             return model;
         }

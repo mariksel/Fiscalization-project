@@ -13,37 +13,21 @@ namespace EInvoice
         protected UBLService UBLService { get; }
         public EInvoiceFactory(UBLService uBLService)
         {
-            UBLService = UBLService;
+            UBLService = uBLService;
         }
 
         /// <summary> Invoicing the supply of goods and services ordered on a contract basis </summary>
-        public RegisterEInvoiceRequest EInviceP1(Invoice invoice, DateTime issuedDate, DateTime dueDate, DateTime taxPointDate, InvoicePeriod invoicePeriod,
-             DateTime? sendDateTime = null)
+        public RegisterEInvoiceRequest EInviceP1(Invoice invoice, DateTime issuedDate, DateTime dueDate, DateTime taxPointDate,
+             string FIC, DateTime? sendDateTime = null)
         {
-            var supplyerParty = new AccountingSupplierParty(invoice.Seller.IDNum);
-            supplyerParty.Party.PostalAddress = new PostalAddress
+            var supplyerParty = new AccountingSupplierParty(invoice.Seller)
             {
-                StreetName = invoice.Seller.Address,
-                CityName = invoice.Seller.Town,
-                Country = new Country
-                {
-                    IdentificationCode = invoice.Seller.Country
-                }
             };
-            var customerParty = new AccountingCustomerParty(invoice.Buyer.IDNum);
-            customerParty.Party.PostalAddress = new PostalAddress
-            {
-                StreetName = invoice.Buyer.Address,
-                CityName = invoice.Buyer.Town,
-                Country = new Country
-                {
-                    IdentificationCode = invoice.Buyer.Country
-                }
-            };
-            var taxTotal = new TaxTotal(new TaxSubtotal { 
-                //TaxAmount = 
-            });
-            var ubl = new UBLInvoice
+
+            var customerParty = new AccountingCustomerParty(invoice.Buyer);
+ 
+
+            var ubl = new UBLInvoice(invoice, FIC)
             {
                 ProfileID = Enums.ProfileIDCode.P1,
                 ID = invoice.InvNum,
@@ -52,7 +36,7 @@ namespace EInvoice
                 DocumentCurrencyCode = invoice.Currency.Code,
                 TaxCurrencyCode = invoice.Currency.Code,
                 TaxPointDate = taxPointDate,
-                InvoicePeriod = invoicePeriod,
+                //InvoicePeriod = new InvoicePeriod { StartDate = taxPointDate.Date },
                 InvoiceTypeCode = Enums.InvoiceTypeCode.CommercialInvoice,
                 AccountingSupplierParty = supplyerParty,
                 AccountingCustomerParty = customerParty,
@@ -61,7 +45,6 @@ namespace EInvoice
                     PaymentMeansCode = Enums.PaymentMeansCode.BankCard,
 
                 },
-                TaxTotal = 
             };
             return Create(ubl, sendDateTime);
         }

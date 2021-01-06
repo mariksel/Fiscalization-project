@@ -1,8 +1,12 @@
-﻿using Fiscalization.Models;
+﻿using EnumsNET;
+using Fiscalization.Enums;
+using Fiscalization.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Text;
 using UblSharp.CommonAggregateComponents;
+using UblSharp.UnqualifiedDataTypes;
 
 namespace EInvoice.Models.UBL
 {
@@ -11,10 +15,23 @@ namespace EInvoice.Models.UBL
     /// </summary>
     public class InvoiceLine
     {
-        public InvoiceLine(InvoiceItem item)
+        public InvoiceLine(InvoiceItem item, CurrencyCode currencyCode)
         {
-            ID = item.Id;
+            ID = new Identifier{
+                schemeID = "0160",
+                Value = item.BarCode
+            };
             Item = new Item(item);
+            Note = item.Note;
+            InvoicedQuantity = new Quantity{
+                unitCode = item.UnitCode,
+                Value = (decimal)item.Q
+            };
+            LineExtensionAmount = new Amount {
+                currencyID = currencyCode,
+                Value = item.PB
+            };
+            Price = new Price((decimal)item.Q, item.PA, item.UnitCode, currencyCode);
         }
         /// <summary>
         /// A unique identifier for a single invoice item.
@@ -30,7 +47,9 @@ namespace EInvoice.Models.UBL
         public DocumentReference DocumentReference { get; set; }
         /// <summary>
         /// The quantity of items (goods or services) that are charged as invoice items.
+        /// Cardinality 1..1
         /// </summary>
+        [Required]
         public Quantity InvoicedQuantity { get; set; }
         /// <summary>
         /// The total amounts for invoice items
@@ -48,7 +67,9 @@ namespace EInvoice.Models.UBL
         public AllowanceCharge AllowanceCharge { get; set; }
         /// <summary>
         /// PRICE DETAILS
+        /// Cardinality 1..1
         /// </summary>
+        [Required]
         public Price Price { get; set; }
         public Item Item { get; set; }
 
@@ -56,7 +77,17 @@ namespace EInvoice.Models.UBL
         {
             return new InvoiceLineType
             {
-
+                ID = ID.ToIdentifierType(),
+                Note = new List<TextType> { Note },
+                DocumentReference = new List<DocumentReferenceType> { DocumentReference?.ToDocumentReferenceType() },
+                InvoicedQuantity = InvoicedQuantity.ToQuantityType(),
+                LineExtensionAmount = LineExtensionAmount.ToAmountType(),
+                OrderLineReference = new List<OrderLineReferenceType> { OrderLineReference?.ToOrderLineReferenceType() },
+                AccountingCost = AccountingCharge,
+                InvoicePeriod = new List<PeriodType> { InvoicePeriod?.ToPeriodType() },
+                AllowanceCharge = new List<AllowanceChargeType> { AllowanceCharge?.ToAllowanceChargeType()},
+                Price = Price.ToPriceType(),
+                Item = Item.ToItemType(),
             };
         }
     }

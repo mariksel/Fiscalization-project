@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UblSharp.CommonAggregateComponents;
 
 namespace EInvoice.Models.UBL
 {
@@ -30,5 +31,19 @@ namespace EInvoice.Models.UBL
         /// </summary>
         public string CountrySubentity { get; set; }
         public Country Country { get; set; }
+
+        public AddressType ToAddressType()
+        {
+            return new AddressType
+            {
+                StreetName = StreetName,
+                AdditionalStreetName = AdditionalStreetName,
+                AddressLine = new List<AddressLineType> { AddressLine?.ToAddressLineType() },
+                PostalZone = PostalZone,
+                CityName = CityName,
+                CountrySubentity = CountrySubentity,
+                Country = Country?.ToCountryType()
+            };
+        }
     }
 }

@@ -29,6 +29,7 @@ using RegisterInvoiceRequest = Fiscalization.Requests.RegisterInvoiceRequest;
 using Fiscalization.Enums;
 using Fiscalization.Models;
 using EInvoice.Requests;
+using EInvoice.Models.UBL;
 
 namespace EInvoice.UI
 {
@@ -54,7 +55,7 @@ namespace EInvoice.UI
 
         public async void CreateEInvoice1()
         {
-            EInvoiceService service = _factory.GetEInvoiceService(); //new EInvoiceService(Path.Combine(Environment.CurrentDirectory, "eltonzhuleku.p12"),null) ;
+            //EInvoiceService service = _factory.GetEInvoiceService(); //new EInvoiceService(Path.Combine(Environment.CurrentDirectory, "eltonzhuleku.p12"),null) ;
             var date = EInvoiceService.GetDateTimeNow();
 
 
@@ -281,7 +282,7 @@ namespace EInvoice.UI
                 },
                 InvoiceTypeCode = new CodeType
                 {
-                    Value = Enums.InvoiceTypeCode.CommercialInvoice
+                    //Value = Enums.InvoiceTypeCode.CommercialInvoice
                 },
                 //PricingCurrencyCode = new CodeType { },
                 //PaymentCurrencyCode = new CodeType { },
@@ -751,7 +752,7 @@ namespace EInvoice.UI
                         ExtensionContent = (XmlElement)xmlDocExt.GetElementsByTagName("SignatureInformation").Item(0)
                     }
                 },
-                ContractDocumentReference = 
+ 
 
             };
 
@@ -1032,6 +1033,7 @@ namespace EInvoice.UI
             {
                 new InvoiceItem
                 {
+                    BarCode = "5301000171376",
                     C = "code1",
                     N = "Item 1",
                     Q = 2,
@@ -1040,30 +1042,43 @@ namespace EInvoice.UI
                     UPB = 10,
                 }
             };
-            var seller = Seller.CreateSeller("L41316032F", "Elton", "Tiran Albania", "Tiran", null);
+            var seller = Seller.CreateSeller("L41316032F", "Elton", "Tiran Albania", "Tiran", CountryCode.ALB);
             var payMethods = new PayMethod[] { 
                 new PayMethod
                 {
                     Type = PaymentMethodType.TRANSFER,
-                    Amt = 200.00M
+                    Amt = items.Sum(i => i.PA)
                 }
             };
             _invoice = Invoice.CreateInvoice(seller, date, Fiscalization.Enums.InvoiceType.NONCASH, "wo765uk675", "dt947iw604", "eq535yw328", "au254tb295",
                 100, items, payMethods, true);
+            _invoice.Buyer = new Buyer
+            {
+               IDNum = "L82118024B",
+                Address = "Tiran Albania",
+               IDType = IDType.NUIS,
+               Name = "CIMI",
+               Country = CountryCode.ALB
+            };
+            _invoice.Currency = new Currency { 
+                Code = CurrencyCode.ALL,
+                ExRate = 1
+            };
             var req = RegisterInvoiceRequest.CreateRegisterInvoiceRequest(date, SubsequentDeliveryType.SERVICE, _invoice);
             var res = await fisService.RegisterInvoiceAsync(req);
+            FIC = res.FIC;
         }
-
+        string FIC;
         private async void RegisterEInvoiceBtn_Click(object sender, EventArgs e)
         {
             var service = _factory.EInvoiceService;
-            var ublService = _factory.UBLService;
+            var eInvoiceFac = _factory.EInvoiceFactory;
 
 
 
-            var ubl = ublService.Create(_invoice);
+            var date = DateTime.Now;
 
-            var req = RegisterEInvoiceRequest.Create(ubl);
+            var req = eInvoiceFac.EInviceP1(_invoice, date, date, date, FIC);
 
             var res = await service.RegisterEinvoiceAsync(req);
             

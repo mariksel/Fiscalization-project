@@ -1,4 +1,6 @@
-﻿namespace Fiscalization.Enums
+﻿using System.Runtime.Serialization;
+
+namespace Fiscalization.Enums
 {
     public enum CountryCode
     {
@@ -7,6 +9,7 @@
         AGO,
         AIA,
         ALA,
+        [EnumMember(Value = "AL")]
         ALB,
         AND,
         ARE,

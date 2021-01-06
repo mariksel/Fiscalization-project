@@ -41,9 +41,9 @@ namespace EInvoice.Models.UBL
                 PaymentMeansCode = PaymentMeansCode.AsString(EnumFormat.Description),
                 InstructionNote = new List<TextType> { InstructionNote },
                 PaymentID = new List<IdentifierType> { PaymentID },
-                PayeeFinancialAccount = PayeeFinancialAccount.ToFinancialAccountType(),
-                CardAccount = CardAccount.ToCardAccountType(),
-                PaymentMandate = PaymentMandate.ToPaymentMandateType()
+                PayeeFinancialAccount = PayeeFinancialAccount?.ToFinancialAccountType(),
+                CardAccount = CardAccount?.ToCardAccountType(),
+                PaymentMandate = PaymentMandate?.ToPaymentMandateType()
             };
         }
     }

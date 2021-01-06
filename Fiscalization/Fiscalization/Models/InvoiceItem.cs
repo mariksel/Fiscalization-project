@@ -9,8 +9,10 @@ namespace Fiscalization.Models
 {
     public class InvoiceItem
     {
-        public string Id { get; set; }
+        public string BarCode { get; set; }
         public string Description { get; set; }
+        public string Note { get; set; }
+        public UnitCode UnitCode { get; set; }
         public VouchersSold VS { get; set; }
         /// <summary>
         /// (Name)
@@ -120,7 +122,7 @@ namespace Fiscalization.Models
         /// E detyrueshme nëse “IsReverseCharge” është e vërtetë. 
         /// Vlerat negative lejohen kur ekzistojnë “CorrectiveInv” ose “BadDebtInv”.
         /// </summary>
-        public decimal VA => decimal.Round(PB * VR, 2) ;
+        public decimal VA => decimal.Round(PB * (VR/100.0M), 2) ;
         public bool VASpecified => VRSpecified;
 
         public bool INSpecified { get; private set; } = false;

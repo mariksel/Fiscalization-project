@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using UblSharp.CommonAggregateComponents;
 
 namespace EInvoice.Models.UBL
 {
@@ -11,5 +12,15 @@ namespace EInvoice.Models.UBL
         public Identifier UUID { get; set; }
         //public CodeType LineStatusCode { get; set; }
         //public OrderReferenceType OrderReference { get; set; }
+
+        public OrderLineReferenceType ToOrderLineReferenceType()
+        {
+            return new OrderLineReferenceType
+            {
+                LineID = LineID.ToIdentifierType(),
+                SalesOrderLineID = SalesOrderLineID.ToIdentifierType(),
+                UUID = UUID.ToIdentifierType(),
+            };
+        }
     }
 }

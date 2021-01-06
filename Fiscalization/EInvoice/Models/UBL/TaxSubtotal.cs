@@ -22,7 +22,7 @@ namespace EInvoice.Models.UBL
         /// Total VAT amount for a particular VAT category.
         /// Calculated by multiplying the taxable amount of VAT with the VAT rate category rate for the relevant VAT category.
         /// </summary>
-        public Amount TaxAmount => TaxableAmount * (TaxCategory.Percent / 100);
+        public Amount TaxAmount => TaxableAmount * (decimal)(TaxCategory.Percent / 100.0);
         public TaxCategory TaxCategory { get; set; }
 
         public TaxSubtotalType ToTaxSubtotalType()

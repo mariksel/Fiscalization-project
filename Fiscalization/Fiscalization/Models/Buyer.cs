@@ -21,7 +21,6 @@ namespace Fiscalization.Models
         [Required]
         public string Town { get; set; }
         public bool CountrySpecified { get; } = false;
-        [Required]
-        public CountryCode Country { get; set; }
+        public CountryCode? Country { get; set; }
     }
 }

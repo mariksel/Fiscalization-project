@@ -15,9 +15,8 @@ namespace Fiscalization.Models
                 Name = name,
                 Address = address,
                 Town = town,
+                Country = country
             };
-            if (country.HasValue)
-                seller.Country = country.Value;
             return seller;
         }
         [Required]
@@ -44,12 +43,12 @@ namespace Fiscalization.Models
         public string Town { get; set; }
 
         public bool CountrySpecified { get; private set; } = false;
-        private CountryCode _country;
-        public CountryCode Country { 
+        private CountryCode? _country;
+        public CountryCode? Country { 
             get => _country;
             set
             {
-                if (value.IsDefined())
+                if (value.HasValue && value.Value.IsDefined())
                 {
                     _country = value;
                     CountrySpecified = true;

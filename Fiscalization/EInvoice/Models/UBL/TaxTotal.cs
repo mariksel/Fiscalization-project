@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using UblSharp.CommonAggregateComponents;
 
@@ -7,10 +8,14 @@ namespace EInvoice.Models.UBL
 {
     public class TaxTotal
     {
-        public TaxTotal(TaxSubtotal taxSubtotal)
+        public TaxTotal(TaxSubtotal[] taxSubtotal)
         {
             TaxSubtotal = taxSubtotal;
-            TaxAmount = TaxSubtotal.TaxAmount;
+            TaxAmount = new Amount
+            {
+                currencyID = taxSubtotal.First().TaxAmount.currencyID,
+                Value = TaxSubtotal.Sum(m => m.TaxAmount.Value)
+            };
         }
         /// <summary>
         /// Total VAT amount for account.
@@ -21,14 +26,14 @@ namespace EInvoice.Models.UBL
         /// DISTRIBUTION OF VAT
         /// A set of business terms that provide information on the distribution of VAT by different categories, rates, and reasons for exemption
         /// </summary>
-        public TaxSubtotal TaxSubtotal { get; set; }
+        public TaxSubtotal[] TaxSubtotal { get; set; }
 
         public TaxTotalType ToTaxTotalType()
         {
             return new TaxTotalType
             {
                 TaxAmount = TaxAmount.ToAmountType(),
-                TaxSubtotal = new List<TaxSubtotalType> { TaxSubtotal.ToTaxSubtotalType() }
+                TaxSubtotal = TaxSubtotal.Select(m => m.ToTaxSubtotalType()).ToList()
             };
         }
     }

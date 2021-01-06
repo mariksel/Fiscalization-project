@@ -1,7 +1,9 @@
-﻿using Fiscalization.Enums;
+﻿using EnumsNET;
+using Fiscalization.Enums;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using UblSharp.CommonAggregateComponents;
 
 namespace EInvoice.Models.UBL
 {
@@ -14,5 +16,13 @@ namespace EInvoice.Models.UBL
         /// "Country Name and Subdivision Codes".
         /// </summary>
         public CountryCode IdentificationCode { get; set; }
+
+        public CountryType ToCountryType()
+        {
+            return new CountryType
+            {
+                IdentificationCode = IdentificationCode.AsString(EnumFormat.EnumMemberValue)
+            };
+        }
     }
 }
