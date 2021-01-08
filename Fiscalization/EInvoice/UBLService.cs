@@ -1,10 +1,7 @@
 ﻿using EInvoice.Models.UBL;
-using EnumsNET;
-using Fiscalization.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 using UblSharp;
