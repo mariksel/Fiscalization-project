@@ -29,9 +29,9 @@ namespace EInvoice.Models.UBL
         {
             return new DocumentReferenceType
             {
-                ID = ID.ToIdentifierType(),
+                ID = ID?.ToIdentifierType(),
                 DocumentDescription = new List<TextType> { DocumentDescription },
-                Attachment = Attachment.ToAttachmentType(),
+                Attachment = Attachment?.ToAttachmentType(),
                 IssueDate = Issued.ToString("yyyy-MM-dd")
             };
         }

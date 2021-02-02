@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using static EInvoice.SOAP.EinvoiceServicePortTypeClient;
 
 namespace EInvoice
 {
@@ -18,7 +19,9 @@ namespace EInvoice
         public EInvoiceClient(IMapper mapper)
         {
             _mapper = mapper;
-            ClientGen = new EinvoiceServicePortTypeClient();
+            //string serviceAddress = "https://efiskalizimi-test.tatime.gov.al/FiscalizationService-v3";
+            string serviceAddress = "https://localhost:5001/einvoice";
+            ClientGen = new EinvoiceServicePortTypeClient(EndpointConfiguration.EinvoiceServicePort, serviceAddress);
 
             var endpointBehavior = new XMLSignerEndpointBehavior();
             ClientGen.Endpoint.EndpointBehaviors.Add(endpointBehavior);

@@ -140,6 +140,8 @@ namespace FiscalizationService.SOAP
         
         private bool subseqDelivTypeFieldSpecified;
         
+        private string sourceField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string UUID
@@ -193,6 +195,20 @@ namespace FiscalizationService.SOAP
             set
             {
                 this.subseqDelivTypeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Source
+        {
+            get
+            {
+                return this.sourceField;
+            }
+            set
+            {
+                this.sourceField = value;
             }
         }
     }
@@ -542,7 +558,7 @@ namespace FiscalizationService.SOAP
         
         private string softCodeField;
         
-        private int wTNOrdNumField;
+        private string wTNOrdNumField;
         
         private string wTNNumField;
         
@@ -585,6 +601,10 @@ namespace FiscalizationService.SOAP
         private string wTNICField;
         
         private string wTNICSignatureField;
+        
+        private bool isEinvoiceField;
+        
+        private bool isEinvoiceFieldSpecified;
         
         /// <remarks/>
         [System.Xml.Serialization.XmlElementAttribute(Order=0)]
@@ -714,8 +734,8 @@ namespace FiscalizationService.SOAP
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public int WTNOrdNum
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType="integer")]
+        public string WTNOrdNum
         {
             get
             {
@@ -1020,6 +1040,34 @@ namespace FiscalizationService.SOAP
                 this.wTNICSignatureField = value;
             }
         }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public bool IsEinvoice
+        {
+            get
+            {
+                return this.isEinvoiceField;
+            }
+            set
+            {
+                this.isEinvoiceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsEinvoiceSpecified
+        {
+            get
+            {
+                return this.isEinvoiceFieldSpecified;
+            }
+            set
+            {
+                this.isEinvoiceFieldSpecified = value;
+            }
+        }
     }
     
     /// <remarks/>
@@ -1132,6 +1180,8 @@ namespace FiscalizationService.SOAP
         
         private bool subseqDelivTypeFieldSpecified;
         
+        private string sourceField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string UUID
@@ -1185,6 +1235,20 @@ namespace FiscalizationService.SOAP
             set
             {
                 this.subseqDelivTypeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Source
+        {
+            get
+            {
+                return this.sourceField;
+            }
+            set
+            {
+                this.sourceField = value;
             }
         }
     }
@@ -1364,6 +1428,8 @@ namespace FiscalizationService.SOAP
         
         private bool subseqDelivTypeFieldSpecified;
         
+        private string sourceField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string UUID
@@ -1417,6 +1483,20 @@ namespace FiscalizationService.SOAP
             set
             {
                 this.subseqDelivTypeFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Source
+        {
+            get
+            {
+                return this.sourceField;
+            }
+            set
+            {
+                this.sourceField = value;
             }
         }
     }
@@ -1701,6 +1781,8 @@ namespace FiscalizationService.SOAP
         
         private System.DateTime sendDateTimeField;
         
+        private string sourceField;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public string UUID
@@ -1726,6 +1808,20 @@ namespace FiscalizationService.SOAP
             set
             {
                 this.sendDateTimeField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Source
+        {
+            get
+            {
+                return this.sourceField;
+            }
+            set
+            {
+                this.sourceField = value;
             }
         }
     }
@@ -4810,6 +4906,8 @@ namespace FiscalizationService.SOAP
         
         private bool isBuyingField;
         
+        private bool isBuyingFieldSpecified;
+        
         /// <remarks/>
         [System.Xml.Serialization.XmlAttributeAttribute()]
         public CurrencyCodeSType Code
@@ -4849,6 +4947,20 @@ namespace FiscalizationService.SOAP
             set
             {
                 this.isBuyingField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsBuyingSpecified
+        {
+            get
+            {
+                return this.isBuyingFieldSpecified;
+            }
+            set
+            {
+                this.isBuyingFieldSpecified = value;
             }
         }
     }
@@ -5277,6 +5389,9 @@ namespace FiscalizationService.SOAP
         TRY,
         
         /// <remarks/>
+        TRL,
+        
+        /// <remarks/>
         TTD,
         
         /// <remarks/>
@@ -5617,7 +5732,7 @@ namespace FiscalizationService.SOAP
         
         private string invNumField;
         
-        private int invOrdNumField;
+        private string invOrdNumField;
         
         private string tCRCodeField;
         
@@ -5660,6 +5775,10 @@ namespace FiscalizationService.SOAP
         private System.DateTime payDeadlineField;
         
         private bool payDeadlineFieldSpecified;
+        
+        private bool isEinvoiceField;
+        
+        private bool isEinvoiceFieldSpecified;
         
         /// <remarks/>
         public SupplyDateOrPeriodType SupplyDateOrPeriod
@@ -5908,8 +6027,8 @@ namespace FiscalizationService.SOAP
         }
         
         /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public int InvOrdNum
+        [System.Xml.Serialization.XmlAttributeAttribute(DataType="integer")]
+        public string InvOrdNum
         {
             get
             {
@@ -6212,6 +6331,34 @@ namespace FiscalizationService.SOAP
             set
             {
                 this.payDeadlineFieldSpecified = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public bool IsEinvoice
+        {
+            get
+            {
+                return this.isEinvoiceField;
+            }
+            set
+            {
+                this.isEinvoiceField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlIgnoreAttribute()]
+        public bool IsEinvoiceSpecified
+        {
+            get
+            {
+                return this.isEinvoiceFieldSpecified;
+            }
+            set
+            {
+                this.isEinvoiceFieldSpecified = value;
             }
         }
     }
@@ -6848,6 +6995,8 @@ namespace FiscalizationService.SOAP
         
         private int versionField;
         
+        private string sourceField;
+        
         public RegisterWTNRequest()
         {
             this.idField = "Request";
@@ -6919,6 +7068,20 @@ namespace FiscalizationService.SOAP
             set
             {
                 this.versionField = value;
+            }
+        }
+        
+        /// <remarks/>
+        [System.Xml.Serialization.XmlAttributeAttribute()]
+        public string Source
+        {
+            get
+            {
+                return this.sourceField;
+            }
+            set
+            {
+                this.sourceField = value;
             }
         }
     }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Xml;
 using System.Xml.Serialization;
 using UblSharp;
@@ -21,7 +22,7 @@ namespace EInvoice
                         ExtensionContent = CreateSignatureExtension()
                     }
                 };
-
+            ublInvoiceType.UBLExtensions.First().Xmlns = null;
             var xml = ublInvoiceType.ToXDocument();
             var xmlText = xml.ToString();
             return xmlText;
@@ -75,6 +76,7 @@ namespace EInvoice
         [Serializable()]
         public class UBLDocumentSignatures
         {
+            //[XmlElement(ElementName = "SignatureInformation", Namespace = "urn:oasis:names:specification:ubl:schema:xsd:SignatureAggregateComponents-2")]
             [XmlElement(ElementName = "SignatureInformation", Namespace = "urn:oasis:names:specification:ubl:schema:xsd:SignatureAggregateComponents-2")]
             public SignatureInformation SignatureInformation { get; set; }
         }

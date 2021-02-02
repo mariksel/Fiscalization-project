@@ -14,6 +14,36 @@ namespace Fiscalization.Models
 {
     public class Invoice
     {
+        public static Invoice CreateCorrectiveInvoice(string originalInvIIC, DateTime originalInvIssuedDate, Seller seller, DateTime issueDateTime, Enums.InvoiceType typeOfInv,
+            string businUnitCode, string tcrCode, string softCode, string operatorCode, int invOrdNum,
+            InvoiceItem[] items, PayMethod[] paymethods, bool isIssuerInVAT)
+        {
+            var invoice = new Invoice
+            {
+                TypeOfInv = typeOfInv,
+                Seller = seller,
+                IssueDateTime = FiscalizationService.GetDateTime(issueDateTime),
+                BusinUnitCode = businUnitCode,
+                TCRCode = tcrCode,
+                SoftCode = softCode,
+                InvOrdNum = invOrdNum,
+                OperatorCode = operatorCode,
+                Items = items,
+                PayMethods = paymethods,
+                IsIssuerInVAT = isIssuerInVAT,
+                CorrectiveInv = new CorrectiveInvoice
+                {
+                    IICRef = originalInvIIC,
+                    IssueDateTime = FiscalizationService.GetDateTime(originalInvIssuedDate) ,
+                    Type = CorrectiveInvoiceType.CORRECTIVE
+                }
+            };
+
+            GenerateIIC(invoice);
+            invoice.VerifyUrl = GenerateVerifyURL(invoice);
+
+            return invoice;
+        }
 
         public static Invoice CreateInvoice(Seller seller, DateTime issueDateTime, Enums.InvoiceType typeOfInv,
             string businUnitCode, string tcrCode, string softCode, string operatorCode, int invOrdNum,
@@ -223,6 +253,9 @@ namespace Fiscalization.Models
                 PayDeadlineSpecified = true;
             } 
         }
+
+        public bool IsEinvoiceSpecified { get; } = true;
+        public bool IsEinvoice { get; set; } = false;
 
         public string VerifyUrl { get; set; }
 

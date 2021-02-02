@@ -1,15 +1,19 @@
-﻿using EInvoice.SOAP;
-using Fiscalization;
+﻿using EInvoice.Models;
+using EInvoice.Requests;
+using EInvoice.SOAP;
+using EnumsNET;
 using FiscalizationService.SOAP;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Drawing;
 using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Security.Cryptography.X509Certificates;
 using System.Security.Cryptography.Xml;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml;
@@ -18,17 +22,9 @@ using UblSharp;
 using UblSharp.CommonAggregateComponents;
 using UblSharp.CommonExtensionComponents;
 using UblSharp.UnqualifiedDataTypes;
+using _con = Colorful.Console;
 using CountryCodeSType = FiscalizationService.SOAP.CountryCodeSType;
 using InvoiceType = FiscalizationService.SOAP.InvoiceType;
-using _con = Colorful.Console;
-
-using SignatureType = UblSharp.CommonAggregateComponents.SignatureType;
-using Newtonsoft.Json;
-using System.Diagnostics;
-using EInvoice.Models;
-using EnumsNET;
-using System.Drawing;
-using EInvoice.Requests;
 
 namespace EInvoice.Console
 {
@@ -188,7 +184,7 @@ namespace EInvoice.Console
             _con.Write("Enter Name:");
             var name = _con.ReadLine();
 
-            EInvoiceService service = _factory.GetEInvoiceService();
+            EInvoiceService service = _factory.EInvoiceService;
 
             var request = new Requests.GetTaxpayersByNameRequest(DateTime.Now, name);
 
@@ -202,7 +198,7 @@ namespace EInvoice.Console
             _con.Write("Enter Tin:");
             var tin = _con.ReadLine();
 
-            EInvoiceService service = _factory.GetEInvoiceService();
+            EInvoiceService service = _factory.EInvoiceService;
 
             var request = new Requests.GetTaxpayersByTinRequest(DateTime.Now, tin);
 
@@ -217,7 +213,7 @@ namespace EInvoice.Console
             _con.Write("Enter EIC:");
             var eic = _con.ReadLine();
 
-            EInvoiceService service = _factory.GetEInvoiceService();
+            EInvoiceService service = _factory.EInvoiceService;
 
             var request = GetEInvoicesRequest.GetEInvoiceByEICRequest(eic, date);
 
@@ -255,7 +251,7 @@ namespace EInvoice.Console
             if (GetDateFlag("--to", line, out DateTime toValue))
                 to = toValue;
 
-            EInvoiceService service = _factory.GetEInvoiceService();
+            EInvoiceService service = _factory.EInvoiceService;
 
             var request = GetEInvoicesRequest.GetEInvoicesListRequest(type, from, to);
 
@@ -300,7 +296,7 @@ namespace EInvoice.Console
 
         public static void EInvocieChangeStatus()
         {
-            EInvoiceService service = _factory.GetEInvoiceService(); 
+            EInvoiceService service = _factory.EInvoiceService; 
             var date = EInvoiceService.GetDateTimeNow();
 
             var request = new EInvoiceChangeStatusRequest
@@ -324,7 +320,7 @@ namespace EInvoice.Console
 
         public static void CreateEInvoice()
         {
-            EInvoiceService service = _factory.GetEInvoiceService(); //new EInvoiceService(Path.Combine(Environment.CurrentDirectory, "eltonzhuleku.p12"),null) ;
+            EInvoiceService service = _factory.EInvoiceService; //new EInvoiceService(Path.Combine(Environment.CurrentDirectory, "eltonzhuleku.p12"),null) ;
             var date = EInvoiceService.GetDateTimeNow();
 
 
@@ -352,7 +348,7 @@ namespace EInvoice.Console
 
             };
 
-            var response = service.RegisterEinvoiceAsync(invoice).Result;
+            var response = service.RegisterEinvoiceAsync(null).Result;
             var json = JsonConvert.SerializeObject(response, Newtonsoft.Json.Formatting.Indented);
             _con.WriteLine(json);
         }
@@ -430,7 +426,7 @@ namespace EInvoice.Console
 
         public static async Task getTaxPayers() 
         {
-            EInvoiceService service = _factory.GetEInvoiceService();
+            EInvoiceService service = _factory.EInvoiceService;
 
             var request = new Requests.GetTaxpayersByNameRequest(DateTime.Now, "elton");
             //  request = new Requests.GetTaxpayersByTinRequest(date, "L41316032F")
@@ -507,7 +503,7 @@ namespace EInvoice.Console
                         IsBuying = true
                     },
                     InvNum = $"111/{date.Year}",
-                    InvOrdNum = 111,
+                    InvOrdNum = 111+"",
                     IssueDateTime = date,
                     Items = new InvoiceItemType[]{
                         new InvoiceItemType
@@ -629,7 +625,7 @@ namespace EInvoice.Console
                     }
                 },
                 InvoiceTypeCode = new CodeType { 
-                    Value = Enums.InvoiceTypeCode.CommercialInvoice
+                    Value = Enums.InvoiceTypeCode.CommercialInvoice.AsString()
                 },
                 //PricingCurrencyCode = new CodeType { },
                 //PaymentCurrencyCode = new CodeType { },
@@ -1187,7 +1183,7 @@ namespace EInvoice.Console
                         IsBuying = true
                     },
                     InvNum = "1/2020/cc123cc123",
-                    InvOrdNum = 1,
+                    InvOrdNum = 1+"",
                     IssueDateTime = date,
                     Items = new InvoiceItemType[]{
                         new InvoiceItemType

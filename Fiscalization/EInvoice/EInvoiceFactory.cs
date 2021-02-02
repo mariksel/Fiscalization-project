@@ -49,6 +49,47 @@ namespace EInvoice
             return Create(ubl, sendDateTime);
         }
 
+        /// <summary> Corrective invoicing </summary>
+        public RegisterEInvoiceRequest EInviceP10(string originalInvIIC, DateTime originalInvIssuedDate, Invoice invoice, DateTime issuedDate, DateTime dueDate, DateTime taxPointDate,
+             string FIC, DateTime? sendDateTime = null)
+        {
+            var supplyerParty = new AccountingSupplierParty(invoice.Seller)
+            {
+            };
+
+            var customerParty = new AccountingCustomerParty(invoice.Buyer);
+
+
+            var ubl = new UBLInvoice(invoice, FIC)
+            {
+                ProfileID = Enums.ProfileIDCode.P10,
+                ID = invoice.InvNum,
+                Issued = issuedDate,
+                Dued = dueDate,
+                DocumentCurrencyCode = invoice.Currency.Code,
+                TaxCurrencyCode = invoice.Currency.Code,
+                TaxPointDate = taxPointDate,
+                //InvoicePeriod = new InvoicePeriod { StartDate = taxPointDate.Date },
+                InvoiceTypeCode = Enums.InvoiceTypeCode.CorrectiveInvoice,
+                AccountingSupplierParty = supplyerParty,
+                AccountingCustomerParty = customerParty,
+                PaymentMeans = new PaymentMeans
+                {
+                    PaymentMeansCode = Enums.PaymentMeansCode.BankCard,
+
+                },
+                BillingReference = new BillingReference
+                {
+                   InvoiceDocumentReference = new InvoiceDocumentReference
+                   {
+                       ID = originalInvIIC,
+                       Issued = originalInvIssuedDate
+                   }
+                }
+            };
+            return Create(ubl, sendDateTime);
+        }
+
         public RegisterEInvoiceRequest Create(UBLInvoice ublInvoice, DateTime? sendDateTime = null)
         {
             var ublInvoiceXml = UBLService.CreateXML(ublInvoice);

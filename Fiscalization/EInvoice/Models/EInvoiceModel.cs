@@ -30,9 +30,12 @@ namespace EInvoice.Models
             public string GetTempFile()
             {
                 var path = Path.Combine(Path.GetTempPath(), $"{Path.GetTempFileName()}.pdf");
-                using FileStream stream = File.Create(path);
-                stream.Write(_data, 0, _data.Length);
-                
+                using (FileStream stream = File.Create(path))
+                {
+                    stream.Write(_data, 0, _data.Length);
+
+                }
+
                 return path;
             }
 

@@ -22,7 +22,7 @@ namespace EInvoice.AutoMapper
             CreateMap<EinvoiceType, EInvoiceModel>()
                 .ForMember(m=>m.Pdf, 
                             m=>m.MapFrom(sm => sm.Pdf == null ? null: new EInvoiceModel.PDF(sm.Pdf, sm.EIC)));
-            CreateMap<SOAP.DocumentType, Enums.DocumentType>();
+            //CreateMap<SOAP.DocumentType, Enums.DocumentType>();
             CreateMap<EinvoiceStatusType, EInvoiceStatus>();
             CreateMap<EInvoiceChangeStatusRequest, EinvoiceChangeStatusRequest>(); 
             CreateMap<EInvoiceChangeStatusRequestHeader, EinvoiceChangeStatusRequestHeaderType>();

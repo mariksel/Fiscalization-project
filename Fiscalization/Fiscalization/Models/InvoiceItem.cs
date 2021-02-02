@@ -41,12 +41,13 @@ namespace Fiscalization.Models
         /// </summary>
         [Required]
         public double Q { get; set; }
+
+        private decimal _UPB;
         /// <summary>
         /// (Cmimi i njësisë pa TVSH)
         /// Çmimi për njësi përpara aplikimit të tatimit mbi vlerën e shtuar.
         /// </summary>
         [Required]
-        private decimal _UPB;
         public decimal UPB {
             get => _UPB + 0.00M;
             set => _UPB = value; 

@@ -17,7 +17,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SharedLibrary", "SharedLibr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibraryConlose", "LibraryConlose\LibraryConlose.csproj", "{91053A6E-53BA-4B83-9598-0BA4396F2C67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInvoice.UI", "EInvoice.UI\EInvoice.UI.csproj", "{2FCD65D8-370F-491C-B25F-9CC37C80B023}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EInvoice.UI", "EInvoice.UI\EInvoice.UI.csproj", "{2FCD65D8-370F-491C-B25F-9CC37C80B023}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EInvoice UI.Frmw", "EInvoice UI.Frmw\EInvoice UI.Frmw.csproj", "{F5809DA0-1174-4416-9006-F5BFC3ADB845}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{2FCD65D8-370F-491C-B25F-9CC37C80B023}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2FCD65D8-370F-491C-B25F-9CC37C80B023}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2FCD65D8-370F-491C-B25F-9CC37C80B023}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5809DA0-1174-4416-9006-F5BFC3ADB845}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5809DA0-1174-4416-9006-F5BFC3ADB845}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5809DA0-1174-4416-9006-F5BFC3ADB845}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5809DA0-1174-4416-9006-F5BFC3ADB845}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

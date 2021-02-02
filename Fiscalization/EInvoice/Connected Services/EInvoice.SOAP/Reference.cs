@@ -178,8 +178,6 @@ namespace EInvoice.SOAP
         
         private string docNumberField;
         
-        private DocumentType docTypeField;
-        
         private System.DateTime recDateTimeField;
         
         private System.DateTime dueDateTimeField;
@@ -229,20 +227,6 @@ namespace EInvoice.SOAP
             set
             {
                 this.docNumberField = value;
-            }
-        }
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlAttributeAttribute()]
-        public DocumentType DocType
-        {
-            get
-            {
-                return this.docTypeField;
-            }
-            set
-            {
-                this.docTypeField = value;
             }
         }
         
@@ -315,57 +299,6 @@ namespace EInvoice.SOAP
                 this.partyTypeField = value;
             }
         }
-    }
-    
-    /// <remarks/>
-    [System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.Tools.ServiceModel.Svcutil", "2.0.2")]
-    [System.Xml.Serialization.XmlTypeAttribute(Namespace="https://Einvoice.tatime.gov.al/EinvoiceService/schema")]
-    public enum DocumentType
-    {
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("80")]
-        Item80,
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("82")]
-        Item82,
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("84")]
-        Item84,
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("380")]
-        Item380,
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("383")]
-        Item383,
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("386")]
-        Item386,
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("393")]
-        Item393,
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("395")]
-        Item395,
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("575")]
-        Item575,
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("623")]
-        Item623,
-        
-        /// <remarks/>
-        [System.Xml.Serialization.XmlEnumAttribute("780")]
-        Item780,
     }
     
     /// <remarks/>

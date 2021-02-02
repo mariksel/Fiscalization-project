@@ -964,7 +964,7 @@
       },
       "EInvoice/1.0.0": {
         "type": "project",
-        "framework": ".NETStandard,Version=v2.1",
+        "framework": ".NETStandard,Version=v2.0",
         "dependencies": {
           "AutoMapper.Extensions.Microsoft.DependencyInjection": "8.1.0",
           "Enums.NET": "3.0.3",
@@ -4372,7 +4372,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
       }
     }
   }
